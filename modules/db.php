@@ -11,17 +11,9 @@
 	// $dbPass = "excalibur";
 	// $dbName = "revitalash";
 
-	// $dbServer = "GIOVANNIMAR3235";
-	// $dbUser = "sa";
-	// $dbPass = "Exc@!ibur";
-	// $dbName = "revitalash";
-
-	$dbServer = "GIOVANNIMAR9351";
-	// $dbUser = "sa";
-	// $dbPass = "Exc@!ibur";
-	$dbUser = "afowler";
-	$dbPass = "password";
+	$dbServer = "GIOVANNIMAR3235";
+	$dbUser = "sa";
+	$dbPass = "Exc@!ibur";
 	$dbName = "revitalash";
-
 ?>
 

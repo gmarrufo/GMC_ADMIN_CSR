@@ -1,4 +1,5 @@
 <?php
+
 // Copyright 2009, FedEx Corporation. All rights reserved.
 
 define('TRANSACTIONS_LOG_FILE', 'fedextransactions.log');  // Transactions log file
@@ -36,13 +37,13 @@ function printFault($exception, $client) {
 /**
  * SOAP request/response logging to a file
  */                                  
-
 function writeToLog($client){  
 if (!$logfile = fopen(TRANSACTIONS_LOG_FILE, "a"))
 {
    error_func("Cannot open " . TRANSACTIONS_LOG_FILE . " file.\n", 0);
    exit(1);
 }
+
 fwrite($logfile, sprintf("\r%s:- %s",date("D M j G:i:s T Y"), $client->__getLastRequest(). "\n\n" . $client->__getLastResponse()));
 }
 

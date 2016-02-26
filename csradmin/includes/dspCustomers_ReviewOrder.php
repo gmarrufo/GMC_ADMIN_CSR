@@ -749,8 +749,6 @@ while($row = mssql_fetch_array($rsShippingMethod))
             */
             $request['RequestedShipment']['RequestedPackageLineItems'] = $_SESSION['Array_Boxes'];
 
-             // 08/12/15 - Separate FedEx Service Call based on Number of Boxes
-             /*
             try
             {
                  $response = $client -> getRates($request);
@@ -1027,61 +1025,18 @@ while($row = mssql_fetch_array($rsShippingMethod))
             {
                 $ResultCode = $ResultCode12;
             }
-
+            
+            // GMC - 09/18/15 - Fedex Freight Desktop Tool - LTL Flag
+            /*
+            else if($_POST['ShipMethodID'] == 777)
+            {
+                $ResultCode = $_POST['ShippingOverride'];
+            }
+            */
+            
         /*
         }
         */
-
-            if($_POST['ShipMethodID'] == 199)
-            {
-                $ResultCode = $_SESSION['RC1'];
-            }
-            elseif($_POST['ShipMethodID'] == 201)
-            {
-                $ResultCode = $_SESSION['RC2'];
-            }
-            else if($_POST['ShipMethodID'] == 200)
-            {
-                $ResultCode = $_SESSION['RC3'];
-            }
-            else if($_POST['ShipMethodID'] == 211)
-            {
-                $ResultCode = $_SESSION['RC5'];
-            }
-            else if($_POST['ShipMethodID'] == 212)
-            {
-                $ResultCode = $_SESSION['RC6'];
-            }
-            else if($_POST['ShipMethodID'] == 213)
-            {
-                $ResultCode = $_SESSION['RC7'];
-            }
-            else if($_POST['ShipMethodID'] == 205)
-            {
-                $ResultCode = $_SESSION['RC8'];
-            }
-            else if($_POST['ShipMethodID'] == 206)
-            {
-                $ResultCode = $_SESSION['RC9'];
-            }
-            else if($_POST['ShipMethodID'] == 214)
-            {
-                $ResultCode = $_SESSION['RC10'];
-            }
-            else if($_POST['ShipMethodID'] == 215)
-            {
-                $ResultCode = $_SESSION['RC11'];
-            }
-            else if($_POST['ShipMethodID'] == 207)
-            {
-                $ResultCode = $_SESSION['RC12'];
-            }
-
-            // GMC - 03/11/11 - Add Standard Overnight to Shipping Methods
-            else if($_POST['ShipMethodID'] == 202)
-            {
-                $ResultCode =  $_SESSION['RC4'];
-            }
 
 	}
 	elseif ($row["Carrier"] == 'USPS')
@@ -1360,6 +1315,17 @@ if (isset($_POST['ItemID1']) && $_POST['ItemID1'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty1'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_01'] == 'True' || $_SESSION['RegenesisReorderRVProd_01'] == 'True'))
+    {
+	    while($row1 = mssql_fetch_array($qryCart))
+	    {
+		    $strProductName1 = $row1["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice1'] * $_POST['ItemQty1']) - ($_POST['ItemPrice1'] * $_POST['ItemQty1'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row1 = mssql_fetch_array($qryCart))
@@ -1367,7 +1333,6 @@ if (isset($_POST['ItemID1']) && $_POST['ItemID1'] != 0)
 		    $strProductName1 = $row1["ProductName"];
 		    $decSubtotal = $decSubtotal + $_POST['ItemPrice1'] * $_POST['ItemQty1'];
 	    }
-
     }
 }
 
@@ -1387,6 +1352,17 @@ if (isset($_POST['ItemID2']) && $_POST['ItemID2'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty2'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_02'] == 'True' || $_SESSION['RegenesisReorderRVProd_02'] == 'True'))
+    {
+	    while($row2 = mssql_fetch_array($qryCart2))
+	    {
+		    $strProductName2 = $row2["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice2'] * $_POST['ItemQty2']) - ($_POST['ItemPrice2'] * $_POST['ItemQty2'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row2 = mssql_fetch_array($qryCart2))
@@ -1413,6 +1389,17 @@ if (isset($_POST['ItemID3']) && $_POST['ItemID3'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty3'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_03'] == 'True' || $_SESSION['RegenesisReorderRVProd_03'] == 'True'))
+    {
+	     while($row3 = mssql_fetch_array($qryCart3))
+	     {
+		    $strProductName3 = $row3["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice3'] * $_POST['ItemQty3']) - ($_POST['ItemPrice3'] * $_POST['ItemQty3'] * $_SESSION['RegenesisReorderDiscount']));
+	     }
+    }
+
     else
     {
         while($row3 = mssql_fetch_array($qryCart3))
@@ -1439,6 +1426,17 @@ if (isset($_POST['ItemID4']) && $_POST['ItemID4'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty4'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_04'] == 'True' || $_SESSION['RegenesisReorderRVProd_04'] == 'True'))
+    {
+	    while($row4 = mssql_fetch_array($qryCart4))
+	    {
+		    $strProductName4 = $row4["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice4'] * $_POST['ItemQty4']) - ($_POST['ItemPrice4'] * $_POST['ItemQty4'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row4 = mssql_fetch_array($qryCart4))
@@ -1465,6 +1463,17 @@ if (isset($_POST['ItemID5']) && $_POST['ItemID5'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty5'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_05'] == 'True' || $_SESSION['RegenesisReorderRVProd_05'] == 'True'))
+    {
+	    while($row5 = mssql_fetch_array($qryCart5))
+	    {
+		    $strProductName5 = $row5["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice5'] * $_POST['ItemQty5']) - ($_POST['ItemPrice5'] * $_POST['ItemQty5'] * $_SESSION['RegenesisReorderDiscount']));
+        }
+    }
+
     else
     {
 	    while($row5 = mssql_fetch_array($qryCart5))
@@ -1491,6 +1500,17 @@ if (isset($_POST['ItemID6']) && $_POST['ItemID6'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty6'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_06'] == 'True' || $_SESSION['RegenesisReorderRVProd_06'] == 'True'))
+    {
+	    while($row6 = mssql_fetch_array($qryCart6))
+	    {
+		    $strProductName6 = $row6["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice6'] * $_POST['ItemQty6']) - ($_POST['ItemPrice6'] * $_POST['ItemQty6'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row6 = mssql_fetch_array($qryCart6))
@@ -1517,6 +1537,17 @@ if (isset($_POST['ItemID7']) && $_POST['ItemID7'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty7'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_07'] == 'True' || $_SESSION['RegenesisReorderRVProd_07'] == 'True'))
+    {
+	    while($row7 = mssql_fetch_array($qryCart7))
+	    {
+		    $strProductName7 = $row7["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice7'] * $_POST['ItemQty7']) - ($_POST['ItemPrice7'] * $_POST['ItemQty7'] * $_SESSION['RegenesisReorderDiscount']));
+        }
+    }
+
     else
     {
 	    while($row7 = mssql_fetch_array($qryCart7))
@@ -1543,6 +1574,17 @@ if (isset($_POST['ItemID8']) && $_POST['ItemID8'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty8'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_08'] == 'True' || $_SESSION['RegenesisReorderRVProd_08'] == 'True'))
+    {
+	    while($row8 = mssql_fetch_array($qryCart8))
+	    {
+		    $strProductName8 = $row8["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice8'] * $_POST['ItemQty8']) - ($_POST['ItemPrice8'] * $_POST['ItemQty8'] * $_SESSION['RegenesisReorderDiscount']));
+        }
+    }
+
     else
     {
 	    while($row8 = mssql_fetch_array($qryCart8))
@@ -1569,6 +1611,17 @@ if (isset($_POST['ItemID9']) && $_POST['ItemID9'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty9'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_09'] == 'True' || $_SESSION['RegenesisReorderRVProd_09'] == 'True'))
+    {
+	    while($row9 = mssql_fetch_array($qryCart9))
+	    {
+		    $strProductName9 = $row9["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice9'] * $_POST['ItemQty9']) - ($_POST['ItemPrice9'] * $_POST['ItemQty9'] * $_SESSION['RegenesisReorderDiscount']));
+        }
+    }
+
     else
     {
 	    while($row9 = mssql_fetch_array($qryCart9))
@@ -1595,6 +1648,17 @@ if (isset($_POST['ItemID10']) && $_POST['ItemID10'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty10'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_10'] == 'True' || $_SESSION['RegenesisReorderRVProd_10'] == 'True'))
+    {
+	    while($row10 = mssql_fetch_array($qryCart10))
+	    {
+		    $strProductName10 = $row10["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice10'] * $_POST['ItemQty10']) - ($_POST['ItemPrice10'] * $_POST['ItemQty10'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row10 = mssql_fetch_array($qryCart10))
@@ -1623,6 +1687,17 @@ if (isset($_POST['ItemID11']) && $_POST['ItemID11'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty11'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_11'] == 'True' || $_SESSION['RegenesisReorderRVProd_11'] == 'True'))
+    {
+        while($row11 = mssql_fetch_array($qryCart11))
+	    {
+		    $strProductName11 = $row11["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice11'] * $_POST['ItemQty11']) - ($_POST['ItemPrice11'] * $_POST['ItemQty11'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row11 = mssql_fetch_array($qryCart11))
@@ -1649,6 +1724,17 @@ if (isset($_POST['ItemID12']) && $_POST['ItemID12'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty12'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_12'] == 'True' || $_SESSION['RegenesisReorderRVProd_12'] == 'True'))
+    {
+	    while($row12 = mssql_fetch_array($qryCart12))
+	    {
+		    $strProductName12 = $row12["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice12'] * $_POST['ItemQty12']) - ($_POST['ItemPrice12'] * $_POST['ItemQty12'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row12 = mssql_fetch_array($qryCart12))
@@ -1675,6 +1761,17 @@ if (isset($_POST['ItemID13']) && $_POST['ItemID13'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty13'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_13'] == 'True' || $_SESSION['RegenesisReorderRVProd_13'] == 'True'))
+    {
+	    while($row13 = mssql_fetch_array($qryCart13))
+	    {
+	        $strProductName13 = $row13["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice13'] * $_POST['ItemQty13']) - ($_POST['ItemPrice13'] * $_POST['ItemQty13'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row13 = mssql_fetch_array($qryCart13))
@@ -1701,6 +1798,17 @@ if (isset($_POST['ItemID14']) && $_POST['ItemID14'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty14'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_14'] == 'True' || $_SESSION['RegenesisReorderRVProd_14'] == 'True'))
+    {
+        while($row14 = mssql_fetch_array($qryCart14))
+	    {
+		    $strProductName14 = $row14["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice14'] * $_POST['ItemQty14']) - ($_POST['ItemPrice14'] * $_POST['ItemQty14'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row14 = mssql_fetch_array($qryCart14))
@@ -1727,6 +1835,17 @@ if (isset($_POST['ItemID15']) && $_POST['ItemID15'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty15'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_15'] == 'True' || $_SESSION['RegenesisReorderRVProd_15'] == 'True'))
+    {
+	    while($row15 = mssql_fetch_array($qryCart15))
+	    {
+		    $strProductName15 = $row15["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice15'] * $_POST['ItemQty15']) - ($_POST['ItemPrice15'] * $_POST['ItemQty15'] * $_SESSION['RegenesisReorderDiscount']));
+        }
+    }
+
     else
     {
 	    while($row15 = mssql_fetch_array($qryCart15))
@@ -1753,6 +1872,17 @@ if (isset($_POST['ItemID16']) && $_POST['ItemID16'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty16'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_16'] == 'True' || $_SESSION['RegenesisReorderRVProd_16'] == 'True'))
+    {
+	    while($row16 = mssql_fetch_array($qryCart16))
+	    {
+            $strProductName16 = $row16["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice16'] * $_POST['ItemQty16']) - ($_POST['ItemPrice16'] * $_POST['ItemQty16'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row16 = mssql_fetch_array($qryCart16))
@@ -1779,6 +1909,17 @@ if (isset($_POST['ItemID17']) && $_POST['ItemID17'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty17'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_17'] == 'True' || $_SESSION['RegenesisReorderRVProd_17'] == 'True'))
+    {
+        while($row17 = mssql_fetch_array($qryCart17))
+	    {
+		    $strProductName17 = $row17["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice17'] * $_POST['ItemQty17']) - ($_POST['ItemPrice17'] * $_POST['ItemQty17'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row17 = mssql_fetch_array($qryCart17))
@@ -1805,6 +1946,17 @@ if (isset($_POST['ItemID18']) && $_POST['ItemID18'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty18'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_18'] == 'True' || $_SESSION['RegenesisReorderRVProd_18'] == 'True'))
+    {
+	    while($row18 = mssql_fetch_array($qryCart18))
+	    {
+	        $strProductName18 = $row18["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice18'] * $_POST['ItemQty18']) - ($_POST['ItemPrice18'] * $_POST['ItemQty18'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row18 = mssql_fetch_array($qryCart18))
@@ -1831,6 +1983,17 @@ if (isset($_POST['ItemID19']) && $_POST['ItemID19'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty19'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_19'] == 'True' || $_SESSION['RegenesisReorderRVProd_19'] == 'True'))
+    {
+	    while($row19 = mssql_fetch_array($qryCart19))
+	    {
+	        $strProductName19 = $row19["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice19'] * $_POST['ItemQty19']) - ($_POST['ItemPrice19'] * $_POST['ItemQty19'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
 	    while($row19 = mssql_fetch_array($qryCart19))
@@ -1857,6 +2020,17 @@ if (isset($_POST['ItemID20']) && $_POST['ItemID20'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty20'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_20'] == 'True' || $_SESSION['RegenesisReorderRVProd_20'] == 'True'))
+    {
+	    while($row20 = mssql_fetch_array($qryCart20))
+	    {
+		    $strProductName20 = $row20["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice20'] * $_POST['ItemQty20']) - ($_POST['ItemPrice20'] * $_POST['ItemQty20'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row20 = mssql_fetch_array($qryCart20))
@@ -1883,6 +2057,17 @@ if (isset($_POST['ItemID21']) && $_POST['ItemID21'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty21'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_21'] == 'True' || $_SESSION['RegenesisReorderRVProd_21'] == 'True'))
+    {
+        while($row21 = mssql_fetch_array($qryCart21))
+	    {
+		    $strProductName21 = $row21["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice21'] * $_POST['ItemQty21']) - ($_POST['ItemPrice21'] * $_POST['ItemQty21'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row21 = mssql_fetch_array($qryCart21))
@@ -1907,6 +2092,17 @@ if (isset($_POST['ItemID22']) && $_POST['ItemID22'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty22'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_22'] == 'True' || $_SESSION['RegenesisReorderRVProd_22'] == 'True'))
+    {
+	    while($row22 = mssql_fetch_array($qryCart22))
+	    {
+            $strProductName22 = $row22["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice22'] * $_POST['ItemQty22']) - ($_POST['ItemPrice22'] * $_POST['ItemQty22'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row22 = mssql_fetch_array($qryCart22))
@@ -1931,6 +2127,17 @@ if (isset($_POST['ItemID23']) && $_POST['ItemID23'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty23'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_23'] == 'True' || $_SESSION['RegenesisReorderRVProd_23'] == 'True'))
+    {
+	    while($row23 = mssql_fetch_array($qryCart23))
+	    {
+	        $strProductName23 = $row23["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice23'] * $_POST['ItemQty23']) - ($_POST['ItemPrice23'] * $_POST['ItemQty23'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row23 = mssql_fetch_array($qryCart23))
@@ -1955,6 +2162,17 @@ if (isset($_POST['ItemID24']) && $_POST['ItemID24'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty24'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_24'] == 'True' || $_SESSION['RegenesisReorderRVProd_24'] == 'True'))
+    {
+	    while($row24 = mssql_fetch_array($qryCart24))
+	    {
+		    $strProductName24 = $row24["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice24'] * $_POST['ItemQty24']) - ($_POST['ItemPrice24'] * $_POST['ItemQty24'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row24 = mssql_fetch_array($qryCart24))
@@ -1979,6 +2197,17 @@ if (isset($_POST['ItemID25']) && $_POST['ItemID25'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty25'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_25'] == 'True' || $_SESSION['RegenesisReorderRVProd_25'] == 'True'))
+    {
+        while($row25 = mssql_fetch_array($qryCart25))
+	    {
+		    $strProductName25 = $row25["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice25'] * $_POST['ItemQty25']) - ($_POST['ItemPrice25'] * $_POST['ItemQty25'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row25 = mssql_fetch_array($qryCart25))
@@ -2003,6 +2232,17 @@ if (isset($_POST['ItemID26']) && $_POST['ItemID26'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty26'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_26'] == 'True' || $_SESSION['RegenesisReorderRVProd_26'] == 'True'))
+    {
+	    while($row26 = mssql_fetch_array($qryCart26))
+	    {
+		    $strProductName26 = $row26["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice26'] * $_POST['ItemQty26']) - ($_POST['ItemPrice26'] * $_POST['ItemQty26'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row26 = mssql_fetch_array($qryCart26))
@@ -2027,6 +2267,17 @@ if (isset($_POST['ItemID27']) && $_POST['ItemID27'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty27'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_27'] == 'True' || $_SESSION['RegenesisReorderRVProd_27'] == 'True'))
+    {
+	    while($row27 = mssql_fetch_array($qryCart27))
+	    {
+		    $strProductName27 = $row27["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice27'] * $_POST['ItemQty27']) - ($_POST['ItemPrice27'] * $_POST['ItemQty27'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row27 = mssql_fetch_array($qryCart27))
@@ -2051,6 +2302,17 @@ if (isset($_POST['ItemID28']) && $_POST['ItemID28'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty28'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_28'] == 'True' || $_SESSION['RegenesisReorderRVProd_28'] == 'True'))
+    {
+	    while($row28 = mssql_fetch_array($qryCart28))
+	    {
+		    $strProductName28 = $row28["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice28'] * $_POST['ItemQty28']) - ($_POST['ItemPrice28'] * $_POST['ItemQty28'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row28 = mssql_fetch_array($qryCart28))
@@ -2075,6 +2337,17 @@ if (isset($_POST['ItemID29']) && $_POST['ItemID29'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty29'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_29'] == 'True' || $_SESSION['RegenesisReorderRVProd_29'] == 'True'))
+    {
+	    while($row29 = mssql_fetch_array($qryCart29))
+	    {
+		    $strProductName29 = $row29["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice29'] * $_POST['ItemQty29']) - ($_POST['ItemPrice29'] * $_POST['ItemQty29'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row29 = mssql_fetch_array($qryCart29))
@@ -2099,6 +2372,17 @@ if (isset($_POST['ItemID30']) && $_POST['ItemID30'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty30'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_30'] == 'True' || $_SESSION['RegenesisReorderRVProd_30'] == 'True'))
+    {
+	    while($row30 = mssql_fetch_array($qryCart30))
+	    {
+		    $strProductName30 = $row30["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice30'] * $_POST['ItemQty30']) - ($_POST['ItemPrice30'] * $_POST['ItemQty30'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row30 = mssql_fetch_array($qryCart30))
@@ -2123,6 +2407,17 @@ if (isset($_POST['ItemID31']) && $_POST['ItemID31'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty31'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_31'] == 'True' || $_SESSION['RegenesisReorderRVProd_31'] == 'True'))
+    {
+	    while($row31 = mssql_fetch_array($qryCart31))
+	    {
+		    $strProductName31 = $row31["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice31'] * $_POST['ItemQty31']) - ($_POST['ItemPrice31'] * $_POST['ItemQty31'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row31 = mssql_fetch_array($qryCart31))
@@ -2147,6 +2442,17 @@ if (isset($_POST['ItemID32']) && $_POST['ItemID32'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty32'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_32'] == 'True' || $_SESSION['RegenesisReorderRVProd_32'] == 'True'))
+    {
+	    while($row32 = mssql_fetch_array($qryCart32))
+	    {
+		    $strProductName32 = $row32["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice32'] * $_POST['ItemQty32']) - ($_POST['ItemPrice32'] * $_POST['ItemQty32'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row32 = mssql_fetch_array($qryCart32))
@@ -2171,6 +2477,17 @@ if (isset($_POST['ItemID33']) && $_POST['ItemID33'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty33'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_33'] == 'True' || $_SESSION['RegenesisReorderRVProd_33'] == 'True'))
+    {
+	    while($row33 = mssql_fetch_array($qryCart33))
+	    {
+		    $strProductName33 = $row33["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice33'] * $_POST['ItemQty33']) - ($_POST['ItemPrice33'] * $_POST['ItemQty33'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row33 = mssql_fetch_array($qryCart33))
@@ -2194,6 +2511,17 @@ if (isset($_POST['ItemID34']) && $_POST['ItemID34'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty34'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_34'] == 'True' || $_SESSION['RegenesisReorderRVProd_34'] == 'True'))
+    {
+	    while($row34 = mssql_fetch_array($qryCart34))
+	    {
+		    $strProductName34 = $row34["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice34'] * $_POST['ItemQty34']) - ($_POST['ItemPrice34'] * $_POST['ItemQty34'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row34 = mssql_fetch_array($qryCart34))
@@ -2217,6 +2545,17 @@ if (isset($_POST['ItemID35']) && $_POST['ItemID35'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty35'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_35'] == 'True' || $_SESSION['RegenesisReorderRVProd_35'] == 'True'))
+    {
+	    while($row35 = mssql_fetch_array($qryCart35))
+	    {
+	        $strProductName35 = $row35["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice35'] * $_POST['ItemQty35']) - ($_POST['ItemPrice35'] * $_POST['ItemQty35'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row35 = mssql_fetch_array($qryCart35))
@@ -2241,6 +2580,17 @@ if (isset($_POST['ItemID36']) && $_POST['ItemID36'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty36'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_36'] == 'True' || $_SESSION['RegenesisReorderRVProd_36'] == 'True'))
+    {
+	    while($row36 = mssql_fetch_array($qryCart36))
+	    {
+		    $strProductName36 = $row36["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice36'] * $_POST['ItemQty36']) - ($_POST['ItemPrice36'] * $_POST['ItemQty36'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row36 = mssql_fetch_array($qryCart36))
@@ -2250,6 +2600,7 @@ if (isset($_POST['ItemID36']) && $_POST['ItemID36'] != 0)
 	    }
     }
 }
+
 if (isset($_POST['ItemID37']) && $_POST['ItemID37'] != 0)
 {
     if($_SESSION['Bundles2010_37'] != '')
@@ -2264,6 +2615,17 @@ if (isset($_POST['ItemID37']) && $_POST['ItemID37'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty37'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_37'] == 'True' || $_SESSION['RegenesisReorderRVProd_37'] == 'True'))
+    {
+	    while($row37 = mssql_fetch_array($qryCart37))
+	    {
+		    $strProductName37 = $row37["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice37'] * $_POST['ItemQty37']) - ($_POST['ItemPrice37'] * $_POST['ItemQty37'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row37 = mssql_fetch_array($qryCart37))
@@ -2273,6 +2635,7 @@ if (isset($_POST['ItemID37']) && $_POST['ItemID37'] != 0)
 	    }
     }
 }
+
 if (isset($_POST['ItemID38']) && $_POST['ItemID38'] != 0)
 {
     if($_SESSION['Bundles2010_38'] != '')
@@ -2287,6 +2650,17 @@ if (isset($_POST['ItemID38']) && $_POST['ItemID38'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty38'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_38'] == 'True' || $_SESSION['RegenesisReorderRVProd_38'] == 'True'))
+    {
+	    while($row38 = mssql_fetch_array($qryCart38))
+	    {
+		    $strProductName38 = $row38["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice38'] * $_POST['ItemQty38']) - ($_POST['ItemPrice38'] * $_POST['ItemQty38'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row38 = mssql_fetch_array($qryCart38))
@@ -2311,6 +2685,17 @@ if (isset($_POST['ItemID39']) && $_POST['ItemID39'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty39'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_39'] == 'True' || $_SESSION['RegenesisReorderRVProd_39'] == 'True'))
+    {
+	    while($row39 = mssql_fetch_array($qryCart39))
+	    {
+		    $strProductName39 = $row39["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice39'] * $_POST['ItemQty39']) - ($_POST['ItemPrice39'] * $_POST['ItemQty39'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row39 = mssql_fetch_array($qryCart39))
@@ -2320,6 +2705,7 @@ if (isset($_POST['ItemID39']) && $_POST['ItemID39'] != 0)
 	    }
     }
 }
+
 if (isset($_POST['ItemID40']) && $_POST['ItemID40'] != 0)
 {
     if($_SESSION['Bundles2010_40'] != '')
@@ -2334,6 +2720,17 @@ if (isset($_POST['ItemID40']) && $_POST['ItemID40'] != 0)
             // $decSubtotal += number_format($rowGetBundle['UnitPrice'] * $rowGetBundle['Qty'] * $_POST['ItemQty40'], 2, '.', '');
         }
     }
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_40'] == 'True' || $_SESSION['RegenesisReorderRVProd_40'] == 'True'))
+    {
+	    while($row40 = mssql_fetch_array($qryCart40))
+	    {
+		    $strProductName40 = $row40["ProductName"];
+		    $decSubtotal = $decSubtotal + (($_POST['ItemPrice40'] * $_POST['ItemQty40']) - ($_POST['ItemPrice40'] * $_POST['ItemQty40'] * $_SESSION['RegenesisReorderDiscount']));
+	    }
+    }
+
     else
     {
         while($row40 = mssql_fetch_array($qryCart40))
@@ -3305,7 +3702,15 @@ if (isset($_POST['ItemID1']) && $_POST['ItemID1'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice1'] * $_POST['ItemQty1'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_01'] == 'True' || $_SESSION['RegenesisReorderRVProd_01'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice1'] * $_POST['ItemQty1']) - ($_POST['ItemPrice1'] * $_POST['ItemQty1'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice1'] * $_POST['ItemQty1'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 	
@@ -3569,7 +3974,15 @@ if (isset($_POST['ItemID2']) && $_POST['ItemID2'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice2'] * $_POST['ItemQty2'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_02'] == 'True' || $_SESSION['RegenesisReorderRVProd_02'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice2'] * $_POST['ItemQty2']) - ($_POST['ItemPrice2'] * $_POST['ItemQty2'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice2'] * $_POST['ItemQty2'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 	
@@ -3833,7 +4246,15 @@ if (isset($_POST['ItemID3']) && $_POST['ItemID3'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice3'] * $_POST['ItemQty3'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_03'] == 'True' || $_SESSION['RegenesisReorderRVProd_03'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice3'] * $_POST['ItemQty3']) - ($_POST['ItemPrice3'] * $_POST['ItemQty3'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice3'] * $_POST['ItemQty3'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 	
@@ -4097,7 +4518,15 @@ if (isset($_POST['ItemID4']) && $_POST['ItemID4'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice4'] * $_POST['ItemQty4'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_04'] == 'True' || $_SESSION['RegenesisReorderRVProd_04'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice4'] * $_POST['ItemQty4']) - ($_POST['ItemPrice4'] * $_POST['ItemQty4'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice4'] * $_POST['ItemQty4'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 	
@@ -4361,7 +4790,15 @@ if (isset($_POST['ItemID5']) && $_POST['ItemID5'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice5'] * $_POST['ItemQty5'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_05'] == 'True' || $_SESSION['RegenesisReorderRVProd_05'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice5'] * $_POST['ItemQty5']) - ($_POST['ItemPrice5'] * $_POST['ItemQty5'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice5'] * $_POST['ItemQty5'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -4625,7 +5062,15 @@ if (isset($_POST['ItemID6']) && $_POST['ItemID6'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice6'] * $_POST['ItemQty6'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_06'] == 'True' || $_SESSION['RegenesisReorderRVProd_06'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice6'] * $_POST['ItemQty6']) - ($_POST['ItemPrice6'] * $_POST['ItemQty6'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice6'] * $_POST['ItemQty6'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -4889,7 +5334,15 @@ if (isset($_POST['ItemID7']) && $_POST['ItemID7'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice7'] * $_POST['ItemQty7'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_07'] == 'True' || $_SESSION['RegenesisReorderRVProd_07'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice7'] * $_POST['ItemQty7']) - ($_POST['ItemPrice7'] * $_POST['ItemQty7'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice7'] * $_POST['ItemQty7'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -5153,7 +5606,15 @@ if (isset($_POST['ItemID8']) && $_POST['ItemID8'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice8'] * $_POST['ItemQty8'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_08'] == 'True' || $_SESSION['RegenesisReorderRVProd_08'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice8'] * $_POST['ItemQty8']) - ($_POST['ItemPrice8'] * $_POST['ItemQty8'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice8'] * $_POST['ItemQty8'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -5417,7 +5878,15 @@ if (isset($_POST['ItemID9']) && $_POST['ItemID9'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice9'] * $_POST['ItemQty9'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_09'] == 'True' || $_SESSION['RegenesisReorderRVProd_09'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice9'] * $_POST['ItemQty9']) - ($_POST['ItemPrice9'] * $_POST['ItemQty9'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice9'] * $_POST['ItemQty9'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -5681,7 +6150,15 @@ if (isset($_POST['ItemID10']) && $_POST['ItemID10'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice10'] * $_POST['ItemQty10'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_10'] == 'True' || $_SESSION['RegenesisReorderRVProd_10'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice10'] * $_POST['ItemQty10']) - ($_POST['ItemPrice10'] * $_POST['ItemQty10'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice10'] * $_POST['ItemQty10'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -5947,7 +6424,15 @@ if (isset($_POST['ItemID11']) && $_POST['ItemID11'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice11'] * $_POST['ItemQty11'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_11'] == 'True' || $_SESSION['RegenesisReorderRVProd_11'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice11'] * $_POST['ItemQty11']) - ($_POST['ItemPrice11'] * $_POST['ItemQty11'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice11'] * $_POST['ItemQty11'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -6211,7 +6696,15 @@ if (isset($_POST['ItemID12']) && $_POST['ItemID12'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice12'] * $_POST['ItemQty12'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_12'] == 'True' || $_SESSION['RegenesisReorderRVProd_12'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice12'] * $_POST['ItemQty12']) - ($_POST['ItemPrice12'] * $_POST['ItemQty12'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice12'] * $_POST['ItemQty12'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -6475,7 +6968,15 @@ if (isset($_POST['ItemID13']) && $_POST['ItemID13'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice13'] * $_POST['ItemQty13'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_13'] == 'True' || $_SESSION['RegenesisReorderRVProd_13'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice13'] * $_POST['ItemQty13']) - ($_POST['ItemPrice13'] * $_POST['ItemQty13'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice13'] * $_POST['ItemQty13'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -6739,7 +7240,15 @@ if (isset($_POST['ItemID14']) && $_POST['ItemID14'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice14'] * $_POST['ItemQty14'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_14'] == 'True' || $_SESSION['RegenesisReorderRVProd_14'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice14'] * $_POST['ItemQty14']) - ($_POST['ItemPrice14'] * $_POST['ItemQty14'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice14'] * $_POST['ItemQty14'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -7003,7 +7512,15 @@ if (isset($_POST['ItemID15']) && $_POST['ItemID15'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice15'] * $_POST['ItemQty15'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_15'] == 'True' || $_SESSION['RegenesisReorderRVProd_15'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice15'] * $_POST['ItemQty15']) - ($_POST['ItemPrice15'] * $_POST['ItemQty15'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice15'] * $_POST['ItemQty15'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -7267,7 +7784,15 @@ if (isset($_POST['ItemID16']) && $_POST['ItemID16'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice16'] * $_POST['ItemQty16'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_16'] == 'True' || $_SESSION['RegenesisReorderRVProd_16'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice16'] * $_POST['ItemQty16']) - ($_POST['ItemPrice16'] * $_POST['ItemQty16'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice16'] * $_POST['ItemQty16'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -7531,7 +8056,15 @@ if (isset($_POST['ItemID17']) && $_POST['ItemID17'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice17'] * $_POST['ItemQty17'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_17'] == 'True' || $_SESSION['RegenesisReorderRVProd_17'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice17'] * $_POST['ItemQty17']) - ($_POST['ItemPrice17'] * $_POST['ItemQty17'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice17'] * $_POST['ItemQty17'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -7795,7 +8328,15 @@ if (isset($_POST['ItemID18']) && $_POST['ItemID18'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice18'] * $_POST['ItemQty18'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_18'] == 'True' || $_SESSION['RegenesisReorderRVProd_18'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice18'] * $_POST['ItemQty18']) - ($_POST['ItemPrice18'] * $_POST['ItemQty18'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice18'] * $_POST['ItemQty18'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -8059,7 +8600,15 @@ if (isset($_POST['ItemID19']) && $_POST['ItemID19'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice19'] * $_POST['ItemQty19'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_19'] == 'True' || $_SESSION['RegenesisReorderRVProd_19'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice19'] * $_POST['ItemQty19']) - ($_POST['ItemPrice19'] * $_POST['ItemQty19'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice19'] * $_POST['ItemQty19'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -8323,7 +8872,15 @@ if (isset($_POST['ItemID20']) && $_POST['ItemID20'] != 0)
 
     echo '</td>';
 
-	echo '<td>$' . number_format($_POST['ItemPrice20'] * $_POST['ItemQty20'], 2, '.', '') . '</td>';
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_20'] == 'True' || $_SESSION['RegenesisReorderRVProd_20'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice20'] * $_POST['ItemQty20']) - ($_POST['ItemPrice20'] * $_POST['ItemQty20'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice20'] * $_POST['ItemQty20'], 2, '.', '') . '</td>';
+    }
 
 	echo '</tr>';
 
@@ -8581,7 +9138,17 @@ if (isset($_POST['ItemID21']) && $_POST['ItemID21'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice21'] * $_POST['ItemQty21'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_21'] == 'True' || $_SESSION['RegenesisReorderRVProd_21'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice21'] * $_POST['ItemQty21']) - ($_POST['ItemPrice21'] * $_POST['ItemQty21'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice21'] * $_POST['ItemQty21'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_21'] >= 12)
 	{
@@ -8812,7 +9379,17 @@ if (isset($_POST['ItemID22']) && $_POST['ItemID22'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice22'] * $_POST['ItemQty22'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_22'] == 'True' || $_SESSION['RegenesisReorderRVProd_22'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice22'] * $_POST['ItemQty22']) - ($_POST['ItemPrice22'] * $_POST['ItemQty22'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice22'] * $_POST['ItemQty22'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_22'] >= 12)
 	{
@@ -9043,7 +9620,17 @@ if (isset($_POST['ItemID23']) && $_POST['ItemID23'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice23'] * $_POST['ItemQty23'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_23'] == 'True' || $_SESSION['RegenesisReorderRVProd_23'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice23'] * $_POST['ItemQty23']) - ($_POST['ItemPrice23'] * $_POST['ItemQty23'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice23'] * $_POST['ItemQty23'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_23'] >= 12)
 	{
@@ -9274,7 +9861,17 @@ if (isset($_POST['ItemID24']) && $_POST['ItemID24'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice24'] * $_POST['ItemQty24'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_24'] == 'True' || $_SESSION['RegenesisReorderRVProd_24'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice24'] * $_POST['ItemQty24']) - ($_POST['ItemPrice24'] * $_POST['ItemQty24'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice24'] * $_POST['ItemQty24'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_24'] >= 12)
 	{
@@ -9505,7 +10102,17 @@ if (isset($_POST['ItemID25']) && $_POST['ItemID25'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice25'] * $_POST['ItemQty25'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_25'] == 'True' || $_SESSION['RegenesisReorderRVProd_25'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice25'] * $_POST['ItemQty25']) - ($_POST['ItemPrice25'] * $_POST['ItemQty25'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice25'] * $_POST['ItemQty25'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_25'] >= 12)
 	{
@@ -9736,7 +10343,17 @@ if (isset($_POST['ItemID26']) && $_POST['ItemID26'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice26'] * $_POST['ItemQty26'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_26'] == 'True' || $_SESSION['RegenesisReorderRVProd_26'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice26'] * $_POST['ItemQty26']) - ($_POST['ItemPrice26'] * $_POST['ItemQty26'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice26'] * $_POST['ItemQty26'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_26'] >= 12)
 	{
@@ -9967,7 +10584,17 @@ if (isset($_POST['ItemID27']) && $_POST['ItemID27'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice27'] * $_POST['ItemQty27'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_27'] == 'True' || $_SESSION['RegenesisReorderRVProd_27'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice27'] * $_POST['ItemQty27']) - ($_POST['ItemPrice27'] * $_POST['ItemQty27'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice27'] * $_POST['ItemQty27'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_27'] >= 12)
 	{
@@ -10198,7 +10825,17 @@ if (isset($_POST['ItemID28']) && $_POST['ItemID28'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice28'] * $_POST['ItemQty28'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_28'] == 'True' || $_SESSION['RegenesisReorderRVProd_28'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice28'] * $_POST['ItemQty28']) - ($_POST['ItemPrice28'] * $_POST['ItemQty28'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice28'] * $_POST['ItemQty28'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_28'] >= 12)
 	{
@@ -10429,7 +11066,17 @@ if (isset($_POST['ItemID29']) && $_POST['ItemID29'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice29'] * $_POST['ItemQty29'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_29'] == 'True' || $_SESSION['RegenesisReorderRVProd_29'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice29'] * $_POST['ItemQty29']) - ($_POST['ItemPrice29'] * $_POST['ItemQty29'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice29'] * $_POST['ItemQty29'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_29'] >= 12)
 	{
@@ -10660,7 +11307,17 @@ if (isset($_POST['ItemID30']) && $_POST['ItemID30'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice30'] * $_POST['ItemQty30'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_30'] == 'True' || $_SESSION['RegenesisReorderRVProd_30'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice30'] * $_POST['ItemQty30']) - ($_POST['ItemPrice30'] * $_POST['ItemQty30'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice30'] * $_POST['ItemQty30'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_30'] >= 12)
 	{
@@ -10891,7 +11548,17 @@ if (isset($_POST['ItemID31']) && $_POST['ItemID31'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice31'] * $_POST['ItemQty31'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_31'] == 'True' || $_SESSION['RegenesisReorderRVProd_31'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice31'] * $_POST['ItemQty31']) - ($_POST['ItemPrice31'] * $_POST['ItemQty31'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice31'] * $_POST['ItemQty31'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_31'] >= 12)
 	{
@@ -11122,7 +11789,17 @@ if (isset($_POST['ItemID32']) && $_POST['ItemID32'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice32'] * $_POST['ItemQty32'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_32'] == 'True' || $_SESSION['RegenesisReorderRVProd_32'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice32'] * $_POST['ItemQty32']) - ($_POST['ItemPrice32'] * $_POST['ItemQty32'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice32'] * $_POST['ItemQty32'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_32'] >= 12)
 	{
@@ -11353,7 +12030,17 @@ if (isset($_POST['ItemID33']) && $_POST['ItemID33'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice33'] * $_POST['ItemQty33'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_33'] == 'True' || $_SESSION['RegenesisReorderRVProd_33'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice33'] * $_POST['ItemQty33']) - ($_POST['ItemPrice33'] * $_POST['ItemQty33'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice33'] * $_POST['ItemQty33'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_33'] >= 12)
 	{
@@ -11584,7 +12271,17 @@ if (isset($_POST['ItemID34']) && $_POST['ItemID34'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice34'] * $_POST['ItemQty34'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_34'] == 'True' || $_SESSION['RegenesisReorderRVProd_34'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice34'] * $_POST['ItemQty34']) - ($_POST['ItemPrice34'] * $_POST['ItemQty34'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice34'] * $_POST['ItemQty34'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_34'] >= 12)
 	{
@@ -11815,7 +12512,17 @@ if (isset($_POST['ItemID35']) && $_POST['ItemID35'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice35'] * $_POST['ItemQty35'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_35'] == 'True' || $_SESSION['RegenesisReorderRVProd_35'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice35'] * $_POST['ItemQty35']) - ($_POST['ItemPrice35'] * $_POST['ItemQty35'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice35'] * $_POST['ItemQty35'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_35'] >= 12)
 	{
@@ -12046,7 +12753,17 @@ if (isset($_POST['ItemID36']) && $_POST['ItemID36'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice36'] * $_POST['ItemQty36'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_36'] == 'True' || $_SESSION['RegenesisReorderRVProd_36'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice36'] * $_POST['ItemQty36']) - ($_POST['ItemPrice36'] * $_POST['ItemQty36'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice36'] * $_POST['ItemQty36'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_36'] >= 12)
 	{
@@ -12277,7 +12994,17 @@ if (isset($_POST['ItemID37']) && $_POST['ItemID37'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice37'] * $_POST['ItemQty37'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_37'] == 'True' || $_SESSION['RegenesisReorderRVProd_37'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice37'] * $_POST['ItemQty37']) - ($_POST['ItemPrice37'] * $_POST['ItemQty37'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice37'] * $_POST['ItemQty37'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_37'] >= 12)
 	{
@@ -12508,7 +13235,17 @@ if (isset($_POST['ItemID38']) && $_POST['ItemID38'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice38'] * $_POST['ItemQty38'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_38'] == 'True' || $_SESSION['RegenesisReorderRVProd_38'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice38'] * $_POST['ItemQty38']) - ($_POST['ItemPrice38'] * $_POST['ItemQty38'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice38'] * $_POST['ItemQty38'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_38'] >= 12)
 	{
@@ -12739,7 +13476,17 @@ if (isset($_POST['ItemID39']) && $_POST['ItemID39'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice39'] * $_POST['ItemQty39'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_39'] == 'True' || $_SESSION['RegenesisReorderRVProd_39'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice39'] * $_POST['ItemQty39']) - ($_POST['ItemPrice39'] * $_POST['ItemQty39'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice39'] * $_POST['ItemQty39'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_39'] >= 12)
 	{
@@ -12970,7 +13717,17 @@ if (isset($_POST['ItemID40']) && $_POST['ItemID40'] != 0)
      }
     }
     echo '</td>';
-	echo '<td>$' . number_format($_POST['ItemPrice40'] * $_POST['ItemQty40'], 2, '.', '') . '</td>';
+
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_40'] == 'True' || $_SESSION['RegenesisReorderRVProd_40'] == 'True'))
+    {
+        echo '<td>$' . number_format(($_POST['ItemPrice40'] * $_POST['ItemQty40']) - ($_POST['ItemPrice40'] * $_POST['ItemQty40'] * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
+    }
+    else
+    {
+	    echo '<td>$' . number_format($_POST['ItemPrice40'] * $_POST['ItemQty40'], 2, '.', '') . '</td>';
+    }
+
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_40'] >= 12)
 	{
@@ -13327,7 +14084,8 @@ if (isset($_POST['ItemID40']) && $_POST['ItemID40'] != 0)
     <?php
 
       // GMC - 01/26/11 - To display the Total Box Count and Total Order Weight
-      echo '<td><font color="red"><b>Total Box Count: ' . $_SESSION["TotalBoxCount"] . ' , Total Order Weight: ' . $_SESSION["OrderWeight"] + 1.2 . ' lbs.</b></font></td>';
+      // GMC - 10/12/15 - Taking the entire line so it does not confuse CRS ADMINs
+      // echo '<td><font color="red"><b>Total Box Count: ' . $_SESSION["TotalBoxCount"] . ' , Total Order Weight: ' . $_SESSION["OrderWeight"] + 1.2 . ' lbs.</b></font></td>';
 
     ?>
 

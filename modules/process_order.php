@@ -996,6 +996,12 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
         $intSpecialCustomerCode = 0;
     }
 
+    // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    if($_SESSION['RegenesisReorderThreshold'] == 'True')
+    {
+        $PromoCode = "RGRODIS";
+    }
+
 	// BIND PARAMETERS
 	$intStatusCode = 0;
 	mssql_bind($qryInsert, "@prmUserID", $intUserID, SQLINT4);
@@ -1042,6 +1048,9 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
     // GMC - 05/11/15 - Integrate CAP Products into Admin
     mssql_bind($qryInsert, "@prmActualShippingCharge", $_SESSION['CapRateReal'], SQLFLT8);
+
+    // GMC - 09/18/15 - Fedex Freight Desktop Tool - LTL Flag
+    // mssql_bind($qryInsert, "@prmLTLOrder", $_SESSION['LTL_Order_Flag'], SQLINT4);
 
 	mssql_bind($qryInsert, "RETVAL", $intStatusCode, SQLINT2);
 
@@ -1432,51 +1441,6 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
         $intItemQty = 1;
 		$decItemPrice = 0;
 
-        // $intItemId = 147; // Test
-		// $intItemId = 204; // Production
-		// $intItemId = 247; // Production
-		// $intItemId = 402; // Production
-		// $intItemId = 662; // Production
-		// $intItemId = 700; // Production
-
-        if($_SESSION['IsInternational'] == 1)
-        {
-		    $intItemId = 1266; // Production
-        }
-        else
-        {
-            /*
-            if(strtoupper($_SESSION['State_Customer']) == 'CA' || strtoupper($_SESSION['State_Customer']) == 'TN')
-            {
-		        $intItemId = 853; // Production
-            }
-            else
-            {
-		        $intItemId = 854; // Production
-            }
-            */
-
-            // GMC - 08/22/13 - Web Orders to include extra item (Domestic = 1060)
-            // GMC - 10/20/14 - Web Orders to include extra item (Domestic = 1324)
-            // $intItemId = 853; // Production
-            // $intItemId = 1060; // Production
-            $intItemId = 1324; // Production
-        }
-
-		$qryInsertBrochure = mssql_init("spOrders_Items_Create", $connProcess);
-
-        // BIND PARAMETERS
-        $intFreeItemStatusCode = 0;
-		mssql_bind($qryInsertBrochure, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
-		mssql_bind($qryInsertBrochure, "@prmItemID", $intItemId, SQLINT4);
-        mssql_bind($qryInsertBrochure, "@prmLocation", $Location, SQLVARCHAR);
-		mssql_bind($qryInsertBrochure, "@prmQty", $intItemQty, SQLINT4);
-		mssql_bind($qryInsertBrochure, "@prmUnitPrice", $decItemPrice, SQLFLT8);
-		mssql_bind($qryInsertBrochure, "@prmExtendedPrice", $decItemPrice, SQLFLT8);
-		mssql_bind($qryInsertBrochure, "RETVAL", $intFreeItemStatusCode, SQLINT2);
-
-		$rsGC = mssql_execute($qryInsertBrochure);
-
        // GMC - 10/30/10 - October 2010 Promotion "MASCARA" - 15% Off on Total Purchased Value (any product)
        if($_SESSION['Promo_Code'] == "MASCARA")
        {
@@ -1565,6 +1529,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
                     mssql_bind($qryInsertItem1, "RETVAL", $intItemStatusCode, SQLINT2);
                     $rs1 = mssql_execute($qryInsertItem1);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_01'] == 'True' || $_SESSION['RegenesisReorderRVProd_01'] == 'True'))
+            {
+                $qryInsertItem1 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID1'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice1'] = $_POST['ItemPrice1'] - ($_POST['ItemPrice1'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice1'] * $_POST['ItemQty1'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice1'] * $_POST['ItemQty1'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation1'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem1, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem1, "@prmItemID", $_POST['ItemID1'], SQLINT4);
+			    mssql_bind($qryInsertItem1, "@prmLocation", $_POST['ItemStockLocation1'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem1, "@prmQty", $_POST['ItemQty1'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem1, "@prmUnitPrice", $_POST['ItemPrice1'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder01 = ($_POST['ItemPrice1'] - ($_POST['ItemPrice1'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem1, "@prmUnitPrice",$DiscUnitPriceRegenesisReorder01, SQLFLT8);
+
+                mssql_bind($qryInsertItem1, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+                $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem1, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem1, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_1'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem1, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_1'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem1, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_1'], SQLVARCHAR);
+                mssql_bind($qryInsertItem1, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs1 = mssql_execute($qryInsertItem1);
+            }
+
             else
             {
                 $qryInsertItem1 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -1776,6 +1787,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
                 mssql_bind($qryInsertItem2, "RETVAL", $intItemStatusCode, SQLINT2);
                 $rs2 = mssql_execute($qryInsertItem2);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_02'] == 'True' || $_SESSION['RegenesisReorderRVProd_02'] == 'True'))
+            {
+                $qryInsertItem2 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID2'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice2'] = $_POST['ItemPrice2'] - ($_POST['ItemPrice2'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice2'] * $_POST['ItemQty2'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice2'] * $_POST['ItemQty2'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation2'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem2, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem2, "@prmItemID", $_POST['ItemID2'], SQLINT4);
+			    mssql_bind($qryInsertItem2, "@prmLocation", $_POST['ItemStockLocation2'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem2, "@prmQty", $_POST['ItemQty2'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem2, "@prmUnitPrice", $_POST['ItemPrice2'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder02 = ($_POST['ItemPrice2'] - ($_POST['ItemPrice2'] * $_SESSION['RegenesisReorderDiscount']));
+                mssql_bind($qryInsertItem2, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder02, SQLFLT8);
+
+                mssql_bind($qryInsertItem2, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem2, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem2, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_2'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem2, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_2'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem2, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_2'], SQLVARCHAR);
+                mssql_bind($qryInsertItem2, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs2 = mssql_execute($qryInsertItem2);
+            }
+
             else
             {
                 $qryInsertItem2 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -1986,6 +2044,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			   $rs3 = mssql_execute($qryInsertItem3);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_03'] == 'True' || $_SESSION['RegenesisReorderRVProd_03'] == 'True'))
+            {
+                $qryInsertItem3 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID3'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice3'] = $_POST['ItemPrice3'] - ($_POST['ItemPrice3'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice3'] * $_POST['ItemQty3'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice3'] * $_POST['ItemQty3'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation3'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem3, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem3, "@prmItemID", $_POST['ItemID3'], SQLINT4);
+			    mssql_bind($qryInsertItem3, "@prmLocation", $_POST['ItemStockLocation3'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem3, "@prmQty", $_POST['ItemQty3'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem3, "@prmUnitPrice", $_POST['ItemPrice3'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder03 = ($_POST['ItemPrice3'] - ($_POST['ItemPrice3'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem3, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder03, SQLFLT8);
+
+                mssql_bind($qryInsertItem3, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem3, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem3, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_3'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem3, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_3'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem3, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_3'], SQLVARCHAR);
+                mssql_bind($qryInsertItem3, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs3 = mssql_execute($qryInsertItem3);
+            }
+
             else
             {
 			    $qryInsertItem3 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2197,6 +2302,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs4 = mssql_execute($qryInsertItem4);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_04'] == 'True' || $_SESSION['RegenesisReorderRVProd_04'] == 'True'))
+            {
+                $qryInsertItem4 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID4'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice4'] = $_POST['ItemPrice4'] - ($_POST['ItemPrice4'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice4'] * $_POST['ItemQty4'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice4'] * $_POST['ItemQty4'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation4'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem4, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem4, "@prmItemID", $_POST['ItemID4'], SQLINT4);
+			    mssql_bind($qryInsertItem4, "@prmLocation", $_POST['ItemStockLocation4'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem4, "@prmQty", $_POST['ItemQty4'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem4, "@prmUnitPrice", $_POST['ItemPrice4'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder04 =  ($_POST['ItemPrice4'] - ($_POST['ItemPrice4'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem4, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder04, SQLFLT8);
+
+                mssql_bind($qryInsertItem4, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem4, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem4, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_4'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem4, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_4'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem4, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_4'], SQLVARCHAR);
+                mssql_bind($qryInsertItem4, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs4 = mssql_execute($qryInsertItem4);
+            }
+
             else
             {
 			    $qryInsertItem4 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2408,6 +2560,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
                 $rs5 = mssql_execute($qryInsertItem5);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_05'] == 'True' || $_SESSION['RegenesisReorderRVProd_05'] == 'True'))
+            {
+                $qryInsertItem5 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID5'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice5'] = $_POST['ItemPrice5'] - ($_POST['ItemPrice5'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice5'] * $_POST['ItemQty5'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice5'] * $_POST['ItemQty5'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation5'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem5, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem5, "@prmItemID", $_POST['ItemID5'], SQLINT4);
+			    mssql_bind($qryInsertItem5, "@prmLocation", $_POST['ItemStockLocation5'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem5, "@prmQty", $_POST['ItemQty5'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem5, "@prmUnitPrice", $_POST['ItemPrice5'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder05 =  ($_POST['ItemPrice5'] - ($_POST['ItemPrice5'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem5, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder05, SQLFLT8);
+
+                mssql_bind($qryInsertItem5, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem5, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem5, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_5'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem5, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_5'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem5, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_5'], SQLVARCHAR);
+                mssql_bind($qryInsertItem5, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs5 = mssql_execute($qryInsertItem5);
+            }
+
             else
             {
 			    $qryInsertItem5 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2618,6 +2817,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs6 = mssql_execute($qryInsertItem6);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_06'] == 'True' || $_SESSION['RegenesisReorderRVProd_06'] == 'True'))
+            {
+                $qryInsertItem6 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID6'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice6'] = $_POST['ItemPrice6'] - ($_POST['ItemPrice6'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice6'] * $_POST['ItemQty6'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice6'] * $_POST['ItemQty6'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation6'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem6, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem6, "@prmItemID", $_POST['ItemID6'], SQLINT4);
+			    mssql_bind($qryInsertItem6, "@prmLocation", $_POST['ItemStockLocation6'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem6, "@prmQty", $_POST['ItemQty6'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem6, "@prmUnitPrice", $_POST['ItemPrice6'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder06 = ($_POST['ItemPrice6'] - ($_POST['ItemPrice6'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem6, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder06, SQLFLT8);
+
+                mssql_bind($qryInsertItem6, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem6, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem6, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_6'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem6, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_6'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem6, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_6'], SQLVARCHAR);
+                mssql_bind($qryInsertItem6, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs6 = mssql_execute($qryInsertItem6);
+            }
+
             else
             {
 			    $qryInsertItem6 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2828,6 +3074,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs7 = mssql_execute($qryInsertItem7);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_07'] == 'True' || $_SESSION['RegenesisReorderRVProd_07'] == 'True'))
+            {
+                $qryInsertItem7 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID7'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice7'] = $_POST['ItemPrice7'] - ($_POST['ItemPrice7'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice7'] * $_POST['ItemQty7'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice7'] * $_POST['ItemQty7'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation7'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem7, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem7, "@prmItemID", $_POST['ItemID7'], SQLINT4);
+			    mssql_bind($qryInsertItem7, "@prmLocation", $_POST['ItemStockLocation7'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem7, "@prmQty", $_POST['ItemQty7'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem7, "@prmUnitPrice", $_POST['ItemPrice7'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder07 = ($_POST['ItemPrice7'] - ($_POST['ItemPrice7'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem7, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder07, SQLFLT8);
+
+                mssql_bind($qryInsertItem7, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem7, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem7, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_7'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem7, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_7'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem7, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_7'], SQLVARCHAR);
+                mssql_bind($qryInsertItem7, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs7 = mssql_execute($qryInsertItem7);
+            }
+
             else
             {
 			    $qryInsertItem7 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3038,6 +3331,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs8 = mssql_execute($qryInsertItem8);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_08'] == 'True' || $_SESSION['RegenesisReorderRVProd_08'] == 'True'))
+            {
+                $qryInsertItem8 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID8'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice8'] = $_POST['ItemPrice8'] - ($_POST['ItemPrice8'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice8'] * $_POST['ItemQty8'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice8'] * $_POST['ItemQty8'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation8'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem8, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem8, "@prmItemID", $_POST['ItemID8'], SQLINT4);
+			    mssql_bind($qryInsertItem8, "@prmLocation", $_POST['ItemStockLocation8'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem8, "@prmQty", $_POST['ItemQty8'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem8, "@prmUnitPrice", $_POST['ItemPrice8'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder08 = ($_POST['ItemPrice8'] - ($_POST['ItemPrice8'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem8, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder08, SQLFLT8);
+
+                mssql_bind($qryInsertItem8, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem8, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem8, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_8'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem8, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_8'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem8, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_8'], SQLVARCHAR);
+                mssql_bind($qryInsertItem8, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs8 = mssql_execute($qryInsertItem8);
+            }
+
             else
             {
 			    $qryInsertItem8 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3248,6 +3588,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs9 = mssql_execute($qryInsertItem9);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_09'] == 'True' || $_SESSION['RegenesisReorderRVProd_09'] == 'True'))
+            {
+                $qryInsertItem9 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID9'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice9'] = $_POST['ItemPrice9'] - ($_POST['ItemPrice9'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice9'] * $_POST['ItemQty9'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice9'] * $_POST['ItemQty9'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation9'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem9, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem9, "@prmItemID", $_POST['ItemID9'], SQLINT4);
+			    mssql_bind($qryInsertItem9, "@prmLocation", $_POST['ItemStockLocation9'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem9, "@prmQty", $_POST['ItemQty9'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem9, "@prmUnitPrice", $_POST['ItemPrice9'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder09 = ($_POST['ItemPrice9'] - ($_POST['ItemPrice9'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem9, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder09, SQLFLT8);
+
+                mssql_bind($qryInsertItem9, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem9, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem9, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_9'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem9, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_9'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem9, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_9'], SQLVARCHAR);
+                mssql_bind($qryInsertItem9, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs9 = mssql_execute($qryInsertItem9);
+            }
+
             else
             {
 			    $qryInsertItem9 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3458,6 +3845,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs10 = mssql_execute($qryInsertItem10);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_10'] == 'True' || $_SESSION['RegenesisReorderRVProd_10'] == 'True'))
+            {
+                $qryInsertItem10 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID10'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice10'] = $_POST['ItemPrice10'] - ($_POST['ItemPrice10'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice10'] * $_POST['ItemQty10'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice10'] * $_POST['ItemQty10'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation10'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem10, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem10, "@prmItemID", $_POST['ItemID10'], SQLINT4);
+			    mssql_bind($qryInsertItem10, "@prmLocation", $_POST['ItemStockLocation10'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem10, "@prmQty", $_POST['ItemQty10'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem10, "@prmUnitPrice", $_POST['ItemPrice10'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder10 = ($_POST['ItemPrice10'] - ($_POST['ItemPrice10'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem10, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder10, SQLFLT8);
+
+                mssql_bind($qryInsertItem10, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem10, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem10, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_10'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem10, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_10'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem10, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_10'], SQLVARCHAR);
+                mssql_bind($qryInsertItem10, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs10 = mssql_execute($qryInsertItem10);
+            }
+
             else
             {
 			    $qryInsertItem10 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3670,6 +4104,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			   $rs11 = mssql_execute($qryInsertItem11);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_11'] == 'True' || $_SESSION['RegenesisReorderRVProd_11'] == 'True'))
+            {
+                $qryInsertItem11 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID11'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice11'] = $_POST['ItemPrice11'] - ($_POST['ItemPrice11'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice11'] * $_POST['ItemQty11'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice11'] * $_POST['ItemQty11'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation11'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem11, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem11, "@prmItemID", $_POST['ItemID11'], SQLINT4);
+			    mssql_bind($qryInsertItem11, "@prmLocation", $_POST['ItemStockLocation11'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem11, "@prmQty", $_POST['ItemQty11'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem11, "@prmUnitPrice", $_POST['ItemPrice11'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder11 = ($_POST['ItemPrice11'] - ($_POST['ItemPrice11'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem11, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder11, SQLFLT8);
+
+                mssql_bind($qryInsertItem11, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem11, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem11, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_11'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem11, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_11'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem11, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_11'], SQLVARCHAR);
+                mssql_bind($qryInsertItem11, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs11 = mssql_execute($qryInsertItem11);
+            }
+
             else
             {
 			    $qryInsertItem11 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3880,6 +4361,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs12 = mssql_execute($qryInsertItem12);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_12'] == 'True' || $_SESSION['RegenesisReorderRVProd_12'] == 'True'))
+            {
+                $qryInsertItem12 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID12'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice12'] = $_POST['ItemPrice12'] - ($_POST['ItemPrice12'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice12'] * $_POST['ItemQty12'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice12'] * $_POST['ItemQty12'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation12'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem12, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem12, "@prmItemID", $_POST['ItemID12'], SQLINT4);
+			    mssql_bind($qryInsertItem12, "@prmLocation", $_POST['ItemStockLocation12'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem12, "@prmQty", $_POST['ItemQty12'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem12, "@prmUnitPrice", $_POST['ItemPrice12'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder12 = ($_POST['ItemPrice12'] - ($_POST['ItemPrice12'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem12, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder12, SQLFLT8);
+
+                mssql_bind($qryInsertItem12, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem12, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem12, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_12'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem12, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_12'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem12, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_12'], SQLVARCHAR);
+                mssql_bind($qryInsertItem12, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs12 = mssql_execute($qryInsertItem12);
+            }
+
             else
             {
 			    $qryInsertItem12 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4090,6 +4618,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs13 = mssql_execute($qryInsertItem13);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_13'] == 'True' || $_SESSION['RegenesisReorderRVProd_13'] == 'True'))
+            {
+                $qryInsertItem13 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID13'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice13'] = $_POST['ItemPrice13'] - ($_POST['ItemPrice13'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice13'] * $_POST['ItemQty13'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice13'] * $_POST['ItemQty13'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation13'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem13, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem13, "@prmItemID", $_POST['ItemID13'], SQLINT4);
+			    mssql_bind($qryInsertItem13, "@prmLocation", $_POST['ItemStockLocation13'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem13, "@prmQty", $_POST['ItemQty13'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem13, "@prmUnitPrice", $_POST['ItemPrice13'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder13 = ($_POST['ItemPrice13'] - ($_POST['ItemPrice13'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem13, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder13, SQLFLT8);
+
+                mssql_bind($qryInsertItem13, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem13, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem13, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_13'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem13, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_13'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem13, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_13'], SQLVARCHAR);
+                mssql_bind($qryInsertItem13, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs13 = mssql_execute($qryInsertItem13);
+            }
+
             else
             {
 			    $qryInsertItem13 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4300,6 +4875,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs14 = mssql_execute($qryInsertItem14);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_14'] == 'True' || $_SESSION['RegenesisReorderRVProd_14'] == 'True'))
+            {
+                $qryInsertItem14 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID14'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice14'] = $_POST['ItemPrice14'] - ($_POST['ItemPrice14'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice14'] * $_POST['ItemQty14'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice14'] * $_POST['ItemQty14'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation14'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem14, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem14, "@prmItemID", $_POST['ItemID14'], SQLINT4);
+			    mssql_bind($qryInsertItem14, "@prmLocation", $_POST['ItemStockLocation14'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem14, "@prmQty", $_POST['ItemQty14'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem14, "@prmUnitPrice", $_POST['ItemPrice14'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder14 = ($_POST['ItemPrice14'] - ($_POST['ItemPrice14'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem14, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder14, SQLFLT8);
+
+                mssql_bind($qryInsertItem14, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem14, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem14, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_14'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem14, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_14'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem14, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_14'], SQLVARCHAR);
+                mssql_bind($qryInsertItem14, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs14 = mssql_execute($qryInsertItem14);
+            }
+
             else
             {
 			    $qryInsertItem14 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4510,6 +5132,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs15 = mssql_execute($qryInsertItem15);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_15'] == 'True' || $_SESSION['RegenesisReorderRVProd_15'] == 'True'))
+            {
+                $qryInsertItem15 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID15'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice15'] = $_POST['ItemPrice15'] - ($_POST['ItemPrice15'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice15'] * $_POST['ItemQty15'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice15'] * $_POST['ItemQty15'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation15'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem15, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem15, "@prmItemID", $_POST['ItemID15'], SQLINT4);
+			    mssql_bind($qryInsertItem15, "@prmLocation", $_POST['ItemStockLocation15'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem15, "@prmQty", $_POST['ItemQty15'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem15, "@prmUnitPrice", $_POST['ItemPrice15'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder15 = ($_POST['ItemPrice15'] - ($_POST['ItemPrice15'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem15, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder15, SQLFLT8);
+
+                mssql_bind($qryInsertItem15, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem15, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem15, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_15'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem15, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_15'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem15, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_15'], SQLVARCHAR);
+                mssql_bind($qryInsertItem15, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs15 = mssql_execute($qryInsertItem15);
+            }
+
             else
             {
 			    $qryInsertItem15 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4720,6 +5389,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs16 = mssql_execute($qryInsertItem16);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_16'] == 'True' || $_SESSION['RegenesisReorderRVProd_16'] == 'True'))
+            {
+                $qryInsertItem16 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID16'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice16'] = $_POST['ItemPrice16'] - ($_POST['ItemPrice16'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice16'] * $_POST['ItemQty16'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice16'] * $_POST['ItemQty16'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation16'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem16, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem16, "@prmItemID", $_POST['ItemID16'], SQLINT4);
+			    mssql_bind($qryInsertItem16, "@prmLocation", $_POST['ItemStockLocation16'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem16, "@prmQty", $_POST['ItemQty16'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem16, "@prmUnitPrice", $_POST['ItemPrice16'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder16 = ($_POST['ItemPrice16'] - ($_POST['ItemPrice16'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem16, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder16, SQLFLT8);
+
+                mssql_bind($qryInsertItem16, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem16, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem16, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_16'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem16, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_16'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem16, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_16'], SQLVARCHAR);
+                mssql_bind($qryInsertItem16, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs16 = mssql_execute($qryInsertItem16);
+            }
+
             else
             {
 			    $qryInsertItem16 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4930,6 +5646,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs17 = mssql_execute($qryInsertItem17);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_17'] == 'True' || $_SESSION['RegenesisReorderRVProd_17'] == 'True'))
+            {
+                $qryInsertItem17 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID17'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice17'] = $_POST['ItemPrice17'] - ($_POST['ItemPrice17'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice17'] * $_POST['ItemQty17'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice17'] * $_POST['ItemQty17'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation17'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem17, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem17, "@prmItemID", $_POST['ItemID17'], SQLINT4);
+			    mssql_bind($qryInsertItem17, "@prmLocation", $_POST['ItemStockLocation17'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem17, "@prmQty", $_POST['ItemQty17'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem17, "@prmUnitPrice", $_POST['ItemPrice17'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder17 = ($_POST['ItemPrice17'] - ($_POST['ItemPrice17'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem17, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder17, SQLFLT8);
+
+                mssql_bind($qryInsertItem17, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem17, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem17, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_17'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem17, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_17'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem17, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_17'], SQLVARCHAR);
+                mssql_bind($qryInsertItem17, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs17 = mssql_execute($qryInsertItem17);
+            }
+
             else
             {
 			    $qryInsertItem17 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5140,6 +5903,54 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs18 = mssql_execute($qryInsertItem18);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_18'] == 'True' || $_SESSION['RegenesisReorderRVProd_18'] == 'True')
+)
+            {
+                $qryInsertItem18 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID18'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice18'] = $_POST['ItemPrice18'] - ($_POST['ItemPrice18'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice18'] * $_POST['ItemQty18'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice18'] * $_POST['ItemQty18'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation18'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem18, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem18, "@prmItemID", $_POST['ItemID18'], SQLINT4);
+			    mssql_bind($qryInsertItem18, "@prmLocation", $_POST['ItemStockLocation18'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem18, "@prmQty", $_POST['ItemQty18'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem18, "@prmUnitPrice", $_POST['ItemPrice18'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder18 = ($_POST['ItemPrice18'] - ($_POST['ItemPrice18'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem18, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder18, SQLFLT8);
+
+                mssql_bind($qryInsertItem18, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem18, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem18, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_18'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem18, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_18'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem18, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_18'], SQLVARCHAR);
+                mssql_bind($qryInsertItem18, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs18 = mssql_execute($qryInsertItem18);
+            }
+
             else
             {
 			    $qryInsertItem18 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5350,6 +6161,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs19 = mssql_execute($qryInsertItem19);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_19'] == 'True' || $_SESSION['RegenesisReorderRVProd_19'] == 'True'))
+            {
+                $qryInsertItem19 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID19'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice19'] = $_POST['ItemPrice19'] - ($_POST['ItemPrice19'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice19'] * $_POST['ItemQty19'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice19'] * $_POST['ItemQty19'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation19'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem19, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem19, "@prmItemID", $_POST['ItemID19'], SQLINT4);
+			    mssql_bind($qryInsertItem19, "@prmLocation", $_POST['ItemStockLocation19'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem19, "@prmQty", $_POST['ItemQty19'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem19, "@prmUnitPrice", $_POST['ItemPrice19'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder19 = ($_POST['ItemPrice19'] - ($_POST['ItemPrice19'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem19, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder19, SQLFLT8);
+
+                mssql_bind($qryInsertItem19, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem19, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem19, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_19'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem19, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_19'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem19, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_19'], SQLVARCHAR);
+                mssql_bind($qryInsertItem19, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs19 = mssql_execute($qryInsertItem19);
+            }
+
             else
             {
 			    $qryInsertItem19 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5560,6 +6418,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs20 = mssql_execute($qryInsertItem20);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_20'] == 'True' || $_SESSION['RegenesisReorderRVProd_20'] == 'True'))
+            {
+                $qryInsertItem20 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID20'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice20'] = $_POST['ItemPrice20'] - ($_POST['ItemPrice20'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice20'] * $_POST['ItemQty20'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice20'] * $_POST['ItemQty20'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation20'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem20, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem20, "@prmItemID", $_POST['ItemID20'], SQLINT4);
+			    mssql_bind($qryInsertItem20, "@prmLocation", $_POST['ItemStockLocation20'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem20, "@prmQty", $_POST['ItemQty20'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem20, "@prmUnitPrice", $_POST['ItemPrice20'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder20 = ($_POST['ItemPrice20'] - ($_POST['ItemPrice20'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem20, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder20, SQLFLT8);
+
+                mssql_bind($qryInsertItem20, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem20, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem20, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_20'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem20, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_20'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem20, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_20'], SQLVARCHAR);
+                mssql_bind($qryInsertItem20, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs20 = mssql_execute($qryInsertItem20);
+            }
+
             else
             {
 			    $qryInsertItem20 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5763,6 +6668,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem21, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs21 = mssql_execute($qryInsertItem21);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_21'] == 'True' || $_SESSION['RegenesisReorderRVProd_21'] == 'True'))
+            {
+                $qryInsertItem21 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID21'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice21'] = $_POST['ItemPrice21'] - ($_POST['ItemPrice21'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice21'] * $_POST['ItemQty21'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice21'] * $_POST['ItemQty21'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation21'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem21, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem21, "@prmItemID", $_POST['ItemID21'], SQLINT4);
+			    mssql_bind($qryInsertItem21, "@prmLocation", $_POST['ItemStockLocation21'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem21, "@prmQty", $_POST['ItemQty21'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem21, "@prmUnitPrice", $_POST['ItemPrice21'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder21 = ($_POST['ItemPrice21'] - ($_POST['ItemPrice21'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem21, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder21, SQLFLT8);
+
+                mssql_bind($qryInsertItem21, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem21, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem21, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_21'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem21, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_21'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem21, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_21'], SQLVARCHAR);
+                mssql_bind($qryInsertItem21, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs21 = mssql_execute($qryInsertItem21);
+            }
+
             else
             {
 			    $qryInsertItem21 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5929,6 +6881,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem22, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs22 = mssql_execute($qryInsertItem22);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_22'] == 'True' || $_SESSION['RegenesisReorderRVProd_22'] == 'True'))
+            {
+                $qryInsertItem22 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID22'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice22'] = $_POST['ItemPrice22'] - ($_POST['ItemPrice22'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice22'] * $_POST['ItemQty22'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice22'] * $_POST['ItemQty22'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation22'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem22, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem22, "@prmItemID", $_POST['ItemID22'], SQLINT4);
+			    mssql_bind($qryInsertItem22, "@prmLocation", $_POST['ItemStockLocation22'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem22, "@prmQty", $_POST['ItemQty22'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem22, "@prmUnitPrice", $_POST['ItemPrice22'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder22 = ($_POST['ItemPrice22'] - ($_POST['ItemPrice22'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem22, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder22, SQLFLT8);
+
+                mssql_bind($qryInsertItem22, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem22, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem22, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_22'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem22, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_22'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem22, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_22'], SQLVARCHAR);
+                mssql_bind($qryInsertItem22, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs22 = mssql_execute($qryInsertItem22);
+            }
+
             else
             {
 			    $qryInsertItem22 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6095,6 +7094,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem23, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs23 = mssql_execute($qryInsertItem23);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_23'] == 'True' || $_SESSION['RegenesisReorderRVProd_23'] == 'True'))
+            {
+                $qryInsertItem23 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID23'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice23'] = $_POST['ItemPrice23'] - ($_POST['ItemPrice23'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice23'] * $_POST['ItemQty23'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice23'] * $_POST['ItemQty23'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation23'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem23, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem23, "@prmItemID", $_POST['ItemID23'], SQLINT4);
+			    mssql_bind($qryInsertItem23, "@prmLocation", $_POST['ItemStockLocation23'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem23, "@prmQty", $_POST['ItemQty23'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem23, "@prmUnitPrice", $_POST['ItemPrice23'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder23 = ($_POST['ItemPrice23'] - ($_POST['ItemPrice23'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem23, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder23, SQLFLT8);
+
+                mssql_bind($qryInsertItem23, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem23, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem23, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_23'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem23, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_23'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem23, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_23'], SQLVARCHAR);
+                mssql_bind($qryInsertItem23, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs23 = mssql_execute($qryInsertItem23);
+            }
+
             else
             {
 			    $qryInsertItem23 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6261,6 +7307,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem24, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs24 = mssql_execute($qryInsertItem24);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_24'] == 'True' || $_SESSION['RegenesisReorderRVProd_24'] == 'True'))
+            {
+                $qryInsertItem24 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID24'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice24'] = $_POST['ItemPrice24'] - ($_POST['ItemPrice24'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice24'] * $_POST['ItemQty24'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice24'] * $_POST['ItemQty24'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation24'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem24, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem24, "@prmItemID", $_POST['ItemID24'], SQLINT4);
+			    mssql_bind($qryInsertItem24, "@prmLocation", $_POST['ItemStockLocation24'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem24, "@prmQty", $_POST['ItemQty24'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem24, "@prmUnitPrice", $_POST['ItemPrice24'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder24 = ($_POST['ItemPrice24'] - ($_POST['ItemPrice24'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem24, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder24, SQLFLT8);
+
+                mssql_bind($qryInsertItem24, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem24, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem24, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_24'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem24, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_24'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem24, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_24'], SQLVARCHAR);
+                mssql_bind($qryInsertItem24, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs24 = mssql_execute($qryInsertItem24);
+            }
+
             else
             {
 			    $qryInsertItem24 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6427,6 +7520,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem25, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs25 = mssql_execute($qryInsertItem25);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_25'] == 'True' || $_SESSION['RegenesisReorderRVProd_25'] == 'True'))
+            {
+                $qryInsertItem25 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID25'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice25'] = $_POST['ItemPrice25'] - ($_POST['ItemPrice25'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice25'] * $_POST['ItemQty25'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice25'] * $_POST['ItemQty25'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation25'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem25, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem25, "@prmItemID", $_POST['ItemID25'], SQLINT4);
+			    mssql_bind($qryInsertItem25, "@prmLocation", $_POST['ItemStockLocation25'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem25, "@prmQty", $_POST['ItemQty25'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem25, "@prmUnitPrice", $_POST['ItemPrice25'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder25 = ($_POST['ItemPrice25'] - ($_POST['ItemPrice25'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem25, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder25, SQLFLT8);
+
+                mssql_bind($qryInsertItem25, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem25, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem25, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_25'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem25, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_25'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem25, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_25'], SQLVARCHAR);
+                mssql_bind($qryInsertItem25, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs25 = mssql_execute($qryInsertItem25);
+            }
+
             else
             {
 			    $qryInsertItem25 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6593,6 +7733,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem26, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs26 = mssql_execute($qryInsertItem26);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_26'] == 'True' || $_SESSION['RegenesisReorderRVProd_26'] == 'True'))
+            {
+                $qryInsertItem26 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID26'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice26'] = $_POST['ItemPrice26'] - ($_POST['ItemPrice26'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice26'] * $_POST['ItemQty26'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice26'] * $_POST['ItemQty26'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation26'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem26, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem26, "@prmItemID", $_POST['ItemID26'], SQLINT4);
+			    mssql_bind($qryInsertItem26, "@prmLocation", $_POST['ItemStockLocation26'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem26, "@prmQty", $_POST['ItemQty26'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem26, "@prmUnitPrice", $_POST['ItemPrice26'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder26 = ($_POST['ItemPrice26'] - ($_POST['ItemPrice26'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem26, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder26, SQLFLT8);
+
+                mssql_bind($qryInsertItem26, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem26, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem26, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_26'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem26, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_26'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem26, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_26'], SQLVARCHAR);
+                mssql_bind($qryInsertItem26, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs26 = mssql_execute($qryInsertItem26);
+            }
+
             else
             {
 			    $qryInsertItem26 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6759,6 +7946,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem27, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs27 = mssql_execute($qryInsertItem27);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_27'] == 'True' || $_SESSION['RegenesisReorderRVProd_27'] == 'True'))
+            {
+                $qryInsertItem27 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID27'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice27'] = $_POST['ItemPrice27'] - ($_POST['ItemPrice27'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice27'] * $_POST['ItemQty27'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice27'] * $_POST['ItemQty27'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation27'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem27, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem27, "@prmItemID", $_POST['ItemID27'], SQLINT4);
+			    mssql_bind($qryInsertItem27, "@prmLocation", $_POST['ItemStockLocation27'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem27, "@prmQty", $_POST['ItemQty27'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem27, "@prmUnitPrice", $_POST['ItemPrice27'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder27 = ($_POST['ItemPrice27'] - ($_POST['ItemPrice27'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem27, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder27, SQLFLT8);
+
+                mssql_bind($qryInsertItem27, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem27, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem27, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_27'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem27, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_27'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem27, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_27'], SQLVARCHAR);
+                mssql_bind($qryInsertItem27, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs27 = mssql_execute($qryInsertItem27);
+            }
+
             else
             {
 			    $qryInsertItem27 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6925,6 +8159,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem28, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs28 = mssql_execute($qryInsertItem28);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_28'] == 'True' || $_SESSION['RegenesisReorderRVProd_28'] == 'True'))
+            {
+                $qryInsertItem28 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID28'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice28'] = $_POST['ItemPrice28'] - ($_POST['ItemPrice28'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice28'] * $_POST['ItemQty28'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice28'] * $_POST['ItemQty28'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation28'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem28, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem28, "@prmItemID", $_POST['ItemID28'], SQLINT4);
+			    mssql_bind($qryInsertItem28, "@prmLocation", $_POST['ItemStockLocation28'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem28, "@prmQty", $_POST['ItemQty28'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem28, "@prmUnitPrice", $_POST['ItemPrice28'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder28 = ($_POST['ItemPrice28'] - ($_POST['ItemPrice28'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem28, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder28, SQLFLT8);
+
+                mssql_bind($qryInsertItem28, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem28, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem28, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_28'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem28, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_28'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem28, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_28'], SQLVARCHAR);
+                mssql_bind($qryInsertItem28, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs28 = mssql_execute($qryInsertItem28);
+            }
+
             else
             {
 			    $qryInsertItem28 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7091,6 +8372,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem29, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs29 = mssql_execute($qryInsertItem29);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_29'] == 'True' || $_SESSION['RegenesisReorderRVProd_29'] == 'True'))
+            {
+                $qryInsertItem29 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID29'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice29'] = $_POST['ItemPrice29'] - ($_POST['ItemPrice29'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice29'] * $_POST['ItemQty29'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice29'] * $_POST['ItemQty29'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation29'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem29, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem29, "@prmItemID", $_POST['ItemID29'], SQLINT4);
+			    mssql_bind($qryInsertItem29, "@prmLocation", $_POST['ItemStockLocation29'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem29, "@prmQty", $_POST['ItemQty29'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem29, "@prmUnitPrice", $_POST['ItemPrice29'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder29 = ($_POST['ItemPrice29'] - ($_POST['ItemPrice29'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem29, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder29, SQLFLT8);
+
+                mssql_bind($qryInsertItem29, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem29, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem29, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_29'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem29, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_29'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem29, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_29'], SQLVARCHAR);
+                mssql_bind($qryInsertItem29, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs29 = mssql_execute($qryInsertItem29);
+            }
+
             else
             {
 			    $qryInsertItem29 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7257,6 +8585,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem30, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs30 = mssql_execute($qryInsertItem30);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_30'] == 'True' || $_SESSION['RegenesisReorderRVProd_30'] == 'True'))
+            {
+                $qryInsertItem30 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID30'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice30'] = $_POST['ItemPrice30'] - ($_POST['ItemPrice30'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice30'] * $_POST['ItemQty30'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice30'] * $_POST['ItemQty30'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation30'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem30, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem30, "@prmItemID", $_POST['ItemID30'], SQLINT4);
+			    mssql_bind($qryInsertItem30, "@prmLocation", $_POST['ItemStockLocation30'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem30, "@prmQty", $_POST['ItemQty30'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem30, "@prmUnitPrice", $_POST['ItemPrice30'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder30 = ($_POST['ItemPrice30'] - ($_POST['ItemPrice30'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem30, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder30, SQLFLT8);
+
+                mssql_bind($qryInsertItem30, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem30, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem30, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_30'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem30, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_30'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem30, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_30'], SQLVARCHAR);
+                mssql_bind($qryInsertItem30, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs30 = mssql_execute($qryInsertItem30);
+            }
+
             else
             {
 			    $qryInsertItem30 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7423,6 +8798,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem31, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs31 = mssql_execute($qryInsertItem31);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_31'] == 'True' || $_SESSION['RegenesisReorderRVProd_31'] == 'True'))
+            {
+                $qryInsertItem31 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID31'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice31'] = $_POST['ItemPrice31'] - ($_POST['ItemPrice31'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice31'] * $_POST['ItemQty31'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice31'] * $_POST['ItemQty31'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation31'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem31, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem31, "@prmItemID", $_POST['ItemID31'], SQLINT4);
+			    mssql_bind($qryInsertItem31, "@prmLocation", $_POST['ItemStockLocation31'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem31, "@prmQty", $_POST['ItemQty31'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem31, "@prmUnitPrice", $_POST['ItemPrice31'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder31 = ($_POST['ItemPrice31'] - ($_POST['ItemPrice31'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem31, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder31, SQLFLT8);
+
+                mssql_bind($qryInsertItem31, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem31, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem31, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_31'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem31, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_31'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem31, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_31'], SQLVARCHAR);
+                mssql_bind($qryInsertItem31, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs31 = mssql_execute($qryInsertItem31);
+            }
+
             else
             {
 			    $qryInsertItem31 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7589,6 +9011,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem32, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs32 = mssql_execute($qryInsertItem32);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_32'] == 'True' || $_SESSION['RegenesisReorderRVProd_32'] == 'True'))
+            {
+                $qryInsertItem32 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID32'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice32'] = $_POST['ItemPrice32'] - ($_POST['ItemPrice32'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice32'] * $_POST['ItemQty32'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice32'] * $_POST['ItemQty32'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation32'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem32, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem32, "@prmItemID", $_POST['ItemID32'], SQLINT4);
+			    mssql_bind($qryInsertItem32, "@prmLocation", $_POST['ItemStockLocation32'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem32, "@prmQty", $_POST['ItemQty32'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem32, "@prmUnitPrice", $_POST['ItemPrice32'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder32 = ($_POST['ItemPrice32'] - ($_POST['ItemPrice32'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem32, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder32, SQLFLT8);
+
+                mssql_bind($qryInsertItem32, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem32, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem32, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_32'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem32, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_32'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem32, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_32'], SQLVARCHAR);
+                mssql_bind($qryInsertItem32, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs32 = mssql_execute($qryInsertItem32);
+            }
+
             else
             {
 			    $qryInsertItem32 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7755,6 +9224,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem33, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs33 = mssql_execute($qryInsertItem33);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_33'] == 'True' || $_SESSION['RegenesisReorderRVProd_33'] == 'True'))
+            {
+                $qryInsertItem33 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID33'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice33'] = $_POST['ItemPrice33'] - ($_POST['ItemPrice33'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice33'] * $_POST['ItemQty33'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice33'] * $_POST['ItemQty33'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation33'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem33, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem33, "@prmItemID", $_POST['ItemID33'], SQLINT4);
+			    mssql_bind($qryInsertItem33, "@prmLocation", $_POST['ItemStockLocation33'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem33, "@prmQty", $_POST['ItemQty33'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem33, "@prmUnitPrice", $_POST['ItemPrice33'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder33 = ($_POST['ItemPrice33'] - ($_POST['ItemPrice33'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem33, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder33, SQLFLT8);
+
+                mssql_bind($qryInsertItem33, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem33, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem33, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_33'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem33, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_33'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem33, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_33'], SQLVARCHAR);
+                mssql_bind($qryInsertItem33, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs33 = mssql_execute($qryInsertItem33);
+            }
+
             else
             {
 			    $qryInsertItem33 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7921,6 +9437,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem34, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs34 = mssql_execute($qryInsertItem34);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_34'] == 'True' || $_SESSION['RegenesisReorderRVProd_34'] == 'True'))
+            {
+                $qryInsertItem34 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID34'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice34'] = $_POST['ItemPrice34'] - ($_POST['ItemPrice34'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice34'] * $_POST['ItemQty34'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice34'] * $_POST['ItemQty34'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation34'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem34, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem34, "@prmItemID", $_POST['ItemID34'], SQLINT4);
+			    mssql_bind($qryInsertItem34, "@prmLocation", $_POST['ItemStockLocation34'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem34, "@prmQty", $_POST['ItemQty34'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem34, "@prmUnitPrice", $_POST['ItemPrice34'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder34 = ($_POST['ItemPrice34'] - ($_POST['ItemPrice34'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem34, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder34, SQLFLT8);
+
+                mssql_bind($qryInsertItem34, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem34, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem34, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_34'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem34, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_34'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem34, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_34'], SQLVARCHAR);
+                mssql_bind($qryInsertItem34, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs34 = mssql_execute($qryInsertItem34);
+            }
+
             else
             {
 			    $qryInsertItem34 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8087,6 +9650,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem35, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs35 = mssql_execute($qryInsertItem35);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_35'] == 'True' || $_SESSION['RegenesisReorderRVProd_35'] == 'True'))
+            {
+                $qryInsertItem35 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID35'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice35'] = $_POST['ItemPrice35'] - ($_POST['ItemPrice35'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice35'] * $_POST['ItemQty35'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice35'] * $_POST['ItemQty35'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation35'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem35, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem35, "@prmItemID", $_POST['ItemID35'], SQLINT4);
+			    mssql_bind($qryInsertItem35, "@prmLocation", $_POST['ItemStockLocation35'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem35, "@prmQty", $_POST['ItemQty35'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem35, "@prmUnitPrice", $_POST['ItemPrice35'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder35 = ($_POST['ItemPrice35'] - ($_POST['ItemPrice35'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem35, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder35, SQLFLT8);
+
+                mssql_bind($qryInsertItem35, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem35, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem35, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_35'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem35, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_35'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem35, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_35'], SQLVARCHAR);
+                mssql_bind($qryInsertItem35, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs35 = mssql_execute($qryInsertItem35);
+            }
+
             else
             {
 			    $qryInsertItem35 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8253,6 +9863,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem36, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs36 = mssql_execute($qryInsertItem36);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_36'] == 'True' || $_SESSION['RegenesisReorderRVProd_36'] == 'True'))
+            {
+                $qryInsertItem36 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID36'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice36'] = $_POST['ItemPrice36'] - ($_POST['ItemPrice36'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice36'] * $_POST['ItemQty36'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice36'] * $_POST['ItemQty36'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation36'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem36, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem36, "@prmItemID", $_POST['ItemID36'], SQLINT4);
+			    mssql_bind($qryInsertItem36, "@prmLocation", $_POST['ItemStockLocation36'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem36, "@prmQty", $_POST['ItemQty36'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem36, "@prmUnitPrice", $_POST['ItemPrice36'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder36 = ($_POST['ItemPrice36'] - ($_POST['ItemPrice36'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem36, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder36, SQLFLT8);
+
+                mssql_bind($qryInsertItem36, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem36, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem36, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_36'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem36, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_36'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem36, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_36'], SQLVARCHAR);
+                mssql_bind($qryInsertItem36, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs36 = mssql_execute($qryInsertItem36);
+            }
+
             else
             {
 			    $qryInsertItem36 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8419,6 +10076,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem37, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs37 = mssql_execute($qryInsertItem37);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_37'] == 'True' || $_SESSION['RegenesisReorderRVProd_37'] == 'True'))
+            {
+                $qryInsertItem37 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID37'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice37'] = $_POST['ItemPrice37'] - ($_POST['ItemPrice37'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice37'] * $_POST['ItemQty37'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice37'] * $_POST['ItemQty37'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation37'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem37, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem37, "@prmItemID", $_POST['ItemID37'], SQLINT4);
+			    mssql_bind($qryInsertItem37, "@prmLocation", $_POST['ItemStockLocation37'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem37, "@prmQty", $_POST['ItemQty37'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem37, "@prmUnitPrice", $_POST['ItemPrice37'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder37 = ($_POST['ItemPrice37'] - ($_POST['ItemPrice37'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem37, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder37, SQLFLT8);
+
+                mssql_bind($qryInsertItem37, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem37, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem37, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_37'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem37, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_37'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem37, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_37'], SQLVARCHAR);
+                mssql_bind($qryInsertItem37, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs37 = mssql_execute($qryInsertItem37);
+            }
+
             else
             {
 			    $qryInsertItem37 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8585,6 +10289,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem38, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs38 = mssql_execute($qryInsertItem38);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_38'] == 'True' || $_SESSION['RegenesisReorderRVProd_38'] == 'True'))
+            {
+                $qryInsertItem38 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID38'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice38'] = $_POST['ItemPrice38'] - ($_POST['ItemPrice38'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice38'] * $_POST['ItemQty38'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice38'] * $_POST['ItemQty38'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation38'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem38, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem38, "@prmItemID", $_POST['ItemID38'], SQLINT4);
+			    mssql_bind($qryInsertItem38, "@prmLocation", $_POST['ItemStockLocation38'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem38, "@prmQty", $_POST['ItemQty38'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem38, "@prmUnitPrice", $_POST['ItemPrice38'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder38 = ($_POST['ItemPrice38'] - ($_POST['ItemPrice38'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem38, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder38, SQLFLT8);
+
+                mssql_bind($qryInsertItem38, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem38, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem38, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_38'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem38, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_38'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem38, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_38'], SQLVARCHAR);
+                mssql_bind($qryInsertItem38, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs38 = mssql_execute($qryInsertItem38);
+            }
+
             else
             {
 			    $qryInsertItem38 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8751,6 +10502,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem39, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs39 = mssql_execute($qryInsertItem39);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_39'] == 'True' || $_SESSION['RegenesisReorderRVProd_39'] == 'True'))
+            {
+                $qryInsertItem39 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID39'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice39'] = $_POST['ItemPrice39'] - ($_POST['ItemPrice39'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice39'] * $_POST['ItemQty39'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice39'] * $_POST['ItemQty39'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation39'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem39, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem39, "@prmItemID", $_POST['ItemID39'], SQLINT4);
+			    mssql_bind($qryInsertItem39, "@prmLocation", $_POST['ItemStockLocation39'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem39, "@prmQty", $_POST['ItemQty39'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem39, "@prmUnitPrice", $_POST['ItemPrice39'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder39 = ($_POST['ItemPrice39'] - ($_POST['ItemPrice39'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem39, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder39, SQLFLT8);
+
+                mssql_bind($qryInsertItem39, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem39, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem39, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_39'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem39, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_39'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem39, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_39'], SQLVARCHAR);
+                mssql_bind($qryInsertItem39, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs39 = mssql_execute($qryInsertItem39);
+            }
+
             else
             {
 			    $qryInsertItem39 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8917,6 +10715,53 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 			    mssql_bind($qryInsertItem40, "RETVAL", $intItemStatusCode, SQLINT2);
 			    $rs40 = mssql_execute($qryInsertItem40);
             }
+
+            // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_40'] == 'True' || $_SESSION['RegenesisReorderRVProd_40'] == 'True'))
+            {
+                $qryInsertItem40 = mssql_init("spOrders_Items_Create", $connProcess);
+
+                // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
+                // GMC - 09/18/09 - To calculate the Promo Discount Value per Item        620
+                if($_POST['ItemID40'] != '620' && $_SESSION['Summer2012FineLinePrimer'] == 0 && $_SESSION['Promo_Code'] != '' && $_SESSION['Promo_Code_Discount'] > 0)
+                {
+                    $_POST['ItemPrice40'] = $_POST['ItemPrice40'] - ($_POST['ItemPrice40'] * $_SESSION['Promo_Code_Discount']);
+                    $decExtendedPrice = $_POST['ItemPrice40'] * $_POST['ItemQty40'];
+                }
+                else
+                {
+			        $decExtendedPrice = $_POST['ItemPrice40'] * $_POST['ItemQty40'];
+                }
+
+                // GMC - 01/28/10 - Include PONumber, EnteredBy and Location in Order Header NAV
+                $Location = $_POST['ItemStockLocation40'];
+
+			    // BIND PARAMETERS
+			    $intItemStatusCode = 0;
+			    mssql_bind($qryInsertItem40, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
+			    mssql_bind($qryInsertItem40, "@prmItemID", $_POST['ItemID40'], SQLINT4);
+			    mssql_bind($qryInsertItem40, "@prmLocation", $_POST['ItemStockLocation40'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem40, "@prmQty", $_POST['ItemQty40'], SQLINT4);
+
+                // GMC - 12/04/15 - Send the Discount Unit Price for Regenesis Reorder Discount
+			    // mssql_bind($qryInsertItem40, "@prmUnitPrice", $_POST['ItemPrice40'], SQLFLT8);
+                $DiscUnitPriceRegenesisReorder40 = ($_POST['ItemPrice40'] - ($_POST['ItemPrice40'] * $_SESSION['RegenesisReorderDiscount']));
+			    mssql_bind($qryInsertItem40, "@prmUnitPrice", $DiscUnitPriceRegenesisReorder40, SQLFLT8);
+
+                mssql_bind($qryInsertItem40, "@prmExtendedPrice", $decExtendedPrice, SQLFLT8);
+
+                // GMC - 01/19/14 - Discount Promo Code International Items
+               $DiscProValue = $decExtendedPrice - ($decExtendedPrice * $_SESSION['RegenesisReorderDiscount']);
+                mssql_bind($qryInsertItem40, "@prmIntDiscProValue", $DiscProValue, SQLFLT8);
+
+			    mssql_bind($qryInsertItem40, "@prmIntDiscProCode", $_SESSION['IntDiscProCode_40'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem40, "@prmIntDiscProStartDate", $_SESSION['IntDiscProStartDate_40'], SQLVARCHAR);
+			    mssql_bind($qryInsertItem40, "@prmIntDiscProEndDate", $_SESSION['IntDiscProEndDate_40'], SQLVARCHAR);
+                mssql_bind($qryInsertItem40, "RETVAL", $intItemStatusCode, SQLINT2);
+
+			    $rs40 = mssql_execute($qryInsertItem40);
+            }
+
             else
             {
 			    $qryInsertItem40 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9069,62 +10914,6 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
             $intItemQty = 1;
 		    $decItemPrice = 0;
-
-            // $intItemId = 147; // Test
-		    // $intItemId = 204; // Production
-		    // $intItemId = 247; // Production
-		    // $intItemId = 402; // Production
-		    // $intItemId = 662; // Production
-		    // $intItemId = 700; // Production
-
-            if($_SESSION['IsInternational'] == 1)
-            {
-		        $intItemId = 1266; // Production
-            }
-            else
-            {
-                /*
-                if(strtoupper($_SESSION['Ship_State']) == 'CA' || strtoupper($_SESSION['Ship_State']) == 'TN')
-                {
-		            $intItemId = 853; // Production
-                }
-                else
-                {
-                    $intItemId = 854; // Production
-                }
-                */
-
-                // GMC - 08/22/13 - Web Orders to include extra item (Domestic = 1060)
-                // GMC - 10/20/14 - Web Orders to include extra item (Domestic = 1324)
-                // $intItemId = 853; // Production
-                // $intItemId = 1060; // Production
-                $intItemId = 1324; // Production
-            }
-
-		    $qryInsertBrochure = mssql_init("spOrders_Items_Create", $connProcess);
-
-            // BIND PARAMETERS
-            $intFreeItemStatusCode = 0;
-		    mssql_bind($qryInsertBrochure, "@prmOrderID", $_SESSION['OrderID'], SQLINT4);
-		    mssql_bind($qryInsertBrochure, "@prmItemID", $intItemId, SQLINT4);
-            mssql_bind($qryInsertBrochure, "@prmLocation",$_POST['ItemStockLocation1'], SQLVARCHAR);
-            mssql_bind($qryInsertBrochure, "@prmQty", $intItemQty, SQLINT4);
-            mssql_bind($qryInsertBrochure, "@prmUnitPrice", $decItemPrice, SQLFLT8);
-		    mssql_bind($qryInsertBrochure, "@prmExtendedPrice", $decItemPrice, SQLFLT8);
-
-            // GMC - 04/25/14 - Fix of Store Procedures passing parameters
-            $DiscProValueBrochure = 0;
-            $DiscProCodeBrochure = "";
-            $DiscProStartDateBrochure = "";
-            $DiscProEndDateBrochure = "";
-            mssql_bind($qryInsertBrochure, "@prmIntDiscProValue", $DiscProValueBrochure, SQLFLT8);
-		    mssql_bind($qryInsertBrochure, "@prmIntDiscProCode", $DiscProCodeBrochure, SQLVARCHAR);
-		    mssql_bind($qryInsertBrochure, "@prmIntDiscProStartDate", $DiscProStartDateBrochure, SQLVARCHAR);
-		    mssql_bind($qryInsertBrochure, "@prmIntDiscProEndDate", $DiscProEndDateBrochure, SQLVARCHAR);
-
-		    mssql_bind($qryInsertBrochure, "RETVAL", $intFreeItemStatusCode, SQLINT2);
-
-		    $rsGC = mssql_execute($qryInsertBrochure);
 
             // GMC - 08/12/13 - Insert Item NAV-ID 1573-1022 into Order with every order NAV-ID 1425-967
             if ($Add_1022_If_967 == "Yes")
@@ -9378,6 +11167,9 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
         // GMC - 05/11/15 - Integrate CAP Products into Admin
         mssql_bind($qryInsertNAVOrder, "@prmActualShippingCharge", $_SESSION['CapRateReal'], SQLFLT8);
+
+        // GMC - 09/18/15 - Fedex Freight Desktop Tool - LTL Flag
+        // mssql_bind($qryInsertNAVOrder, "@prmLTLOrder", $_SESSION['LTL_Order_Flag'], SQLINT4);
 
 		$rsInsertNAVOrder = mssql_execute($qryInsertNAVOrder);
 		$intLineNumber = 0;

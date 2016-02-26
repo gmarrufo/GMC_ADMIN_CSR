@@ -27,6 +27,9 @@ $TradeShow = 'False';
 // GMC - 03/24/09 - Add *REQUIRED on New Address
 $_SESSION['NoNewAddress'] = "";
 
+// GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
+$_SESSION['UseDeleteEditAddress'] = "";
+
 // GMC - 07/25/12 - Detect the type of browser so PopUps can be disable
 $_SESSION['IEBrowser'] = "";
 
@@ -233,7 +236,6 @@ elseif ($_GET['Action'] == 'Detail')
 		}
 		
 		mssql_next_result($rs);
-	
 	}
 
 	// CLOSE DATABASE CONNECTION
@@ -715,98 +717,7 @@ elseif ($_GET['Action'] == 'SearchCRMList')
 elseif ($_GET['Action'] == 'EditProfile')
 // ********** EDIT CUSTOMER **********
 {
-    // GMC - 05/27/10 - Edit Shipping Information in CSRADMIN
-	// RESET SESSION VARIABLES
-    /*
-    foreach ($_SESSION as $key => $value) {
-		if ($key != 'IsRevitalashLoggedIn' && $key != 'UserID' && $key != 'FirstName' && $key != 'LastName' && $key != 'EMailAddress' && $key != 'UserTypeID')	
-		{
-			unset($_SESSION[$key]);
-		}
-	}
-
-	if (isset($_POST['cmdUpdate']))
-	// DISPLAY AND PROCESS EDIT FORM
-	{
-		// CONNECT TO SQL SERVER DATABASE
-		$connUpdate = mssql_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
-		$selected = mssql_select_db($dbName, $connUpdate);
-			
-		$qryUpdate = mssql_init("spCustomers_ProEdit", $connUpdate);
-		
-		$intCustomerID = $_GET['CustomerID'];
-		$strFirstName = $_POST['FirstName'];
-		$strLastName = $_POST['LastName'];
-		$strCompanyName = $_POST['CompanyName'];
-		$strEMailAddress = $_POST['EMailAddress'];
-		if (($_POST['Password'] != '') && ($_POST['PasswordConfirm'] != ''))
-		{
-			$strPassword = md5($_POST['Password']);
-			$strPasswordConfirm = md5($_POST['PasswordConfirm']);
-		}
-		else
-		{
-			$strPassword = '';
-			$strPasswordConfirm = '';
-		}
-		$intSecurityQuestionID = $_POST['SecurityQuestionID'];
-		$strSecurityAnswer = $_POST['SecurityAnswer'];
-		$strAddress1 = $_POST['Address1'];
-		$strAddress2 = $_POST['Address2'];
-		$strCity = $_POST['City'];
-		$strState = $_POST['State'];
-		$strPostalCode = $_POST['PostalCode'];
-		$strCountryCode = $_POST['CountryCode'];
-		$strTelephone = preg_replace('/[^0-9]/', '', $_POST['Telephone']);
-		$strTelephoneExtension = preg_replace('/[^0-9]/', '', $_POST['TelephoneExtension']);
-		
-		// GMC - 08/19/09 -  Add Sales Rep Id for Editing
-        $intSalesRepID = $_POST['SalesRepID'];
-		
-		$intStatusCode = 0;
-		
-		// Bind the parameters
-		mssql_bind($qryUpdate, "@prmCustomerID", $intCustomerID, SQLINT4);
-		mssql_bind($qryUpdate, "@prmFirstName", $strFirstName, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmLastName", $strLastName, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmCompanyName", $strCompanyName, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmEMailAddress", $strEMailAddress, SQLVARCHAR);
-		if (($_POST['Password'] != '') && ($_POST['PasswordConfirm'] != ''))
-		{
-			mssql_bind($qryUpdate, "@prmPassword", $strPassword, SQLVARCHAR);
-			mssql_bind($qryUpdate, "@prmPasswordConfirm", $strPasswordConfirm, SQLVARCHAR);
-		}
-		else
-		{
-			mssql_bind($qryUpdate, "@prmPassword", $strPassword, SQLVARCHAR, false, true);
-			mssql_bind($qryUpdate, "@prmPasswordConfirm", $strPasswordConfirm, SQLVARCHAR, false, true);
-		}
-		mssql_bind($qryUpdate, "@prmSecurityQuestionID", $intSecurityQuestionID, SQLINT4);
-		mssql_bind($qryUpdate, "@prmSecurityAnswer", $strSecurityAnswer, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmAddress1", $strAddress1, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmAddress2", $strAddress2, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmCity", $strCity, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmState", $strState, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmPostalCode", $strPostalCode, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmCountryCode", $strCountryCode, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmTelephone", $strTelephone, SQLVARCHAR);
-		mssql_bind($qryUpdate, "@prmTelephoneExtension", $strTelephoneExtension, SQLVARCHAR);
-
-		// GMC - 08/19/09 -  Add Sales Rep Id for Editing
-		mssql_bind($qryUpdate, "@prmSalesRepID", $intSalesRepID, SQLINT4);
-		
-		// BIND RETURN VALUE
-		mssql_bind($qryUpdate, "RETVAL", $intStatusCode, SQLINT2);
-		
-		// EXECUTE QUERY
-		$rs = mssql_execute($qryUpdate);
-		$confirmation = 'The customer profile was updated successfully.';
-		
-		// echo $intCustomerID;
-	
-	}
-    */
-
+    // GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
 	// CONNECT TO SQL SERVER DATABASE
    	$connCustomer = mssql_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
    	mssql_select_db($dbName, $connCustomer);
@@ -1190,81 +1101,12 @@ elseif ($_GET['Action'] == 'EditProfile')
 		$ShipState = ereg_replace("[^A-Za-z0-9 ]", "", $TempState);
         $ShipPostalCode = ereg_replace("[^A-Za-z0-9 ]", "", $TempPostalCode);
 
-        // GMC - 06/03/10 - Add Company Name to tblCustomers_ShiptTo
-        $qryUpdateShippingInfo = mssql_query("UPDATE tblCustomers_ShipTo SET Attn = '" . $ShipAttn . "', Address1 = '" . $ShipAddress1 . "', Address2 = '" . $ShipAddress2 . "', City = '" . $ShipCity . "', State = '" . $ShipState . "', PostalCode = '" . $ShipPostalCode . "', CountryCode = '" . $ShipCountryCode . "', CompanyName = '" . $ShipCompany . "' WHERE RecordID = '" . $_SESSION['ShipToRecordId'] . "'");
+        $qryUpdateShippingInfo = mssql_query("UPDATE tblCustomers_ShipTo SET Attn = '" . $ShipAttn . "', Address1 = '" . $ShipAddress1 . "', Address2 = '" . $ShipAddress2 . "', City = '" . $ShipCity . "', State = '" . $ShipState . "', PostalCode = '" . $ShipPostalCode . "', CountryCode = '" . $ShipCountryCode . "', CompanyName = '" . $ShipCompany . "' WHERE RecordID = '" . $_SESSION['CustomerShipToID'] . "'");
 
 		$confirmation = 'The customers shipping information was updated successfully.';
-
-	    $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = 'X'"); // Production
-	    // $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = ''"); // Test
     }
     
-    // GMC - 12/15/10 - Add Nav Rep Id and ability to delete shipping address
-	else if (isset($_POST['cmdDeleteShippingAddress']))
-	{
- 		$ShipToId = $_SESSION['ShipToRecordId'];
-        $intShipRecordId = 0;
-	    $qryGetShipRecordId = mssql_query("select tblorders.recordid from tblorders join tblcustomers_shipto on tblorders.shiptoid = tblcustomers_shipto.recordid where tblorders.shiptoid = '" . $ShipToId . "'");
-
-        while($rowGetShipRecordId = mssql_fetch_array($qryGetShipRecordId))
-		{
-		    if (!isset($rowGetShipRecordId["RecordID"]))
-		    {
-                $intShipRecordId = 0;
-            }
-            else
-            {
-                $intShipRecordId = 1;
-            }
-        }
-
-		if ($intShipRecordId == 0)
-		{
-            $qryUpdateShipRecordId = mssql_query("UPDATE tblCustomers_ShipTo SET IsActive = 'False' WHERE RecordID = '" . $ShipToId . "'");
-		}
-        else
-        {
-            // You can not delete the record because an order is assigned to it
-        }
-
-	    $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = 'X'"); // Production
-	    // $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = ''"); // Test
-    }
-    
-    else if(isset($_POST['shipSelect']))
-    {
-        // GMC - 08/16/12 - Split US Other Countries at Shipping Selection Shopping Cart Consumer
-		// include("../includes/selCountries.php");
-		include("../includes/selCountries_Prior.php");
-
-        $ShipToRecordId = $_POST['shipSelect'];
-        $_SESSION['ShipToRecordId'] = $ShipToRecordId;
-	    $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE RecordID = " . $ShipToRecordId . " AND CustomerID = " . $_GET['CustomerID']);
-    }
-    else
-    {
-        // GMC - 08/16/12 - Split US Other Countries at Shipping Selection Shopping Cart Consumer
-		// include("../includes/selCountries.php");
-		include("../includes/selCountries_Prior.php");
-
-        $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = 'X'"); // Production
-        // $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = ''"); // Test
-    }
-
-	// CONNECT TO SQL SERVER DATABASE
-	// $connCustomer = mssql_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
-	// mssql_select_db($dbName, $connCustomer);
-	
-	// QUERY CUSTOMER RECORDS
-	$qryGetCustomer = mssql_query("SELECT * FROM tblCustomers WHERE RecordID = " . $_GET['CustomerID']);
-	
-    // GMC - 11/12/09 - Need to Delete Extra Shipping Addresses
-    // GMC - 05/27/10 - Edit Shipping Information in CSRADMIN
-    // GMC - 12/15/10 - Add Nav Rep Id and ability to delete shipping address
-	// $qryGetShippingAddresses = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE IsDefault = 0 AND CustomerID = " . $_GET['CustomerID']);
-	// $qryGetShippingAddresses = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = " . $_GET['CustomerID']);
-	$qryGetShippingAddresses = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE CustomerID = " . $_GET['CustomerID'] . " AND IsActive = 'True'");
-    require_once("../includes/selSecurityQuestions_Variable.php");
+    $_SESSION['DeleteEditAddress'] = "True";
 }
 
 elseif ($_GET['Action'] == 'NewOrder')
@@ -5230,57 +5072,18 @@ elseif ($_GET['Action'] == 'UpdateAddress')
 		$qryGetCustomer = mssql_query("SELECT tblCustomers.CustomerTypeID, tblCustomers.IsApprovedTerms, tblCustomers_ShipTo.CountryCode, tblCustomers.CompanyName, tblCustomers.FirstName, tblCustomers.LastName FROM tblCustomers_ShipTo, tblCustomers WHERE tblCustomers.recordid = tblCustomers_shipto.customerid and tblcustomers_shipto.IsActive = 1 AND tblcustomers_shipto.IsDefault = 1 AND tblcustomers_shipto.customerid = " . $intCustomerID);
 
         // GMC - 06/03/10 - Add Company Name to tblCustomers_ShiptTo
+        // GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
 		// $qryGetCustomerShipTo = mssql_query("SELECT RecordID, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
-		$qryGetCustomerShipTo = mssql_query("SELECT RecordID, CompanyName, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
+		// $qryGetCustomerShipTo = mssql_query("SELECT RecordID, CompanyName, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
+		$qryGetCustomerShipTo = mssql_query("SELECT RecordID, CompanyName, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND IsDisplay = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
 
         $cboCountryCodes = mssql_query("SELECT CountryCode, CountryName FROM conCountryCodes ORDER BY SortOrder ASC, CountryName ASC");
     }
 
-	if (isset($_POST['cmdContinue']))
+    // GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
+	if (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Add Address")
 	{
-       if ($_POST['ShippingAddress'] == 'UseExisting')
-       // SET SESSION
-       {
-          if (isset($_POST['ShipToID']) && $_POST['ShipToID'] != "")
-          {
-             $_SESSION['IsShippingSet'] = 1;
-             $_SESSION['CustomerShipToID'] = $_POST['ShipToID'];
-
-             // GMC - 02/01/11 - Order Closed By CSR ADMIN Partner - Rep
-             // GMC - 11/12/11 - Fix bug when Rep is logged in
-             // GMC - 09/29/14 - UnWash in Admin
-             if ($_SESSION['UserTypeID'] == 2 || $_SESSION['UserTypeID'] == 4)
-             {
-                 $_SESSION['OrderClosedBy'] = $_POST['OrderClosedBy'];
-             }
-
-             // UPDATE RECORD IN TBLCUSTOMERS_SHIPTO
-
-		     //INITIALIZE SPROC
-		     $qrySetUpdateShipping = mssql_init("spOrders_SetUpdateShipping", $connNewOrder);
-		     $intStatusCode = 0;
-
-		     //BIND INPUT PARAMETERS
-		     mssql_bind($qrySetUpdateShipping, "@prmRecordID", $_SESSION['CustomerShipToID'], SQLINT4);
-		     mssql_bind($qrySetUpdateShipping, "@prmCustomerID", $_SESSION['CustomerID'], SQLINT4);
-
-		     $rsSetUpdateAddress = mssql_execute($qrySetUpdateShipping);
-
-             // GMC - 01/14/09 - CA - NV Sales Tax
-             if (mssql_num_rows($rsSetUpdateAddress) > 0)
-		     {
-			    while($row = mssql_fetch_array($rsSetUpdateAddress))
-			    {
-				    $_SESSION['Ship_State'] = $row["State"];
-		        }
-             }
-          }
-          else
-          {
-              echo '<script language="javascript">alert("You have not selected a shipping address, please try again.")</script>;';
-          }
-       }
-	   elseif ($_POST['ShippingAddress'] == 'New')
+	   if (isset($_POST['ShippingAddress']) && $_POST['ShippingAddress'] == 'New')
 	   // ADD NEW SHIPPING ADDRESS AND SET SESSION
 	   {
           // GMC - 03/24/09 - Add *REQUIRED on New Address
@@ -5700,11 +5503,98 @@ elseif ($_GET['Action'] == 'UpdateAddress')
 		  else
 		  {
 		      $_SESSION['NoNewAddress'] = "True";
-              // GMC - 06/03/10 - Add Company Name to tblCustomers_ShiptTo
-              // echo '<script language="javascript">alert("You have not entered a valid shipping address, the required fields are: FirstName, LastName, Address1, City, State or Province, Postal Code and Country, please try again.")</script>;';
               echo '<script language="javascript">alert("You have not entered a valid shipping address, the required fields are: CompanyName, ContactName, Address1, City, State or Province, Postal Code and Country, please try again.")</script>;';
 		  }
 	   }
+       else
+       {
+		    $_SESSION['NoNewAddress'] = "True";
+            echo '<script language="javascript">alert("You have not selected the New Shipping Address Radio Button, please try again.")</script>;';
+       }
+    }
+    else if (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Use Address")
+    {
+       if (isset($_POST['ShippingAddress']) && $_POST['ShippingAddress'] != "")
+       // SET SESSION
+       {
+           $_SESSION['CustomerShipToID'] = $_POST['ShippingAddress'];
+           $_SESSION['DeleteEditAddress'] = 'True';
+           $_SESSION['IsShippingSet'] = 1;
+
+           if ($_SESSION['UserTypeID'] == 2 || $_SESSION['UserTypeID'] == 4)
+           {
+               $_SESSION['OrderClosedBy'] = $_POST['OrderClosedBy'];
+           }
+
+           // UPDATE RECORD IN TBLCUSTOMERS_SHIPTO
+
+           //INITIALIZE SPROC
+		   $qrySetUpdateShipping = mssql_init("spOrders_SetUpdateShipping", $connNewOrder);
+		   $intStatusCode = 0;
+
+		   //BIND INPUT PARAMETERS
+		   mssql_bind($qrySetUpdateShipping, "@prmRecordID", $_SESSION['CustomerShipToID'], SQLINT4);
+		   mssql_bind($qrySetUpdateShipping, "@prmCustomerID", $_SESSION['CustomerID'], SQLINT4);
+
+		   $rsSetUpdateAddress = mssql_execute($qrySetUpdateShipping);
+
+           // GMC - 01/14/09 - CA - NV Sales Tax
+           if (mssql_num_rows($rsSetUpdateAddress) > 0)
+		   {
+			  while($row = mssql_fetch_array($rsSetUpdateAddress))
+			  {
+				  $_SESSION['Ship_State'] = $row["State"];
+		      }
+           }
+           $_SESSION['UseDeleteEditAddress'] = 'True';
+       }
+       else
+       {
+           $_SESSION['UseDeleteEditAddress'] = 'False';
+           echo '<script language="javascript">alert("You have not selected a shipping address, please try again.")</script>;';
+       }
+    }
+    else if (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Edit Address")
+    {
+       if (isset($_POST['ShippingAddress']) && $_POST['ShippingAddress'] != "")
+       // SET SESSION
+       {
+		   include("../includes/selCountries_Prior.php");
+           $_SESSION['CustomerShipToID'] = $_POST['ShippingAddress'];
+           $qryGetShippingAddressesToModify = mssql_query("SELECT * FROM tblCustomers_ShipTo WHERE RecordID = " . $_SESSION['CustomerShipToID'] . " AND CustomerID = " . $intCustomerID);
+           $_SESSION['UseDeleteEditAddress'] = 'True';
+       }
+       else
+       {
+           $_SESSION['UseDeleteEditAddress'] = 'False';
+           echo '<script language="javascript">alert("You have not selected a shipping address, please try again.")</script>;';
+       }
+    }
+    else if (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Delete Address")
+    {
+       if (isset($_POST['ShippingAddress']) && $_POST['ShippingAddress'] != "")
+       // SET SESSION
+       {
+           $_SESSION['CustomerShipToID'] = $_POST['ShippingAddress'];
+
+           // DELETE (SOFT) RECORD IN TBLCUSTOMERS_SHIPTO
+
+		   //INITIALIZE SPROC
+		   $qrySetDeleteShipping = mssql_init("spOrders_SetDeleteShipping", $connNewOrder);
+		   $intStatusCode = 0;
+
+		   //BIND INPUT PARAMETERS
+		   mssql_bind($qrySetDeleteShipping, "@prmRecordID", $_SESSION['CustomerShipToID'], SQLINT4);
+
+		   $rsSetDeleteAddress = mssql_execute($qrySetDeleteShipping);
+     
+           $_SESSION['UseDeleteEditAddress'] = 'True';
+       }
+       else
+       {
+           $_SESSION['UseDeleteEditAddress'] = 'False';
+           echo '<script language="javascript">alert("You have not selected a shipping address, please try again.")</script>;';
+       }
     }
 
 	// CLOSE DATABASE CONNECTION
@@ -5751,8 +5641,10 @@ elseif ($_GET['Action'] == 'SelectAddress')
 		$qryGetCustomer = mssql_query("SELECT tblCustomers.CustomerTypeID, tblCustomers.IsApprovedTerms, tblCustomers_ShipTo.CountryCode, tblCustomers.CompanyName, tblCustomers.FirstName, tblCustomers.LastName FROM tblCustomers_ShipTo, tblCustomers WHERE tblCustomers.recordid = tblCustomers_shipto.customerid and tblcustomers_shipto.IsActive = 1 AND tblcustomers_shipto.IsDefault = 1 AND tblcustomers_shipto.customerid = " . $intCustomerID);
 
         // GMC - 06/03/10 - Add Company Name to tblCustomers_ShiptTo
+        // GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
 		// $qryGetCustomerShipTo = mssql_query("SELECT RecordID, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
-		$qryGetCustomerShipTo = mssql_query("SELECT RecordID, CompanyName, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
+		// $qryGetCustomerShipTo = mssql_query("SELECT RecordID, CompanyName, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
+		$qryGetCustomerShipTo = mssql_query("SELECT RecordID, CompanyName, Attn, Address1, Address2, City, State, PostalCode, CountryCode FROM tblCustomers_ShipTo WHERE IsActive = 1 AND  IsDisplay = 1 AND CustomerID = " . $intCustomerID . " ORDER BY Attn ASC");
 
 		$cboCountryCodes = mssql_query("SELECT CountryCode, CountryName FROM conCountryCodes ORDER BY SortOrder ASC, CountryName ASC");
     }
@@ -5957,7 +5849,13 @@ elseif ($_GET['Action'] == 'Search')
 
             elseif ($_GET['Action'] == 'EditProfile')
             {
-				include("includes/dspCustomers_EditProfile.php");
+                // GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
+				// include("includes/dspCustomers_EditProfile.php");
+                if ($_SESSION['DeleteEditAddress'] == 'True')
+                {
+                    // header("Location: http://secure.revitalash.com/csradmin/customers.php");
+                    header("Location: http://localhost/csradmin/customers.php");
+                }
             }
 			elseif ($_GET['Action'] == 'NewOrder')
 			{
@@ -6000,15 +5898,46 @@ elseif ($_GET['Action'] == 'Search')
 			{
                    include("includes/dspCustomers_UpdateAddress.php");
             }
+            // GMC - 02/04/16 Modifications for the Edit - Delete - Address Shipping Addresses
 			elseif ($_GET['Action'] == 'UpdateAddress')
 			{
                     if($_SESSION['NoNewAddress'] == 'True')
                     {
                         include("includes/dspCustomers_UpdateAddress.php");
                     }
-                    else
+                    elseif (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Use Address")
                     {
-                        include("includes/dspCustomers_BackNewOrder.php");
+                        if ($_SESSION['UseDeleteEditAddress'] == 'True')
+                        {
+                            include("includes/dspCustomers_BackNewOrder.php");
+                        }
+                        else
+                        {
+                            include("includes/dspCustomers_UpdateAddress.php");
+                        }
+                    }
+                    elseif (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Delete Address")
+                    {
+                        if ($_SESSION['UseDeleteEditAddress'] == 'True')
+                        {
+                            // header("Location: https://ae.secure.revitalash.com/csradmin/customers.php");
+                            header("Location: http://localhost/csradmin/customers.php");
+                        }
+                        else
+                        {
+                            include("includes/dspCustomers_UpdateAddress.php");
+                        }
+                    }
+                    elseif (isset($_POST['cmdContinue']) && $_POST['cmdContinue'] == "Edit Address")
+                    {
+                        if ($_SESSION['UseDeleteEditAddress'] == 'True')
+                        {
+                            include("includes/dspCustomers_EditProfile.php");
+                        }
+                        else
+                        {
+                            include("includes/dspCustomers_UpdateAddress.php");
+                        }
                     }
             }
 

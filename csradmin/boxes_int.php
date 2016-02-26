@@ -11,21 +11,10 @@ $_SESSION['Country_Customer'] = "NON_US";
 if ((!isset($_GET['Action'])) || ($_GET['Action'] == 'NewOrder'))
 {
 	// CONNECT TO SQL SERVER DATABASE
-	// $connNewOrder = mssql_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
-	// $selected = mssql_select_db($dbName, $connNewOrder);
-	
-	$connectionInfo = array( "Database"=>$dbName, "UID"=>$dbUser, "PWD"=>$dbPass);
-	$conn = sqlsrv_connect( $serverName, $connectionInfo);
-	
-	if( $conn ) {
-		 // echo "Connection established.<br />";
-	}else{
-		 echo "Connection could not be established.<br />";
-		 die( print_r( sqlsrv_errors(), true));
-	}	
-	
+	$connNewOrder = mssql_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
+	$selected = mssql_select_db($dbName, $connNewOrder);
+
     // OBTAIN LIST OF PRODUCTS
-	/*
     $cboProducts1 = mssql_query("SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
     $cboProducts2 = mssql_query("SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
     $cboProducts3 = mssql_query("SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
@@ -46,32 +35,9 @@ if ((!isset($_GET['Action'])) || ($_GET['Action'] == 'NewOrder'))
     $cboProducts18 = mssql_query("SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
     $cboProducts19 = mssql_query("SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
     $cboProducts20 = mssql_query("SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-	*/
-	
-    $cboProducts1 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts2 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts3 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts4 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts5 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts6 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts7 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts8 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts9 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts10 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts11 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts12 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts13 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts14 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts15 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts16 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts17 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts18 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts19 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-    $cboProducts20 = sqlsrv_query($conn, "SELECT * FROM tblProducts WHERE IsActive = 1 and IsDomestic = 0 order by productname asc");
-	
+
 	// CLOSE DATABASE CONNECTION
-	// mssql_close($connNewOrder);
-	// sqlsrv_close($conn);
+	mssql_close($connNewOrder);
 }
 
 ?>

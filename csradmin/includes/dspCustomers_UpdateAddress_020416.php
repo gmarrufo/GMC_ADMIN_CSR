@@ -2,8 +2,6 @@
 
 <h1>Select Shipping Address</h1>
 
-<?php if (isset($confirmation)) echo '<p class="confirmation">' . $confirmation . '</p>'; ?>
-
 <?php
 
 if ($_SESSION['UserTypeID'] == 1)
@@ -56,25 +54,84 @@ while($rowGetCustomer = mssql_fetch_array($qryGetCustomer))
 
 }
 
+// INITIALIZE DEFAULT SESSION VARIABLES
+/*
+if (!isset($_SESSION['FORMItemID1']))
+{
+	$_SESSION['FORMItemID1'] = 0;
+	$_SESSION['FORMItemStockLocation1'] = 'MAIN';
+	$_SESSION['FORMItemQty1'] = '';
+
+	$_SESSION['FORMItemID2'] = 0;
+	$_SESSION['FORMItemStockLocation2'] = 'MAIN';
+	$_SESSION['FORMItemQty2'] = '';
+
+	$_SESSION['FORMItemID3'] = 0;
+	$_SESSION['FORMItemStockLocation3'] = 'MAIN';
+	$_SESSION['FORMItemQty3'] = '';
+
+	$_SESSION['FORMItemID4'] = 0;
+	$_SESSION['FORMItemStockLocation4'] = 'MAIN';
+	$_SESSION['FORMItemQty4'] = '';
+
+	$_SESSION['FORMItemID5'] = 0;
+	$_SESSION['FORMItemStockLocation5'] = 'MAIN';
+	$_SESSION['FORMItemQty5'] = '';
+
+	$_SESSION['FORMItemID6'] = 0;
+	$_SESSION['FORMItemStockLocation6'] = 'MAIN';
+	$_SESSION['FORMItemQty6'] = '';
+
+	$_SESSION['FORMItemID7'] = 0;
+	$_SESSION['FORMItemStockLocation7'] = 'MAIN';
+	$_SESSION['FORMItemQty7'] = '';
+
+	$_SESSION['FORMItemID8'] = 0;
+	$_SESSION['FORMItemStockLocation8'] = 'MAIN';
+	$_SESSION['FORMItemQty8'] = '';
+
+	$_SESSION['FORMItemID9'] = 0;
+	$_SESSION['FORMItemStockLocation9'] = 'MAIN';
+	$_SESSION['FORMItemQty9'] = '';
+
+	$_SESSION['FORMItemID10'] = 0;
+	$_SESSION['FORMItemStockLocation10'] = 'MAIN';
+	$_SESSION['FORMItemQty10'] = '';
+}
+*/
+
 echo '</table>';
 
 ?>
 
-<table width="100%">
-<tr>
-    <td width="*"><font color="red"><center><strong>YOU MUST SELECT A SHIPPING ADDRESS AND USE IT, EDIT OR DELETE OR ADD A NEW SHIPPING ADDRESS AND CLICK "ADD ADDRESS" TO CONTINUE.</strong></center></font></td>
-</tr>
-</table>
-
 <form action="/csradmin/customers.php?Action=UpdateAddress&CustomerID=<?php echo $intCustomerID; ?>" method="post">
 
-<table width="100%">
-<tr>
-<td width="50%">
-
-<!-- NEW ADDRESS SECTION -->
-
 <table width="100%" cellpadding="5" cellspacing="0">
+
+<tr>
+    <td width="30">&nbsp;</td>
+    <td width="150">&nbsp;</th>
+    <td width="*"><font color="red"><strong>YOU MUST HIGHLIGHT A SHIPPING ADDRESS OR ADD A NEW SHIPPING ADDRESS AND CLICK "UPDATE ADDRESS" TO CONTINUE.</strong></font></td>
+</tr>
+
+<tr>
+    <td width="30"><input type="radio" name="ShippingAddress" value="UseExisting" checked="checked" />
+    <td width="150">Shipping Addresses:</th>
+    <td width="*"><select name="ShipToID" size="1">
+    <?php
+
+    // GMC - 06/03/10 - Add Company Name to tblCustomers_ShiptTo
+    while($row = mssql_fetch_array($qryGetCustomerShipTo))
+    {
+		if (isset($_SESSION['CustomerShipToID']) && $_SESSION['CustomerShipToID'] == $row["RecordID"])
+			echo '<option value="' . $row["RecordID"] . '">' . $row["CompanyName"] . ' - ' . $row["Attn"] . ' - ' . $row["Address1"] . ' - ' . $row["Address2"] . ' - ' . $row["City"] . ', ' . $row["State"] . ' ' . $row["PostalCode"] . ' ' . $row["CountryCode"] . '</option>';
+		else
+			echo '<option selected="selected" value="' . $row["RecordID"] . '">' . $row["CompanyName"] . ' - ' . $row["Attn"] . ' - ' . $row["Address1"] . ' - ' . $row["Address2"] . ' - ' . $row["City"] . ', ' . $row["State"] . ' ' . $row["PostalCode"] . ' ' . $row["CountryCode"] . '</option>';
+    }
+    ?>
+    </select>
+    </td>
+</tr>
 
 <?php
 
@@ -730,39 +787,9 @@ if ($_SESSION['UserTypeID'] != 1)
 
 ?>
 
-<tr><td colspan="3"><input type="submit" name="cmdContinue" value="Add Address" class="formSubmit" /></td></tr>
+<tr><td colspan="3"><input type="submit" name="cmdContinue" value="Update Address" class="formSubmit" /></td></tr>
 
 </table>
-
-</td>
-<td width="50%">
-
-<!-- EDIT DELETE ADDRESS SECTION -->
-
-<table width="100%" cellpadding="5" cellspacing="0">
-
-<?php
-
-    while($row = mssql_fetch_array($qryGetCustomerShipTo))
-    {
-        echo '<tr><td width="30"><input type="radio" name="ShippingAddress" value="' . $row["RecordID"] . '" />';
-        echo '<td width="400">Address:</th>';
-        echo '<td width="400">' . $row["CompanyName"] . '<br/>' . $row["Attn"] . '<br/>' . $row["Address1"] . '<br/>' . $row["Address2"] . '<br/>' . $row["City"] . ', ' . $row["State"] . ' ' . $row["PostalCode"] . ' ' . $row["CountryCode"];
-        echo '</td></tr>';
-    }
-
-?>
-
-</table>
-
-<table width="100%" cellpadding="5" cellspacing="0">
-
-<tr><td colspan="1"><input type="submit" name="cmdContinue" value="Use Address" class="formSubmit" /></td><td colspan="1"><input type="submit" name="cmdContinue" value="Edit Address" class="formSubmit" /></td><td colspan="1"><input type="submit" name="cmdContinue" value="Delete Address" class="formSubmit" /></td></tr>
-
-</table>
-
-</td>
-</tr>
 
 </table>
 

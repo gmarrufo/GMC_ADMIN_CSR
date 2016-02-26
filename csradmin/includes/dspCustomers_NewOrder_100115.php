@@ -62,95 +62,9 @@ $_SESSION['2010_Holiday_Gift_Set'] = '';
 // GMC - 12/11/13 - Magento Manual Process
 $_SESSION['MagentoFlag'] = '';
 
-// GMC - 09/18/15 - Fedex Freight Desktop Tool - LTL Flag
-// $_SESSION['LTL_Order_Flag'] = 0;
-// $_SESSION['FedEx_Desktop_Tool'] = 0;
-
-// GMC - 10/12/15 - Regenesis Reorder Discount Program
-$_SESSION['RegenesisReorderThreshold'] = '';
-$_SESSION['RegenesisReorderDiscount'] = .15;
-
-$_SESSION['RegenesisReorderRGProd_01'] = '';
-$_SESSION['RegenesisReorderRGProd_02'] = '';
-$_SESSION['RegenesisReorderRGProd_03'] = '';
-$_SESSION['RegenesisReorderRGProd_04'] = '';
-$_SESSION['RegenesisReorderRGProd_05'] = '';
-$_SESSION['RegenesisReorderRGProd_06'] = '';
-$_SESSION['RegenesisReorderRGProd_07'] = '';
-$_SESSION['RegenesisReorderRGProd_08'] = '';
-$_SESSION['RegenesisReorderRGProd_09'] = '';
-$_SESSION['RegenesisReorderRGProd_10'] = '';
-$_SESSION['RegenesisReorderRGProd_11'] = '';
-$_SESSION['RegenesisReorderRGProd_12'] = '';
-$_SESSION['RegenesisReorderRGProd_13'] = '';
-$_SESSION['RegenesisReorderRGProd_14'] = '';
-$_SESSION['RegenesisReorderRGProd_15'] = '';
-$_SESSION['RegenesisReorderRGProd_16'] = '';
-$_SESSION['RegenesisReorderRGProd_17'] = '';
-$_SESSION['RegenesisReorderRGProd_18'] = '';
-$_SESSION['RegenesisReorderRGProd_19'] = '';
-$_SESSION['RegenesisReorderRGProd_20'] = '';
-$_SESSION['RegenesisReorderRGProd_21'] = '';
-$_SESSION['RegenesisReorderRGProd_22'] = '';
-$_SESSION['RegenesisReorderRGProd_23'] = '';
-$_SESSION['RegenesisReorderRGProd_24'] = '';
-$_SESSION['RegenesisReorderRGProd_25'] = '';
-$_SESSION['RegenesisReorderRGProd_26'] = '';
-$_SESSION['RegenesisReorderRGProd_27'] = '';
-$_SESSION['RegenesisReorderRGProd_28'] = '';
-$_SESSION['RegenesisReorderRGProd_29'] = '';
-$_SESSION['RegenesisReorderRGProd_30'] = '';
-$_SESSION['RegenesisReorderRGProd_31'] = '';
-$_SESSION['RegenesisReorderRGProd_32'] = '';
-$_SESSION['RegenesisReorderRGProd_33'] = '';
-$_SESSION['RegenesisReorderRGProd_34'] = '';
-$_SESSION['RegenesisReorderRGProd_35'] = '';
-$_SESSION['RegenesisReorderRGProd_36'] = '';
-$_SESSION['RegenesisReorderRGProd_37'] = '';
-$_SESSION['RegenesisReorderRGProd_38'] = '';
-$_SESSION['RegenesisReorderRGProd_39'] = '';
-$_SESSION['RegenesisReorderRGProd_40'] = '';
-
-$_SESSION['RegenesisReorderRVProd_01'] = '';
-$_SESSION['RegenesisReorderRVProd_02'] = '';
-$_SESSION['RegenesisReorderRVProd_03'] = '';
-$_SESSION['RegenesisReorderRVProd_04'] = '';
-$_SESSION['RegenesisReorderRVProd_05'] = '';
-$_SESSION['RegenesisReorderRVProd_06'] = '';
-$_SESSION['RegenesisReorderRVProd_07'] = '';
-$_SESSION['RegenesisReorderRVProd_08'] = '';
-$_SESSION['RegenesisReorderRVProd_09'] = '';
-$_SESSION['RegenesisReorderRVProd_10'] = '';
-$_SESSION['RegenesisReorderRVProd_11'] = '';
-$_SESSION['RegenesisReorderRVProd_12'] = '';
-$_SESSION['RegenesisReorderRVProd_13'] = '';
-$_SESSION['RegenesisReorderRVProd_14'] = '';
-$_SESSION['RegenesisReorderRVProd_15'] = '';
-$_SESSION['RegenesisReorderRVProd_16'] = '';
-$_SESSION['RegenesisReorderRVProd_17'] = '';
-$_SESSION['RegenesisReorderRVProd_18'] = '';
-$_SESSION['RegenesisReorderRVProd_19'] = '';
-$_SESSION['RegenesisReorderRVProd_20'] = '';
-$_SESSION['RegenesisReorderRVProd_21'] = '';
-$_SESSION['RegenesisReorderRVProd_22'] = '';
-$_SESSION['RegenesisReorderRVProd_23'] = '';
-$_SESSION['RegenesisReorderRVProd_24'] = '';
-$_SESSION['RegenesisReorderRVProd_25'] = '';
-$_SESSION['RegenesisReorderRVProd_26'] = '';
-$_SESSION['RegenesisReorderRVProd_27'] = '';
-$_SESSION['RegenesisReorderRVProd_28'] = '';
-$_SESSION['RegenesisReorderRVProd_29'] = '';
-$_SESSION['RegenesisReorderRVProd_30'] = '';
-$_SESSION['RegenesisReorderRVProd_31'] = '';
-$_SESSION['RegenesisReorderRVProd_32'] = '';
-$_SESSION['RegenesisReorderRVProd_33'] = '';
-$_SESSION['RegenesisReorderRVProd_34'] = '';
-$_SESSION['RegenesisReorderRVProd_35'] = '';
-$_SESSION['RegenesisReorderRVProd_36'] = '';
-$_SESSION['RegenesisReorderRVProd_37'] = '';
-$_SESSION['RegenesisReorderRVProd_38'] = '';
-$_SESSION['RegenesisReorderRVProd_39'] = '';
-$_SESSION['RegenesisReorderRVProd_40'] = '';
+// GMC - 09/18/15 - Fedex Freight Web Tool - LTL Flag
+$_SESSION['LTL_Order_Flag'] = 0;
+$_SESSION['FedEx_Web_Tool'] = 0;
 
 // GMC - 01/19/14 - Discount Promo Code International Items
 $_SESSION['IntDiscProValue_1'] = '';
@@ -1285,13 +1199,6 @@ REGENESIS PROMOTION
 Regenesis Back Bar Shampoo and Regenesis Back Bar Conditioner. Minimum order of 3 or more. Buy 3 and get 1 for Free.
 </p>
 
-<!-- GMC - 11/17/15 - Warning for UnWash Dry Cleansing Conditioner -->
-UNWASH DRY CLEANSING CONDITIONER
-<br>
-<p>
-Special Shipping Information:  This product may not be available for 1 or 2 day shipping due to federal regulations that require it to ship via ground ship methods only.  This product can only be shipped within the 48 contiguous states.
-</p>
-
 </strong>
 </font>
 </div>
@@ -1656,8 +1563,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation1'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation1'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -1679,8 +1586,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation1'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation1'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -1702,8 +1609,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation1'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation1'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -1725,8 +1632,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation1'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation1'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -1756,8 +1663,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation1'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation1'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2083,8 +1990,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation2'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation2'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2106,8 +2013,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation2'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation2'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2129,8 +2036,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation2'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation2'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2152,8 +2059,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation2'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation2'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2183,8 +2090,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation2'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation2'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2511,8 +2418,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation3'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation3'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2534,8 +2441,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation3'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation3'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2557,8 +2464,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation3'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation3'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2580,8 +2487,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation3'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation3'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2611,8 +2518,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation3'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation3'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2938,8 +2845,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation4'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation4'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2961,8 +2868,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation4'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation4'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -2984,8 +2891,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation4'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation4'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3007,8 +2914,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation4'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation4'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3038,8 +2945,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation4'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation4'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3365,8 +3272,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation5'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation5'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3388,8 +3295,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation5'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation5'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3411,8 +3318,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation5'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation5'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3434,8 +3341,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation5'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation5'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3465,8 +3372,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation5'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation5'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3793,8 +3700,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation6'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation6'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3816,8 +3723,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation6'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation6'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3839,8 +3746,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation6'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation6'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3862,8 +3769,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation6'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation6'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -3893,8 +3800,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation6'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation6'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4221,8 +4128,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation7'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation7'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4244,8 +4151,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation7'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation7'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4267,8 +4174,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation7'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation7'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4290,8 +4197,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation7'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation7'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4321,8 +4228,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation7'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation7'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4649,8 +4556,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation8'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation8'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4672,8 +4579,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation8'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation8'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4695,8 +4602,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation8'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation8'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4718,8 +4625,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation8'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation8'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -4749,8 +4656,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation8'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation8'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5076,8 +4983,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation9'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation9'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5099,8 +5006,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation9'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation9'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5122,8 +5029,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation9'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation9'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5145,8 +5052,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation9'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation9'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5176,8 +5083,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation9'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation9'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5503,8 +5410,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation10'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation10'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5526,8 +5433,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation10'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation10'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5549,8 +5456,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation10'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation10'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5572,8 +5479,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation10'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation10'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5603,8 +5510,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation10'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation10'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5932,8 +5839,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation11'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation11'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5955,8 +5862,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation11'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation11'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -5978,8 +5885,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation11'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation11'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6001,8 +5908,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation11'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation11'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6032,8 +5939,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation11'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation11'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6360,8 +6267,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation12'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation12'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6383,8 +6290,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation12'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation12'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6406,8 +6313,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation12'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation12'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6429,8 +6336,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation12'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation12'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6460,8 +6367,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation12'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation12'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6788,8 +6695,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation13'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation13'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6811,8 +6718,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation13'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation13'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6834,8 +6741,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation13'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation13'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6857,8 +6764,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation13'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation13'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -6888,8 +6795,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation13'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation13'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7214,8 +7121,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation14'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation14'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7237,8 +7144,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation14'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation14'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7260,8 +7167,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation14'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation14'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7283,8 +7190,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation14'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation14'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7314,8 +7221,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation14'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation14'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7642,8 +7549,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation15'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation15'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7665,8 +7572,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation15'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation15'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7688,8 +7595,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation15'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation15'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7711,8 +7618,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation15'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation15'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -7742,8 +7649,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation15'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation15'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8069,8 +7976,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation16'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation16'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8092,8 +7999,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation16'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation16'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8115,8 +8022,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation16'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation16'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8138,8 +8045,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation16'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation16'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8169,8 +8076,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation16'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation16'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8497,8 +8404,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation17'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation17'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8520,8 +8427,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation17'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation17'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8543,8 +8450,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation17'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation17'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8566,8 +8473,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation17'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation17'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8597,8 +8504,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation17'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation17'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8925,8 +8832,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation18'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation18'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8948,8 +8855,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation18'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation18'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8971,8 +8878,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation18'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation18'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -8994,8 +8901,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation18'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation18'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9025,8 +8932,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation18'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation18'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9352,8 +9259,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation19'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9375,8 +9282,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation19'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9398,8 +9305,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation19'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9424,8 +9331,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		    echo '<option value="FEDEXNETH"'; if ($_SESSION['FORMItemStockLocation19'] == 'FEDEXNETH') echo ' selected="selected"'; echo '>FedEx EU</option>';
 		    echo '<option value="TRADESHOW"'; if ($_SESSION['FORMItemStockLocation19'] == 'TRADESHOW') echo ' selected="selected"'; echo '>Tradeshow</option>';
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9452,8 +9359,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation19'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9779,8 +9686,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation20'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9802,8 +9709,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation20'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9825,8 +9732,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation20'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9848,8 +9755,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation20'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation20'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -9879,8 +9786,8 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation20'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
 
-            // GMC - 03/07/12 - 10/01/15 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone) - Add Slyvia Rodriguez
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            // GMC - 03/07/12 - WESTWAY Selection in Shipping From Location (Sidney, Oronoz, Stancarone)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation20'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10139,7 +10046,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation21'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10155,7 +10062,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation21'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10171,7 +10078,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation21'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation21'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10187,7 +10094,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation21'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10208,7 +10115,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation21'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation21'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10461,7 +10368,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation22'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10477,7 +10384,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation22'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10493,7 +10400,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation22'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10509,7 +10416,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation22'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10530,7 +10437,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation22'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10783,7 +10690,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation23'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10799,7 +10706,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation23'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10815,7 +10722,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation23'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10831,7 +10738,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation23'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -10852,7 +10759,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation23'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11104,7 +11011,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation24'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11120,7 +11027,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation24'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11136,7 +11043,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation24'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11152,7 +11059,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation24'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11173,7 +11080,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation24'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11425,7 +11332,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation25'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11441,7 +11348,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation25'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11457,7 +11364,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation25'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11473,7 +11380,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation25'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11494,7 +11401,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation25'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11746,7 +11653,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation26'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11762,7 +11669,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation26'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11778,7 +11685,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation26'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11794,7 +11701,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation26'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -11815,7 +11722,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation26'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12067,7 +11974,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation27'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12083,7 +11990,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation27'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12099,7 +12006,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation27'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12115,7 +12022,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation27'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12136,7 +12043,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation27'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12388,7 +12295,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation28'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12404,7 +12311,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation28'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12420,7 +12327,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation28'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12436,7 +12343,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation28'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12457,7 +12364,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation28'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12709,7 +12616,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation29'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12725,7 +12632,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation29'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12741,7 +12648,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation29'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12757,7 +12664,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation29'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -12778,7 +12685,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation29'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13030,7 +12937,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation30'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13046,7 +12953,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation30'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13062,7 +12969,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation30'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13078,7 +12985,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation30'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13099,7 +13006,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation30'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13351,7 +13258,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation31'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13367,7 +13274,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation31'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13383,7 +13290,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation31'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13399,7 +13306,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation31'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13420,7 +13327,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation31'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13672,7 +13579,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation32'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13688,7 +13595,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation32'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13704,7 +13611,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation32'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13720,7 +13627,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation32'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13741,7 +13648,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation32'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -13993,7 +13900,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation33'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14009,7 +13916,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation33'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14025,7 +13932,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation33'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14041,7 +13948,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation33'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14062,7 +13969,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation33'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14314,7 +14221,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation34'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14330,7 +14237,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation34'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14346,7 +14253,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation34'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14362,7 +14269,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation34'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14383,7 +14290,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation34'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14635,7 +14542,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation35'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14651,7 +14558,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation35'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14667,7 +14574,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation35'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14683,7 +14590,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation35'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14704,7 +14611,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation35'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14956,7 +14863,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation36'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14972,7 +14879,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation36'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -14988,7 +14895,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation36'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15004,7 +14911,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation36'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15025,7 +14932,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation36'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15277,7 +15184,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation37'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15293,7 +15200,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation37'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15309,7 +15216,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation37'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15325,7 +15232,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation37'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15346,7 +15253,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation37'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15598,7 +15505,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation38'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15614,7 +15521,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation38'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15630,7 +15537,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation38'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15646,7 +15553,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation38'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15667,7 +15574,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation38'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15919,7 +15826,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation39'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15935,7 +15842,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation39'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15951,7 +15858,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation39'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15967,7 +15874,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation39'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -15988,7 +15895,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation39'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -16240,7 +16147,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation40'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -16256,7 +16163,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation40'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -16272,7 +16179,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation40'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -16288,7 +16195,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
 		        echo '<option value="MAIN"'; if ($_SESSION['FORMItemStockLocation40'] == 'MAIN') echo ' selected="selected"'; echo '>FCA</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }
@@ -16309,7 +16216,7 @@ Special Shipping Information:  This product may not be available for 1 or 2 day 
             {
                 echo '<option value="VEN CORP"'; if ($_SESSION['FORMItemStockLocation40'] == 'VEN CORP') echo ' selected="selected"'; echo '>Ventura</option>';
             }
-            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44 || $_SESSION['UserID'] == 234)
+            if($_SESSION['UserID'] == 35 || $_SESSION['UserID'] == 133 || $_SESSION['UserID'] == 171 || $_SESSION['UserID'] == 44)
             {
 		        echo '<option value="WESTWAY"'; if ($_SESSION['FORMItemStockLocation19'] == 'WESTWAY') echo ' selected="selected"'; echo '>WESTWAY</option>';
             }

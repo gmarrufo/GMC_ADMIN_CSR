@@ -44,47 +44,19 @@ $_SESSION['SummerTravelKitPromoJune2012'] = 0;
 // GMC - 06/04/12 - SUMMER2012 Special Promotion Code 15% just for NAV974/620 FineLine Primer
 $_SESSION['Summer2012FineLinePrimer'] = 0;
 
-// GMC - 10/12/15 - Regenesis Reorder Discount Program
-$RegenesisReorderRGProd_01 = 0;
-$RegenesisReorderRGProd_02 = 0;
-$RegenesisReorderRGProd_03 = 0;
-$RegenesisReorderRGProd_04 = 0;
-$RegenesisReorderRGProd_05 = 0;
-$RegenesisReorderRGProd_06 = 0;
-$RegenesisReorderRGProd_07 = 0;
-$RegenesisReorderRGProd_08 = 0;
-$RegenesisReorderRGProd_09 = 0;
-$RegenesisReorderRGProd_10 = 0;
-$RegenesisReorderRGProd_11 = 0;
-$RegenesisReorderRGProd_12 = 0;
-$RegenesisReorderRGProd_13 = 0;
-$RegenesisReorderRGProd_14 = 0;
-$RegenesisReorderRGProd_15 = 0;
-$RegenesisReorderRGProd_16 = 0;
-$RegenesisReorderRGProd_17 = 0;
-$RegenesisReorderRGProd_18 = 0;
-$RegenesisReorderRGProd_19 = 0;
-$RegenesisReorderRGProd_20 = 0;
-$RegenesisReorderRGProd_21 = 0;
-$RegenesisReorderRGProd_22 = 0;
-$RegenesisReorderRGProd_23 = 0;
-$RegenesisReorderRGProd_24 = 0;
-$RegenesisReorderRGProd_25 = 0;
-$RegenesisReorderRGProd_26 = 0;
-$RegenesisReorderRGProd_27 = 0;
-$RegenesisReorderRGProd_28 = 0;
-$RegenesisReorderRGProd_29 = 0;
-$RegenesisReorderRGProd_30 = 0;
-$RegenesisReorderRGProd_31 = 0;
-$RegenesisReorderRGProd_32 = 0;
-$RegenesisReorderRGProd_33 = 0;
-$RegenesisReorderRGProd_34 = 0;
-$RegenesisReorderRGProd_35 = 0;
-$RegenesisReorderRGProd_36 = 0;
-$RegenesisReorderRGProd_37 = 0;
-$RegenesisReorderRGProd_38 = 0;
-$RegenesisReorderRGProd_39 = 0;
-$RegenesisReorderRGProd_40 = 0;
+// 08/12/15 - Separate FedEx Service Call based on Number of Boxes
+$_SESSION['RC1'] = 0;
+$_SESSION['RC2'] = 0;
+$_SESSION['RC3'] = 0;
+$_SESSION['RC4'] = 0;
+$_SESSION['RC5'] = 0;
+$_SESSION['RC6'] = 0;
+$_SESSION['RC7'] = 0;
+$_SESSION['RC8'] = 0;
+$_SESSION['RC9'] = 0;
+$_SESSION['RC10'] = 0;
+$_SESSION['RC11'] = 0;
+$_SESSION['RC12'] = 0;
 
 // GMC - 08/16/11 - To divide Products and Marketing Materials
 
@@ -6057,22 +6029,6 @@ if ($_POST['ItemID1'] != 0)
                    $_SESSION['Regenesis_2285_1'] = (floor($_POST['ItemQty1']/3))*1;
                }
 
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID1'] == '1619') || ($_POST['ItemID1'] == '1618') || ($_POST['ItemID1'] == '1608') || ($_POST['ItemID1'] == '1385') || ($_POST['ItemID1'] == '1384') || ($_POST['ItemID1'] == '1383')) // Production
-               {
-			       $decUnitPrice1 = $row1["ResellerPrice"];
-			       $decExtendedPrice1 = number_format($decUnitPrice1 * $_POST['ItemQty1'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_01'] = 'True';
-                   $RegenesisReorderRGProd_01 = $decExtendedPrice1;
-               }
-
-               else if (($_POST['ItemID1'] == '804') || ($_POST['ItemID1'] == '1612') || ($_POST['ItemID1'] == '1316')) // Production
-               {
-			       $decUnitPrice1 = $row1["ResellerPrice"];
-			       $decExtendedPrice1 = number_format($decUnitPrice1 * $_POST['ItemQty1'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_01'] = 'True';
-               }
-
                else
                {
 				     $rs2 = mssql_query("SELECT TOP 1 DiscountPrice FROM tblProducts_ResellerTier WHERE ProductID = " . $_POST['ItemID1'] . " AND " . $_POST['ItemQty1'] . " >= QtyRequired ORDER BY QtyRequired DESC");
@@ -6454,9 +6410,8 @@ if ($_POST['ItemID1'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice1;
-        }
+		    $decSubtotal = $decSubtotal + $decExtendedPrice1;
+		}
 
 		$decTotalWeight = $decTotalWeight + ($row1["Weight"] * $_POST['ItemQty1']);
 
@@ -6811,22 +6766,6 @@ if ($_POST['ItemID2'] != 0)
 			       $decUnitPrice2 = $row2["ResellerPrice"];
 			       $decExtendedPrice2 = number_format($decUnitPrice2 * $_POST['ItemQty2'], 2, '.', '');
                    $_SESSION['Regenesis_2285_2'] = (floor($_POST['ItemQty2']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID2'] == '1619') || ($_POST['ItemID2'] == '1618') || ($_POST['ItemID2'] == '1608') || ($_POST['ItemID2'] == '1385') || ($_POST['ItemID2'] == '1384') || ($_POST['ItemID2'] == '1383')) // Production
-               {
-			       $decUnitPrice2 = $row2["ResellerPrice"];
-			       $decExtendedPrice2 = number_format($decUnitPrice2 * $_POST['ItemQty2'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_02'] = 'True';
-                   $RegenesisReorderRGProd_02 = $decExtendedPrice2;
-               }
-
-               else if (($_POST['ItemID2'] == '804') || ($_POST['ItemID2'] == '1612') || ($_POST['ItemID2'] == '1316')) // Production
-               {
-			       $decUnitPrice2 = $row2["ResellerPrice"];
-			       $decExtendedPrice2 = number_format($decUnitPrice2 * $_POST['ItemQty2'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_02'] = 'True';
                }
 
                else
@@ -7210,8 +7149,7 @@ if ($_POST['ItemID2'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice2;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice2;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row2["Weight"] * $_POST['ItemQty2']);
@@ -7567,22 +7505,6 @@ if ($_POST['ItemID3'] != 0)
 			       $decUnitPrice3 = $row3["ResellerPrice"];
 			       $decExtendedPrice3 = number_format($decUnitPrice3 * $_POST['ItemQty3'], 2, '.', '');
                    $_SESSION['Regenesis_2285_3'] = (floor($_POST['ItemQty3']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID3'] == '1619') || ($_POST['ItemID3'] == '1618') || ($_POST['ItemID3'] == '1608') || ($_POST['ItemID3'] == '1385') || ($_POST['ItemID3'] == '1384') || ($_POST['ItemID3'] == '1383')) // Production
-               {
-			       $decUnitPrice3 = $row3["ResellerPrice"];
-			       $decExtendedPrice3 = number_format($decUnitPrice3 * $_POST['ItemQty3'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_03'] = 'True';
-                   $RegenesisReorderRGProd_03 = $decExtendedPrice3;
-               }
-
-               else if (($_POST['ItemID3'] == '804') || ($_POST['ItemID3'] == '1612') || ($_POST['ItemID3'] == '1316')) // Production
-               {
-			       $decUnitPrice3 = $row3["ResellerPrice"];
-			       $decExtendedPrice3 = number_format($decUnitPrice3 * $_POST['ItemQty3'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_03'] = 'True';
                }
 
                else
@@ -7966,8 +7888,7 @@ if ($_POST['ItemID3'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice3;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice3;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row3["Weight"] * $_POST['ItemQty3']);
@@ -8324,22 +8245,6 @@ if ($_POST['ItemID4'] != 0)
 			       $decUnitPrice4 = $row4["ResellerPrice"];
 			       $decExtendedPrice4 = number_format($decUnitPrice4 * $_POST['ItemQty4'], 2, '.', '');
                    $_SESSION['Regenesis_2285_4'] = (floor($_POST['ItemQty4']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID4'] == '1619') || ($_POST['ItemID4'] == '1618') || ($_POST['ItemID4'] == '1608') || ($_POST['ItemID4'] == '1385') || ($_POST['ItemID4'] == '1384') || ($_POST['ItemID4'] == '1383')) // Production
-               {
-			       $decUnitPrice4 = $row4["ResellerPrice"];
-			       $decExtendedPrice4 = number_format($decUnitPrice4 * $_POST['ItemQty4'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_04'] = 'True';
-                   $RegenesisReorderRGProd_04 = $decExtendedPrice4;
-               }
-
-               else if (($_POST['ItemID4'] == '804') || ($_POST['ItemID4'] == '1612') || ($_POST['ItemID4'] == '1316')) // Production
-               {
-			       $decUnitPrice4 = $row4["ResellerPrice"];
-			       $decExtendedPrice4 = number_format($decUnitPrice4 * $_POST['ItemQty4'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_04'] = 'True';
                }
 
                else
@@ -8723,8 +8628,7 @@ if ($_POST['ItemID4'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice4;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice4;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row4["Weight"] * $_POST['ItemQty4']);
@@ -9080,22 +8984,6 @@ if ($_POST['ItemID5'] != 0)
 			       $decUnitPrice5 = $row5["ResellerPrice"];
 			       $decExtendedPrice5 = number_format($decUnitPrice5 * $_POST['ItemQty5'], 2, '.', '');
                    $_SESSION['Regenesis_2285_5'] = (floor($_POST['ItemQty5']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID5'] == '1619') || ($_POST['ItemID5'] == '1618') || ($_POST['ItemID5'] == '1608') || ($_POST['ItemID5'] == '1385') || ($_POST['ItemID5'] == '1384') || ($_POST['ItemID5'] == '1383')) // Production
-               {
-			       $decUnitPrice5 = $row5["ResellerPrice"];
-			       $decExtendedPrice5 = number_format($decUnitPrice5 * $_POST['ItemQty5'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_05'] = 'True';
-                   $RegenesisReorderRGProd_05 = $decExtendedPrice5;
-               }
-
-               else if (($_POST['ItemID5'] == '804') || ($_POST['ItemID5'] == '1612') || ($_POST['ItemID5'] == '1316')) // Production
-               {
-			       $decUnitPrice5 = $row5["ResellerPrice"];
-			       $decExtendedPrice5 = number_format($decUnitPrice5 * $_POST['ItemQty5'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_05'] = 'True';
                }
 
                else
@@ -9479,8 +9367,7 @@ if ($_POST['ItemID5'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice5;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice5;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row5["Weight"] * $_POST['ItemQty5']);
@@ -9836,22 +9723,6 @@ if ($_POST['ItemID6'] != 0)
 			       $decUnitPrice6 = $row6["ResellerPrice"];
 			       $decExtendedPrice6 = number_format($decUnitPrice6 * $_POST['ItemQty6'], 2, '.', '');
                    $_SESSION['Regenesis_2285_6'] = (floor($_POST['ItemQty6']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID6'] == '1619') || ($_POST['ItemID6'] == '1618') || ($_POST['ItemID6'] == '1608') || ($_POST['ItemID6'] == '1385') || ($_POST['ItemID6'] == '1384') || ($_POST['ItemID6'] == '1383')) // Production
-               {
-			       $decUnitPrice6 = $row6["ResellerPrice"];
-			       $decExtendedPrice6 = number_format($decUnitPrice6 * $_POST['ItemQty6'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_06'] = 'True';
-                   $RegenesisReorderRGProd_06 = $decExtendedPrice6;
-               }
-
-               else if (($_POST['ItemID6'] == '804') || ($_POST['ItemID6'] == '1612') || ($_POST['ItemID6'] == '1316')) // Production
-               {
-			       $decUnitPrice6 = $row6["ResellerPrice"];
-			       $decExtendedPrice6 = number_format($decUnitPrice6 * $_POST['ItemQty6'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_06'] = 'True';
                }
 
                else
@@ -10235,8 +10106,7 @@ if ($_POST['ItemID6'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice6;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice6;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row6["Weight"] * $_POST['ItemQty6']);
@@ -10592,22 +10462,6 @@ if ($_POST['ItemID7'] != 0)
 			       $decUnitPrice7 = $row7["ResellerPrice"];
 			       $decExtendedPrice7 = number_format($decUnitPrice7 * $_POST['ItemQty7'], 2, '.', '');
                    $_SESSION['Regenesis_2285_7'] = (floor($_POST['ItemQty7']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID7'] == '1619') || ($_POST['ItemID7'] == '1618') || ($_POST['ItemID7'] == '1608') || ($_POST['ItemID7'] == '1385') || ($_POST['ItemID7'] == '1384') || ($_POST['ItemID7'] == '1383')) // Production
-               {
-			       $decUnitPrice7 = $row7["ResellerPrice"];
-			       $decExtendedPrice7 = number_format($decUnitPrice7 * $_POST['ItemQty7'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_07'] = 'True';
-                   $RegenesisReorderRGProd_07 = $decExtendedPrice7;
-               }
-
-               else if (($_POST['ItemID7'] == '804') || ($_POST['ItemID7'] == '1612') || ($_POST['ItemID7'] == '1316')) // Production
-               {
-			       $decUnitPrice7 = $row7["ResellerPrice"];
-			       $decExtendedPrice7 = number_format($decUnitPrice7 * $_POST['ItemQty7'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_07'] = 'True';
                }
 
                else
@@ -10991,8 +10845,7 @@ if ($_POST['ItemID7'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice7;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice7;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row7["Weight"] * $_POST['ItemQty7']);
@@ -11348,22 +11201,6 @@ if ($_POST['ItemID8'] != 0)
 			       $decUnitPrice8 = $row8["ResellerPrice"];
 			       $decExtendedPrice8 = number_format($decUnitPrice8 * $_POST['ItemQty8'], 2, '.', '');
                    $_SESSION['Regenesis_2285_8'] = (floor($_POST['ItemQty8']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID8'] == '1619') || ($_POST['ItemID8'] == '1618') || ($_POST['ItemID8'] == '1608') || ($_POST['ItemID8'] == '1385') || ($_POST['ItemID8'] == '1384') || ($_POST['ItemID8'] == '1383')) // Production
-               {
-			       $decUnitPrice8 = $row8["ResellerPrice"];
-			       $decExtendedPrice8 = number_format($decUnitPrice8 * $_POST['ItemQty8'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_08'] = 'True';
-                   $RegenesisReorderRGProd_08 = $decExtendedPrice8;
-               }
-
-               else if (($_POST['ItemID8'] == '804') || ($_POST['ItemID8'] == '1612') || ($_POST['ItemID8'] == '1316')) // Production
-               {
-			       $decUnitPrice8 = $row8["ResellerPrice"];
-			       $decExtendedPrice8 = number_format($decUnitPrice8 * $_POST['ItemQty8'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_08'] = 'True';
                }
 
                else
@@ -11747,8 +11584,7 @@ if ($_POST['ItemID8'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice8;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice8;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row8["Weight"] * $_POST['ItemQty8']);
@@ -12104,22 +11940,6 @@ if ($_POST['ItemID9'] != 0)
 			       $decUnitPrice9 = $row9["ResellerPrice"];
 			       $decExtendedPrice9 = number_format($decUnitPrice9 * $_POST['ItemQty9'], 2, '.', '');
                    $_SESSION['Regenesis_2285_9'] = (floor($_POST['ItemQty9']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID9'] == '1619') || ($_POST['ItemID9'] == '1618') || ($_POST['ItemID9'] == '1608') || ($_POST['ItemID9'] == '1385') || ($_POST['ItemID9'] == '1384') || ($_POST['ItemID9'] == '1383')) // Production
-               {
-			       $decUnitPrice9 = $row9["ResellerPrice"];
-			       $decExtendedPrice9 = number_format($decUnitPrice9 * $_POST['ItemQty9'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_09'] = 'True';
-                   $RegenesisReorderRGProd_09 = $decExtendedPrice9;
-               }
-
-               else if (($_POST['ItemID9'] == '804') || ($_POST['ItemID9'] == '1612') || ($_POST['ItemID9'] == '1316')) // Production
-               {
-			       $decUnitPrice9 = $row9["ResellerPrice"];
-			       $decExtendedPrice9 = number_format($decUnitPrice9 * $_POST['ItemQty9'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_09'] = 'True';
                }
 
                else
@@ -12503,8 +12323,7 @@ if ($_POST['ItemID9'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice9;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice9;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row9["Weight"] * $_POST['ItemQty9']);
@@ -12860,22 +12679,6 @@ if ($_POST['ItemID10'] != 0)
 			       $decUnitPrice10 = $row10["ResellerPrice"];
 			       $decExtendedPrice10 = number_format($decUnitPrice10 * $_POST['ItemQty10'], 2, '.', '');
                    $_SESSION['Regenesis_2285_10'] = (floor($_POST['ItemQty10']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID10'] == '1619') || ($_POST['ItemID10'] == '1618') || ($_POST['ItemID10'] == '1608') || ($_POST['ItemID10'] == '1385') || ($_POST['ItemID10'] == '1384') || ($_POST['ItemID10'] == '1383')) // Production
-               {
-			       $decUnitPrice10 = $row10["ResellerPrice"];
-			       $decExtendedPrice10 = number_format($decUnitPrice10 * $_POST['ItemQty10'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_10'] = 'True';
-                   $RegenesisReorderRGProd_10 = $decExtendedPrice10;
-               }
-
-               else if (($_POST['ItemID10'] == '804') || ($_POST['ItemID10'] == '1612') || ($_POST['ItemID10'] == '1316')) // Production
-               {
-			       $decUnitPrice10 = $row10["ResellerPrice"];
-			       $decExtendedPrice10 = number_format($decUnitPrice10 * $_POST['ItemQty10'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_10'] = 'True';
                }
 
                else
@@ -13259,8 +13062,7 @@ if ($_POST['ItemID10'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice10;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice10;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row10["Weight"] * $_POST['ItemQty10']);
@@ -13618,22 +13420,6 @@ if ($_POST['ItemID11'] != 0)
 			       $decUnitPrice11 = $row11["ResellerPrice"];
 			       $decExtendedPrice11 = number_format($decUnitPrice11 * $_POST['ItemQty11'], 2, '.', '');
                    $_SESSION['Regenesis_2285_11'] = (floor($_POST['ItemQty11']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID11'] == '1619') || ($_POST['ItemID11'] == '1618') || ($_POST['ItemID11'] == '1608') || ($_POST['ItemID11'] == '1385') || ($_POST['ItemID11'] == '1384') || ($_POST['ItemID11'] == '1383')) // Production
-               {
-			       $decUnitPrice11 = $row11["ResellerPrice"];
-			       $decExtendedPrice11 = number_format($decUnitPrice11 * $_POST['ItemQty11'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_11'] = 'True';
-                   $RegenesisReorderRGProd_11 = $decExtendedPrice11;
-               }
-
-               else if (($_POST['ItemID11'] == '804') || ($_POST['ItemID11'] == '1612') || ($_POST['ItemID11'] == '1316')) // Production
-               {
-			       $decUnitPrice11 = $row11["ResellerPrice"];
-			       $decExtendedPrice11 = number_format($decUnitPrice11 * $_POST['ItemQty11'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_11'] = 'True';
                }
 
                else
@@ -14017,8 +13803,7 @@ if ($_POST['ItemID11'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice11;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice11;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row11["Weight"] * $_POST['ItemQty11']);
@@ -14374,22 +14159,6 @@ if ($_POST['ItemID12'] != 0)
 			       $decUnitPrice12 = $row12["ResellerPrice"];
 			       $decExtendedPrice12 = number_format($decUnitPrice12 * $_POST['ItemQty12'], 2, '.', '');
                    $_SESSION['Regenesis_2285_12'] = (floor($_POST['ItemQty12']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID12'] == '1619') || ($_POST['ItemID12'] == '1618') || ($_POST['ItemID12'] == '1608') || ($_POST['ItemID12'] == '1385') || ($_POST['ItemID12'] == '1384') || ($_POST['ItemID12'] == '1383')) // Production
-               {
-			       $decUnitPrice12 = $row12["ResellerPrice"];
-			       $decExtendedPrice12 = number_format($decUnitPrice12 * $_POST['ItemQty12'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_12'] = 'True';
-                   $RegenesisReorderRGProd_12 = $decExtendedPrice12;
-               }
-
-               else if (($_POST['ItemID12'] == '804') || ($_POST['ItemID12'] == '1612') || ($_POST['ItemID12'] == '1316')) // Production
-               {
-			       $decUnitPrice12 = $row12["ResellerPrice"];
-			       $decExtendedPrice12 = number_format($decUnitPrice12 * $_POST['ItemQty12'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_12'] = 'True';
                }
 
                else
@@ -14773,8 +14542,7 @@ if ($_POST['ItemID12'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice12;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice12;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row12["Weight"] * $_POST['ItemQty12']);
@@ -15130,22 +14898,6 @@ if ($_POST['ItemID13'] != 0)
 			       $decUnitPrice13 = $row13["ResellerPrice"];
 			       $decExtendedPrice13 = number_format($decUnitPrice13 * $_POST['ItemQty13'], 2, '.', '');
                    $_SESSION['Regenesis_2285_13'] = (floor($_POST['ItemQty13']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID13'] == '1619') || ($_POST['ItemID13'] == '1618') || ($_POST['ItemID13'] == '1608') || ($_POST['ItemID13'] == '1385') || ($_POST['ItemID13'] == '1384') || ($_POST['ItemID13'] == '1383')) // Production
-               {
-			       $decUnitPrice13 = $row13["ResellerPrice"];
-			       $decExtendedPrice13 = number_format($decUnitPrice13 * $_POST['ItemQty13'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_13'] = 'True';
-                   $RegenesisReorderRGProd_13 = $decExtendedPrice13;
-               }
-
-               else if (($_POST['ItemID13'] == '804') || ($_POST['ItemID13'] == '1612') || ($_POST['ItemID13'] == '1316')) // Production
-               {
-			       $decUnitPrice13 = $row13["ResellerPrice"];
-			       $decExtendedPrice13 = number_format($decUnitPrice13 * $_POST['ItemQty13'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_13'] = 'True';
                }
 
                else
@@ -15529,8 +15281,7 @@ if ($_POST['ItemID13'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice13;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice13;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row13["Weight"] * $_POST['ItemQty13']);
@@ -15886,22 +15637,6 @@ if ($_POST['ItemID14'] != 0)
 			       $decUnitPrice14 = $row14["ResellerPrice"];
 			       $decExtendedPrice14 = number_format($decUnitPrice14 * $_POST['ItemQty14'], 2, '.', '');
                    $_SESSION['Regenesis_2285_14'] = (floor($_POST['ItemQty14']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID14'] == '1619') || ($_POST['ItemID14'] == '1618') || ($_POST['ItemID14'] == '1608') || ($_POST['ItemID14'] == '1385') || ($_POST['ItemID14'] == '1384') || ($_POST['ItemID14'] == '1383')) // Production
-               {
-			       $decUnitPrice14 = $row14["ResellerPrice"];
-			       $decExtendedPrice14 = number_format($decUnitPrice14 * $_POST['ItemQty14'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_14'] = 'True';
-                   $RegenesisReorderRGProd_14 = $decExtendedPrice14;
-               }
-
-               else if (($_POST['ItemID14'] == '804') || ($_POST['ItemID14'] == '1612') || ($_POST['ItemID14'] == '1316')) // Production
-               {
-			       $decUnitPrice14 = $row14["ResellerPrice"];
-			       $decExtendedPrice14 = number_format($decUnitPrice14 * $_POST['ItemQty14'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_14'] = 'True';
                }
 
                else
@@ -16285,8 +16020,7 @@ if ($_POST['ItemID14'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice14;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice14;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row14["Weight"] * $_POST['ItemQty14']);
@@ -16642,22 +16376,6 @@ if ($_POST['ItemID15'] != 0)
 			       $decUnitPrice15 = $row15["ResellerPrice"];
 			       $decExtendedPrice15 = number_format($decUnitPrice15 * $_POST['ItemQty15'], 2, '.', '');
                    $_SESSION['Regenesis_2285_15'] = (floor($_POST['ItemQty15']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID15'] == '1619') || ($_POST['ItemID15'] == '1618') || ($_POST['ItemID15'] == '1608') || ($_POST['ItemID15'] == '1385') || ($_POST['ItemID15'] == '1384') || ($_POST['ItemID15'] == '1383')) // Production
-               {
-			       $decUnitPrice15 = $row15["ResellerPrice"];
-			       $decExtendedPrice15 = number_format($decUnitPrice15 * $_POST['ItemQty15'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_15'] = 'True';
-                   $RegenesisReorderRGProd_15 = $decExtendedPrice15;
-               }
-
-               else if (($_POST['ItemID15'] == '804') || ($_POST['ItemID15'] == '1612') || ($_POST['ItemID15'] == '1316')) // Production
-               {
-			       $decUnitPrice15 = $row15["ResellerPrice"];
-			       $decExtendedPrice15 = number_format($decUnitPrice15 * $_POST['ItemQty15'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_15'] = 'True';
                }
 
                else
@@ -17041,8 +16759,7 @@ if ($_POST['ItemID15'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice15;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice15;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row15["Weight"] * $_POST['ItemQty15']);
@@ -17398,22 +17115,6 @@ if ($_POST['ItemID16'] != 0)
 			       $decUnitPrice16 = $row16["ResellerPrice"];
 			       $decExtendedPrice16 = number_format($decUnitPrice16 * $_POST['ItemQty16'], 2, '.', '');
                    $_SESSION['Regenesis_2285_16'] = (floor($_POST['ItemQty16']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID16'] == '1619') || ($_POST['ItemID16'] == '1618') || ($_POST['ItemID16'] == '1608') || ($_POST['ItemID16'] == '1385') || ($_POST['ItemID16'] == '1384') || ($_POST['ItemID16'] == '1383')) // Production
-               {
-			       $decUnitPrice16 = $row16["ResellerPrice"];
-			       $decExtendedPrice16 = number_format($decUnitPrice16 * $_POST['ItemQty16'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_16'] = 'True';
-                   $RegenesisReorderRGProd_16 = $decExtendedPrice16;
-               }
-
-               else if (($_POST['ItemID16'] == '804') || ($_POST['ItemID16'] == '1612') || ($_POST['ItemID16'] == '1316')) // Production
-               {
-			       $decUnitPrice16 = $row16["ResellerPrice"];
-			       $decExtendedPrice16 = number_format($decUnitPrice16 * $_POST['ItemQty16'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_16'] = 'True';
                }
 
                else
@@ -17797,8 +17498,7 @@ if ($_POST['ItemID16'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice16;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice16;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row16["Weight"] * $_POST['ItemQty16']);
@@ -18155,22 +17855,6 @@ if ($_POST['ItemID17'] != 0)
 			       $decUnitPrice17 = $row17["ResellerPrice"];
 			       $decExtendedPrice17 = number_format($decUnitPrice17 * $_POST['ItemQty17'], 2, '.', '');
                    $_SESSION['Regenesis_2285_17'] = (floor($_POST['ItemQty17']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID17'] == '1619') || ($_POST['ItemID17'] == '1618') || ($_POST['ItemID17'] == '1608') || ($_POST['ItemID17'] == '1385') || ($_POST['ItemID17'] == '1384') || ($_POST['ItemID17'] == '1383')) // Production
-               {
-			       $decUnitPrice17 = $row17["ResellerPrice"];
-			       $decExtendedPrice17 = number_format($decUnitPrice17 * $_POST['ItemQty17'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_17'] = 'True';
-                   $RegenesisReorderRGProd_17 = $decExtendedPrice17;
-               }
-
-               else if (($_POST['ItemID17'] == '804') || ($_POST['ItemID17'] == '1612') || ($_POST['ItemID17'] == '1316')) // Production
-               {
-			       $decUnitPrice17 = $row17["ResellerPrice"];
-			       $decExtendedPrice17 = number_format($decUnitPrice17 * $_POST['ItemQty17'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_17'] = 'True';
                }
 
                else
@@ -18554,8 +18238,7 @@ if ($_POST['ItemID17'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice17;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice17;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row17["Weight"] * $_POST['ItemQty17']);
@@ -18911,22 +18594,6 @@ if ($_POST['ItemID18'] != 0)
 			       $decUnitPrice18 = $row18["ResellerPrice"];
 			       $decExtendedPrice18 = number_format($decUnitPrice18 * $_POST['ItemQty18'], 2, '.', '');
                    $_SESSION['Regenesis_2285_18'] = (floor($_POST['ItemQty18']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID18'] == '1619') || ($_POST['ItemID18'] == '1618') || ($_POST['ItemID18'] == '1608') || ($_POST['ItemID18'] == '1385') || ($_POST['ItemID18'] == '1384') || ($_POST['ItemID18'] == '1383')) // Production
-               {
-			       $decUnitPrice18 = $row18["ResellerPrice"];
-			       $decExtendedPrice18 = number_format($decUnitPrice18 * $_POST['ItemQty18'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_18'] = 'True';
-                   $RegenesisReorderRGProd_18 = $decExtendedPrice18;
-               }
-
-               else if (($_POST['ItemID18'] == '804') || ($_POST['ItemID18'] == '1612') || ($_POST['ItemID18'] == '1316')) // Production
-               {
-			       $decUnitPrice18 = $row18["ResellerPrice"];
-			       $decExtendedPrice18 = number_format($decUnitPrice18 * $_POST['ItemQty18'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_18'] = 'True';
                }
 
                else
@@ -19310,8 +18977,7 @@ if ($_POST['ItemID18'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice18;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice18;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row18["Weight"] * $_POST['ItemQty18']);
@@ -19667,22 +19333,6 @@ if ($_POST['ItemID19'] != 0)
 			       $decUnitPrice19 = $row19["ResellerPrice"];
 			       $decExtendedPrice19 = number_format($decUnitPrice19 * $_POST['ItemQty19'], 2, '.', '');
                    $_SESSION['Regenesis_2285_19'] = (floor($_POST['ItemQty19']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID19'] == '1619') || ($_POST['ItemID19'] == '1618') || ($_POST['ItemID19'] == '1608') || ($_POST['ItemID19'] == '1385') || ($_POST['ItemID19'] == '1384') || ($_POST['ItemID19'] == '1383')) // Production
-               {
-			       $decUnitPrice19 = $row19["ResellerPrice"];
-			       $decExtendedPrice19 = number_format($decUnitPrice19 * $_POST['ItemQty19'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_19'] = 'True';
-                   $RegenesisReorderRGProd_19 = $decExtendedPrice19;
-               }
-
-               else if (($_POST['ItemID19'] == '804') || ($_POST['ItemID19'] == '1612') || ($_POST['ItemID19'] == '1316')) // Production
-               {
-			       $decUnitPrice19 = $row19["ResellerPrice"];
-			       $decExtendedPrice19 = number_format($decUnitPrice19 * $_POST['ItemQty19'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_19'] = 'True';
                }
 
                else
@@ -20066,8 +19716,7 @@ if ($_POST['ItemID19'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice19;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice19;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row19["Weight"] * $_POST['ItemQty19']);
@@ -20424,22 +20073,6 @@ if ($_POST['ItemID20'] != 0)
 			       $decUnitPrice20 = $row20["ResellerPrice"];
 			       $decExtendedPrice20 = number_format($decUnitPrice20 * $_POST['ItemQty20'], 2, '.', '');
                    $_SESSION['Regenesis_2285_20'] = (floor($_POST['ItemQty20']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID20'] == '1619') || ($_POST['ItemID20'] == '1618') || ($_POST['ItemID20'] == '1608') || ($_POST['ItemID20'] == '1385') || ($_POST['ItemID20'] == '1384') || ($_POST['ItemID20'] == '1383')) // Production
-               {
-			       $decUnitPrice20 = $row20["ResellerPrice"];
-			       $decExtendedPrice20 = number_format($decUnitPrice20 * $_POST['ItemQty20'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_20'] = 'True';
-                   $RegenesisReorderRGProd_20 = $decExtendedPrice20;
-               }
-
-               else if (($_POST['ItemID20'] == '804') || ($_POST['ItemID20'] == '1612') || ($_POST['ItemID20'] == '1316')) // Production
-               {
-			       $decUnitPrice20 = $row20["ResellerPrice"];
-			       $decExtendedPrice20 = number_format($decUnitPrice20 * $_POST['ItemQty20'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_20'] = 'True';
                }
 
                else
@@ -20824,8 +20457,7 @@ if ($_POST['ItemID20'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice20;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice20;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row20["Weight"] * $_POST['ItemQty20']);
@@ -21088,22 +20720,6 @@ if ($_POST['ItemID21'] != 0)
 			       $decUnitPrice21 = $row21["ResellerPrice"];
 			       $decExtendedPrice21 = number_format($decUnitPrice21 * $_POST['ItemQty21'], 2, '.', '');
                    $_SESSION['Regenesis_2285_21'] = (floor($_POST['ItemQty21']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID21'] == '1619') || ($_POST['ItemID21'] == '1618') || ($_POST['ItemID21'] == '1608') || ($_POST['ItemID21'] == '1385') || ($_POST['ItemID21'] == '1384') || ($_POST['ItemID21'] == '1383')) // Production
-               {
-			       $decUnitPrice21 = $row21["ResellerPrice"];
-			       $decExtendedPrice21 = number_format($decUnitPrice21 * $_POST['ItemQty21'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_21'] = 'True';
-                   $RegenesisReorderRGProd_21 = $decExtendedPrice21;
-               }
-
-               else if (($_POST['ItemID21'] == '804') || ($_POST['ItemID21'] == '1612') || ($_POST['ItemID21'] == '1316')) // Production
-               {
-			       $decUnitPrice21 = $row21["ResellerPrice"];
-			       $decExtendedPrice21 = number_format($decUnitPrice21 * $_POST['ItemQty21'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_21'] = 'True';
                }
 
                else
@@ -21393,8 +21009,7 @@ if ($_POST['ItemID21'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice21;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice21;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row21["Weight"] * $_POST['ItemQty21']);
@@ -21654,22 +21269,6 @@ if ($_POST['ItemID22'] != 0)
 			       $decUnitPrice22 = $row22["ResellerPrice"];
 			       $decExtendedPrice22 = number_format($decUnitPrice22 * $_POST['ItemQty22'], 2, '.', '');
                    $_SESSION['Regenesis_2285_22'] = (floor($_POST['ItemQty22']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID22'] == '1619') || ($_POST['ItemID22'] == '1618') || ($_POST['ItemID22'] == '1608') || ($_POST['ItemID22'] == '1385') || ($_POST['ItemID22'] == '1384') || ($_POST['ItemID22'] == '1383')) // Production
-               {
-			       $decUnitPrice22 = $row22["ResellerPrice"];
-			       $decExtendedPrice22 = number_format($decUnitPrice22 * $_POST['ItemQty22'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_22'] = 'True';
-                   $RegenesisReorderRGProd_22 = $decExtendedPrice22;
-               }
-
-               else if (($_POST['ItemID22'] == '804') || ($_POST['ItemID22'] == '1612') || ($_POST['ItemID22'] == '1316')) // Production
-               {
-			       $decUnitPrice22 = $row22["ResellerPrice"];
-			       $decExtendedPrice22 = number_format($decUnitPrice22 * $_POST['ItemQty22'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_22'] = 'True';
                }
 
                else
@@ -21958,8 +21557,7 @@ if ($_POST['ItemID22'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice22;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice22;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row22["Weight"] * $_POST['ItemQty22']);
@@ -22219,22 +21817,6 @@ if ($_POST['ItemID23'] != 0)
 			       $decUnitPrice23 = $row23["ResellerPrice"];
 			       $decExtendedPrice23 = number_format($decUnitPrice23 * $_POST['ItemQty23'], 2, '.', '');
                    $_SESSION['Regenesis_2285_23'] = (floor($_POST['ItemQty23']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID23'] == '1619') || ($_POST['ItemID23'] == '1618') || ($_POST['ItemID23'] == '1608') || ($_POST['ItemID23'] == '1385') || ($_POST['ItemID23'] == '1384') || ($_POST['ItemID23'] == '1383')) // Production
-               {
-			       $decUnitPrice23 = $row23["ResellerPrice"];
-			       $decExtendedPrice23 = number_format($decUnitPrice23 * $_POST['ItemQty23'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_23'] = 'True';
-                   $RegenesisReorderRGProd_23 = $decExtendedPrice23;
-               }
-
-               else if (($_POST['ItemID23'] == '804') || ($_POST['ItemID23'] == '1612') || ($_POST['ItemID23'] == '1316')) // Production
-               {
-			       $decUnitPrice23 = $row23["ResellerPrice"];
-			       $decExtendedPrice23 = number_format($decUnitPrice23 * $_POST['ItemQty23'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_23'] = 'True';
                }
 
                else
@@ -22523,8 +22105,7 @@ if ($_POST['ItemID23'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice23;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice23;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row23["Weight"] * $_POST['ItemQty23']);
@@ -22784,22 +22365,6 @@ if ($_POST['ItemID24'] != 0)
 			       $decUnitPrice24 = $row24["ResellerPrice"];
 			       $decExtendedPrice24 = number_format($decUnitPrice24 * $_POST['ItemQty24'], 2, '.', '');
                    $_SESSION['Regenesis_2285_24'] = (floor($_POST['ItemQty24']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID24'] == '1619') || ($_POST['ItemID24'] == '1618') || ($_POST['ItemID24'] == '1608') || ($_POST['ItemID24'] == '1385') || ($_POST['ItemID24'] == '1384') || ($_POST['ItemID24'] == '1383')) // Production
-               {
-			       $decUnitPrice24 = $row24["ResellerPrice"];
-			       $decExtendedPrice24 = number_format($decUnitPrice24 * $_POST['ItemQty24'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_24'] = 'True';
-                   $RegenesisReorderRGProd_24 = $decExtendedPrice24;
-               }
-
-               else if (($_POST['ItemID24'] == '804') || ($_POST['ItemID24'] == '1612') || ($_POST['ItemID24'] == '1316')) // Production
-               {
-			       $decUnitPrice24 = $row24["ResellerPrice"];
-			       $decExtendedPrice24 = number_format($decUnitPrice24 * $_POST['ItemQty24'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_24'] = 'True';
                }
 
                else
@@ -23088,8 +22653,7 @@ if ($_POST['ItemID24'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice24;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice24;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row24["Weight"] * $_POST['ItemQty24']);
@@ -23349,22 +22913,6 @@ if ($_POST['ItemID25'] != 0)
 			       $decUnitPrice25 = $row25["ResellerPrice"];
 			       $decExtendedPrice25 = number_format($decUnitPrice25 * $_POST['ItemQty25'], 2, '.', '');
                    $_SESSION['Regenesis_2285_25'] = (floor($_POST['ItemQty25']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID25'] == '1619') || ($_POST['ItemID25'] == '1618') || ($_POST['ItemID25'] == '1608') || ($_POST['ItemID25'] == '1385') || ($_POST['ItemID25'] == '1384') || ($_POST['ItemID25'] == '1383')) // Production
-               {
-			       $decUnitPrice25 = $row25["ResellerPrice"];
-			       $decExtendedPrice25 = number_format($decUnitPrice25 * $_POST['ItemQty25'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_25'] = 'True';
-                   $RegenesisReorderRGProd_25 = $decExtendedPrice25;
-               }
-
-               else if (($_POST['ItemID25'] == '804') || ($_POST['ItemID25'] == '1612') || ($_POST['ItemID25'] == '1316')) // Production
-               {
-			       $decUnitPrice25 = $row25["ResellerPrice"];
-			       $decExtendedPrice25 = number_format($decUnitPrice25 * $_POST['ItemQty25'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_25'] = 'True';
                }
 
                else
@@ -23653,8 +23201,7 @@ if ($_POST['ItemID25'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice25;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice25;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row25["Weight"] * $_POST['ItemQty25']);
@@ -23914,22 +23461,6 @@ if ($_POST['ItemID26'] != 0)
 			       $decUnitPrice26 = $row26["ResellerPrice"];
 			       $decExtendedPrice26 = number_format($decUnitPrice26 * $_POST['ItemQty26'], 2, '.', '');
                    $_SESSION['Regenesis_2285_26'] = (floor($_POST['ItemQty26']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID26'] == '1619') || ($_POST['ItemID26'] == '1618') || ($_POST['ItemID26'] == '1608') || ($_POST['ItemID26'] == '1385') || ($_POST['ItemID26'] == '1384') || ($_POST['ItemID26'] == '1383')) // Production
-               {
-			       $decUnitPrice26 = $row26["ResellerPrice"];
-			       $decExtendedPrice26 = number_format($decUnitPrice26 * $_POST['ItemQty26'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_26'] = 'True';
-                   $RegenesisReorderRGProd_26 = $decExtendedPrice26;
-               }
-
-               else if (($_POST['ItemID26'] == '804') || ($_POST['ItemID26'] == '1612') || ($_POST['ItemID26'] == '1316')) // Production
-               {
-			       $decUnitPrice26 = $row26["ResellerPrice"];
-			       $decExtendedPrice26 = number_format($decUnitPrice26 * $_POST['ItemQty26'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_26'] = 'True';
                }
 
                else
@@ -24218,8 +23749,7 @@ if ($_POST['ItemID26'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice26;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice26;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row26["Weight"] * $_POST['ItemQty26']);
@@ -24479,22 +24009,6 @@ if ($_POST['ItemID27'] != 0)
 			       $decUnitPrice27 = $row27["ResellerPrice"];
 			       $decExtendedPrice27 = number_format($decUnitPrice27 * $_POST['ItemQty27'], 2, '.', '');
                    $_SESSION['Regenesis_2285_27'] = (floor($_POST['ItemQty27']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID27'] == '1619') || ($_POST['ItemID27'] == '1618') || ($_POST['ItemID27'] == '1608') || ($_POST['ItemID27'] == '1385') || ($_POST['ItemID27'] == '1384') || ($_POST['ItemID27'] == '1383')) // Production
-               {
-			       $decUnitPrice27 = $row27["ResellerPrice"];
-			       $decExtendedPrice27 = number_format($decUnitPrice27 * $_POST['ItemQty27'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_27'] = 'True';
-                   $RegenesisReorderRGProd_27 = $decExtendedPrice27;
-               }
-
-               else if (($_POST['ItemID27'] == '804') || ($_POST['ItemID27'] == '1612') || ($_POST['ItemID27'] == '1316')) // Production
-               {
-			       $decUnitPrice27 = $row27["ResellerPrice"];
-			       $decExtendedPrice27 = number_format($decUnitPrice27 * $_POST['ItemQty27'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_27'] = 'True';
                }
 
                else
@@ -24783,8 +24297,7 @@ if ($_POST['ItemID27'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice27;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice27;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row27["Weight"] * $_POST['ItemQty27']);
@@ -25044,22 +24557,6 @@ if ($_POST['ItemID28'] != 0)
 			       $decUnitPrice28 = $row28["ResellerPrice"];
 			       $decExtendedPrice28 = number_format($decUnitPrice28 * $_POST['ItemQty28'], 2, '.', '');
                    $_SESSION['Regenesis_2285_28'] = (floor($_POST['ItemQty28']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID28'] == '1619') || ($_POST['ItemID28'] == '1618') || ($_POST['ItemID28'] == '1608') || ($_POST['ItemID28'] == '1385') || ($_POST['ItemID28'] == '1384') || ($_POST['ItemID28'] == '1383')) // Production
-               {
-			       $decUnitPrice28 = $row28["ResellerPrice"];
-			       $decExtendedPrice28 = number_format($decUnitPrice28 * $_POST['ItemQty28'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_28'] = 'True';
-                   $RegenesisReorderRGProd_28 = $decExtendedPrice28;
-               }
-
-               else if (($_POST['ItemID28'] == '804') || ($_POST['ItemID28'] == '1612') || ($_POST['ItemID28'] == '1316')) // Production
-               {
-			       $decUnitPrice28 = $row28["ResellerPrice"];
-			       $decExtendedPrice28 = number_format($decUnitPrice28 * $_POST['ItemQty28'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_28'] = 'True';
                }
 
                else
@@ -25348,8 +24845,7 @@ if ($_POST['ItemID28'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice28;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice28;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row28["Weight"] * $_POST['ItemQty28']);
@@ -25609,22 +25105,6 @@ if ($_POST['ItemID29'] != 0)
 			       $decUnitPrice29 = $row29["ResellerPrice"];
 			       $decExtendedPrice29 = number_format($decUnitPrice29 * $_POST['ItemQty29'], 2, '.', '');
                    $_SESSION['Regenesis_2285_29'] = (floor($_POST['ItemQty29']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID29'] == '1619') || ($_POST['ItemID29'] == '1618') || ($_POST['ItemID29'] == '1608') || ($_POST['ItemID29'] == '1385') || ($_POST['ItemID29'] == '1384') || ($_POST['ItemID29'] == '1383')) // Production
-               {
-			       $decUnitPrice29 = $row29["ResellerPrice"];
-			       $decExtendedPrice29 = number_format($decUnitPrice29 * $_POST['ItemQty29'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_29'] = 'True';
-                   $RegenesisReorderRGProd_29 = $decExtendedPrice29;
-               }
-
-               else if (($_POST['ItemID29'] == '804') || ($_POST['ItemID29'] == '1612') || ($_POST['ItemID29'] == '1316')) // Production
-               {
-			       $decUnitPrice29 = $row29["ResellerPrice"];
-			       $decExtendedPrice29 = number_format($decUnitPrice29 * $_POST['ItemQty29'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_29'] = 'True';
                }
 
                else
@@ -25913,8 +25393,7 @@ if ($_POST['ItemID29'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice29;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice29;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row29["Weight"] * $_POST['ItemQty29']);
@@ -26174,22 +25653,6 @@ if ($_POST['ItemID30'] != 0)
 			       $decUnitPrice30 = $row30["ResellerPrice"];
 			       $decExtendedPrice30 = number_format($decUnitPrice30 * $_POST['ItemQty30'], 2, '.', '');
                    $_SESSION['Regenesis_2285_30'] = (floor($_POST['ItemQty30']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID30'] == '1619') || ($_POST['ItemID30'] == '1618') || ($_POST['ItemID30'] == '1608') || ($_POST['ItemID30'] == '1385') || ($_POST['ItemID30'] == '1384') || ($_POST['ItemID30'] == '1383')) // Production
-               {
-			       $decUnitPrice30 = $row30["ResellerPrice"];
-			       $decExtendedPrice30 = number_format($decUnitPrice30 * $_POST['ItemQty30'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_30'] = 'True';
-                   $RegenesisReorderRGProd_30 = $decExtendedPrice30;
-               }
-
-               else if (($_POST['ItemID30'] == '804') || ($_POST['ItemID30'] == '1612') || ($_POST['ItemID30'] == '1316')) // Production
-               {
-			       $decUnitPrice30 = $row30["ResellerPrice"];
-			       $decExtendedPrice30 = number_format($decUnitPrice30 * $_POST['ItemQty30'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_30'] = 'True';
                }
 
                else
@@ -26478,8 +25941,7 @@ if ($_POST['ItemID30'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice30;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice30;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row30["Weight"] * $_POST['ItemQty30']);
@@ -26739,22 +26201,6 @@ if ($_POST['ItemID31'] != 0)
 			       $decUnitPrice31 = $row31["ResellerPrice"];
 			       $decExtendedPrice31 = number_format($decUnitPrice31 * $_POST['ItemQty31'], 2, '.', '');
                    $_SESSION['Regenesis_2285_31'] = (floor($_POST['ItemQty31']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID31'] == '1619') || ($_POST['ItemID31'] == '1618') || ($_POST['ItemID31'] == '1608') || ($_POST['ItemID31'] == '1385') || ($_POST['ItemID31'] == '1384') || ($_POST['ItemID31'] == '1383')) // Production
-               {
-			       $decUnitPrice31 = $row31["ResellerPrice"];
-			       $decExtendedPrice31 = number_format($decUnitPrice31 * $_POST['ItemQty31'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_31'] = 'True';
-                   $RegenesisReorderRGProd_31 = $decExtendedPrice31;
-               }
-
-               else if (($_POST['ItemID31'] == '804') || ($_POST['ItemID31'] == '1612') || ($_POST['ItemID31'] == '1316')) // Production
-               {
-			       $decUnitPrice31 = $row31["ResellerPrice"];
-			       $decExtendedPrice31 = number_format($decUnitPrice31 * $_POST['ItemQty31'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_31'] = 'True';
                }
 
                else
@@ -27043,8 +26489,7 @@ if ($_POST['ItemID31'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice31;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice31;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row31["Weight"] * $_POST['ItemQty31']);
@@ -27304,22 +26749,6 @@ if ($_POST['ItemID32'] != 0)
 			       $decUnitPrice32 = $row32["ResellerPrice"];
 			       $decExtendedPrice32 = number_format($decUnitPrice32 * $_POST['ItemQty32'], 2, '.', '');
                    $_SESSION['Regenesis_2285_32'] = (floor($_POST['ItemQty32']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID32'] == '1619') || ($_POST['ItemID32'] == '1618') || ($_POST['ItemID32'] == '1608') || ($_POST['ItemID32'] == '1385') || ($_POST['ItemID32'] == '1384') || ($_POST['ItemID32'] == '1383')) // Production
-               {
-			       $decUnitPrice32 = $row32["ResellerPrice"];
-			       $decExtendedPrice32 = number_format($decUnitPrice32 * $_POST['ItemQty32'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_32'] = 'True';
-                   $RegenesisReorderRGProd_32 = $decExtendedPrice32;
-               }
-
-               else if (($_POST['ItemID32'] == '804') || ($_POST['ItemID32'] == '1612') || ($_POST['ItemID32'] == '1316')) // Production
-               {
-			       $decUnitPrice32 = $row32["ResellerPrice"];
-			       $decExtendedPrice32 = number_format($decUnitPrice32 * $_POST['ItemQty32'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_32'] = 'True';
                }
 
                else
@@ -27608,8 +27037,7 @@ if ($_POST['ItemID32'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice32;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice32;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row32["Weight"] * $_POST['ItemQty32']);
@@ -27869,22 +27297,6 @@ if ($_POST['ItemID33'] != 0)
 			       $decUnitPrice33 = $row33["ResellerPrice"];
 			       $decExtendedPrice33 = number_format($decUnitPrice33 * $_POST['ItemQty33'], 2, '.', '');
                    $_SESSION['Regenesis_2285_33'] = (floor($_POST['ItemQty33']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID33'] == '1619') || ($_POST['ItemID33'] == '1618') || ($_POST['ItemID33'] == '1608') || ($_POST['ItemID33'] == '1385') || ($_POST['ItemID33'] == '1384') || ($_POST['ItemID33'] == '1383')) // Production
-               {
-			       $decUnitPrice33 = $row33["ResellerPrice"];
-			       $decExtendedPrice33 = number_format($decUnitPrice33 * $_POST['ItemQty33'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_33'] = 'True';
-                   $RegenesisReorderRGProd_33 = $decExtendedPrice33;
-               }
-
-               else if (($_POST['ItemID33'] == '804') || ($_POST['ItemID33'] == '1612') || ($_POST['ItemID33'] == '1316')) // Production
-               {
-			       $decUnitPrice33 = $row33["ResellerPrice"];
-			       $decExtendedPrice33 = number_format($decUnitPrice33 * $_POST['ItemQty33'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_33'] = 'True';
                }
 
                else
@@ -28173,8 +27585,7 @@ if ($_POST['ItemID33'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice33;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice33;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row33["Weight"] * $_POST['ItemQty33']);
@@ -28434,22 +27845,6 @@ if ($_POST['ItemID34'] != 0)
 			       $decUnitPrice34 = $row34["ResellerPrice"];
 			       $decExtendedPrice34 = number_format($decUnitPrice34 * $_POST['ItemQty34'], 2, '.', '');
                    $_SESSION['Regenesis_2285_34'] = (floor($_POST['ItemQty34']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID34'] == '1619') || ($_POST['ItemID34'] == '1618') || ($_POST['ItemID34'] == '1608') || ($_POST['ItemID34'] == '1385') || ($_POST['ItemID34'] == '1384') || ($_POST['ItemID34'] == '1383')) // Production
-               {
-			       $decUnitPrice34 = $row34["ResellerPrice"];
-			       $decExtendedPrice34 = number_format($decUnitPrice34 * $_POST['ItemQty34'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_34'] = 'True';
-                   $RegenesisReorderRGProd_34 = $decExtendedPrice34;
-               }
-
-               else if (($_POST['ItemID34'] == '804') || ($_POST['ItemID34'] == '1612') || ($_POST['ItemID34'] == '1316')) // Production
-               {
-			       $decUnitPrice34 = $row34["ResellerPrice"];
-			       $decExtendedPrice34 = number_format($decUnitPrice34 * $_POST['ItemQty34'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_34'] = 'True';
                }
 
                else
@@ -28738,8 +28133,7 @@ if ($_POST['ItemID34'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice34;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice34;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row34["Weight"] * $_POST['ItemQty34']);
@@ -28999,22 +28393,6 @@ if ($_POST['ItemID35'] != 0)
 			       $decUnitPrice35 = $row35["ResellerPrice"];
 			       $decExtendedPrice35 = number_format($decUnitPrice35 * $_POST['ItemQty35'], 2, '.', '');
                    $_SESSION['Regenesis_2285_35'] = (floor($_POST['ItemQty35']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID35'] == '1619') || ($_POST['ItemID35'] == '1618') || ($_POST['ItemID35'] == '1608') || ($_POST['ItemID35'] == '1385') || ($_POST['ItemID35'] == '1384') || ($_POST['ItemID35'] == '1383')) // Production
-               {
-			       $decUnitPrice35 = $row35["ResellerPrice"];
-			       $decExtendedPrice35 = number_format($decUnitPrice35 * $_POST['ItemQty35'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_35'] = 'True';
-                   $RegenesisReorderRGProd_35 = $decExtendedPrice35;
-               }
-
-               else if (($_POST['ItemID35'] == '804') || ($_POST['ItemID35'] == '1612') || ($_POST['ItemID35'] == '1316')) // Production
-               {
-			       $decUnitPrice35 = $row35["ResellerPrice"];
-			       $decExtendedPrice35 = number_format($decUnitPrice35 * $_POST['ItemQty35'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_35'] = 'True';
                }
 
                else
@@ -29303,8 +28681,7 @@ if ($_POST['ItemID35'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice35;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice35;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row35["Weight"] * $_POST['ItemQty35']);
@@ -29564,22 +28941,6 @@ if ($_POST['ItemID36'] != 0)
 			       $decUnitPrice36 = $row36["ResellerPrice"];
 			       $decExtendedPrice36 = number_format($decUnitPrice36 * $_POST['ItemQty36'], 2, '.', '');
                    $_SESSION['Regenesis_2285_36'] = (floor($_POST['ItemQty36']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID36'] == '1619') || ($_POST['ItemID36'] == '1618') || ($_POST['ItemID36'] == '1608') || ($_POST['ItemID36'] == '1385') || ($_POST['ItemID36'] == '1384') || ($_POST['ItemID36'] == '1383')) // Production
-               {
-			       $decUnitPrice36 = $row36["ResellerPrice"];
-			       $decExtendedPrice36 = number_format($decUnitPrice36 * $_POST['ItemQty36'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_36'] = 'True';
-                   $RegenesisReorderRGProd_36 = $decExtendedPrice36;
-               }
-
-               else if (($_POST['ItemID36'] == '804') || ($_POST['ItemID36'] == '1612') || ($_POST['ItemID36'] == '1316')) // Production
-               {
-			       $decUnitPrice36 = $row36["ResellerPrice"];
-			       $decExtendedPrice36 = number_format($decUnitPrice36 * $_POST['ItemQty36'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_36'] = 'True';
                }
 
                else
@@ -29868,8 +29229,7 @@ if ($_POST['ItemID36'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice36;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice36;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row36["Weight"] * $_POST['ItemQty36']);
@@ -30129,22 +29489,6 @@ if ($_POST['ItemID37'] != 0)
 			       $decUnitPrice37 = $row37["ResellerPrice"];
 			       $decExtendedPrice37 = number_format($decUnitPrice37 * $_POST['ItemQty37'], 2, '.', '');
                    $_SESSION['Regenesis_2285_37'] = (floor($_POST['ItemQty37']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID37'] == '1619') || ($_POST['ItemID37'] == '1618') || ($_POST['ItemID37'] == '1608') || ($_POST['ItemID37'] == '1385') || ($_POST['ItemID37'] == '1384') || ($_POST['ItemID37'] == '1383')) // Production
-               {
-			       $decUnitPrice37 = $row37["ResellerPrice"];
-			       $decExtendedPrice37 = number_format($decUnitPrice37 * $_POST['ItemQty37'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_37'] = 'True';
-                   $RegenesisReorderRGProd_37 = $decExtendedPrice37;
-               }
-
-               else if (($_POST['ItemID37'] == '804') || ($_POST['ItemID37'] == '1612') || ($_POST['ItemID37'] == '1316')) // Production
-               {
-			       $decUnitPrice37 = $row37["ResellerPrice"];
-			       $decExtendedPrice37 = number_format($decUnitPrice37 * $_POST['ItemQty37'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_37'] = 'True';
                }
 
                else
@@ -30433,8 +29777,7 @@ if ($_POST['ItemID37'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice37;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice37;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row37["Weight"] * $_POST['ItemQty37']);
@@ -30694,22 +30037,6 @@ if ($_POST['ItemID38'] != 0)
 			       $decUnitPrice38 = $row38["ResellerPrice"];
 			       $decExtendedPrice38 = number_format($decUnitPrice38 * $_POST['ItemQty38'], 2, '.', '');
                    $_SESSION['Regenesis_2285_38'] = (floor($_POST['ItemQty38']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID38'] == '1619') || ($_POST['ItemID38'] == '1618') || ($_POST['ItemID38'] == '1608') || ($_POST['ItemID38'] == '1385') || ($_POST['ItemID38'] == '1384') || ($_POST['ItemID38'] == '1383')) // Production
-               {
-			       $decUnitPrice38 = $row38["ResellerPrice"];
-			       $decExtendedPrice38 = number_format($decUnitPrice38 * $_POST['ItemQty38'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_38'] = 'True';
-                   $RegenesisReorderRGProd_38 = $decExtendedPrice38;
-               }
-
-               else if (($_POST['ItemID38'] == '804') || ($_POST['ItemID38'] == '1612') || ($_POST['ItemID38'] == '1316')) // Production
-               {
-			       $decUnitPrice38 = $row38["ResellerPrice"];
-			       $decExtendedPrice38 = number_format($decUnitPrice38 * $_POST['ItemQty38'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_38'] = 'True';
                }
 
                else
@@ -30998,8 +30325,7 @@ if ($_POST['ItemID38'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice38;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice38;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row38["Weight"] * $_POST['ItemQty38']);
@@ -31259,22 +30585,6 @@ if ($_POST['ItemID39'] != 0)
 			       $decUnitPrice39 = $row39["ResellerPrice"];
 			       $decExtendedPrice39 = number_format($decUnitPrice39 * $_POST['ItemQty39'], 2, '.', '');
                    $_SESSION['Regenesis_2285_39'] = (floor($_POST['ItemQty39']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID39'] == '1619') || ($_POST['ItemID39'] == '1618') || ($_POST['ItemID39'] == '1608') || ($_POST['ItemID39'] == '1385') || ($_POST['ItemID39'] == '1384') || ($_POST['ItemID39'] == '1383')) // Production
-               {
-			       $decUnitPrice39 = $row39["ResellerPrice"];
-			       $decExtendedPrice39 = number_format($decUnitPrice39 * $_POST['ItemQty39'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_39'] = 'True';
-                   $RegenesisReorderRGProd_39 = $decExtendedPrice39;
-               }
-
-               else if (($_POST['ItemID39'] == '804') || ($_POST['ItemID39'] == '1612') || ($_POST['ItemID39'] == '1316')) // Production
-               {
-			       $decUnitPrice39 = $row39["ResellerPrice"];
-			       $decExtendedPrice39 = number_format($decUnitPrice39 * $_POST['ItemQty39'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_39'] = 'True';
                }
 
                else
@@ -31563,8 +30873,7 @@ if ($_POST['ItemID39'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice39;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice39;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row39["Weight"] * $_POST['ItemQty39']);
@@ -31824,22 +31133,6 @@ if ($_POST['ItemID40'] != 0)
 			       $decUnitPrice40 = $row40["ResellerPrice"];
 			       $decExtendedPrice40 = number_format($decUnitPrice40 * $_POST['ItemQty40'], 2, '.', '');
                    $_SESSION['Regenesis_2285_40'] = (floor($_POST['ItemQty40']/3))*1;
-               }
-
-               // GMC - 10/12/15 - Regenesis Reorder Discount Program
-               else if (($_POST['ItemID40'] == '1619') || ($_POST['ItemID40'] == '1618') || ($_POST['ItemID40'] == '1608') || ($_POST['ItemID40'] == '1385') || ($_POST['ItemID40'] == '1384') || ($_POST['ItemID40'] == '1383')) // Production
-               {
-			       $decUnitPrice40 = $row40["ResellerPrice"];
-			       $decExtendedPrice40 = number_format($decUnitPrice40 * $_POST['ItemQty40'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRGProd_40'] = 'True';
-                   $RegenesisReorderRGProd_40 = $decExtendedPrice40;
-               }
-
-               else if (($_POST['ItemID40'] == '804') || ($_POST['ItemID40'] == '1612') || ($_POST['ItemID40'] == '1316')) // Production
-               {
-			       $decUnitPrice40 = $row40["ResellerPrice"];
-			       $decExtendedPrice40 = number_format($decUnitPrice40 * $_POST['ItemQty40'], 2, '.', '');
-                   $_SESSION['RegenesisReorderRVProd_40'] = 'True';
                }
 
                else
@@ -32128,8 +31421,7 @@ if ($_POST['ItemID40'] != 0)
 		}
 		else
 		{
-            // GMC - 10/12/15 - Regenesis Reorder Discount Program
-		    // $decSubtotal = $decSubtotal + $decExtendedPrice40;
+		    $decSubtotal = $decSubtotal + $decExtendedPrice40;
 		}
 
 		$decTotalWeight = $decTotalWeight + ($row40["Weight"] * $_POST['ItemQty40']);
@@ -32174,6 +31466,7 @@ if ($_POST['ItemID40'] != 0)
                 }
             }
         }
+
 	}
 }
 
@@ -35017,420 +34310,6 @@ else
 
 $_SESSION['TotalBoxCount'] = $TotalBoxCount;
 
-// GMC - 10/12/15 - Regenesis Reorder Discount Program
-$RegenesisReorderRGProdTot = $RegenesisReorderRGProd_01 + $RegenesisReorderRGProd_02 + $RegenesisReorderRGProd_03 + $RegenesisReorderRGProd_04 + $RegenesisReorderRGProd_05 + $RegenesisReorderRGProd_06 + $RegenesisReorderRGProd_07 + $RegenesisReorderRGProd_08 + $RegenesisReorderRGProd_09 + $RegenesisReorderRGProd_10;
-$RegenesisReorderRGProdTot = $RegenesisReorderRGProdTot + $RegenesisReorderRGProd_11 + $RegenesisReorderRGProd_12 + $RegenesisReorderRGProd_13 + $RegenesisReorderRGProd_14 + $RegenesisReorderRGProd_15 + $RegenesisReorderRGProd_16 + $RegenesisReorderRGProd_17 + $RegenesisReorderRGProd_18 + $RegenesisReorderRGProd_19 + $RegenesisReorderRGProd_20;
-$RegenesisReorderRGProdTot = $RegenesisReorderRGProdTot + $RegenesisReorderRGProd_21 + $RegenesisReorderRGProd_22 + $RegenesisReorderRGProd_23 + $RegenesisReorderRGProd_24 + $RegenesisReorderRGProd_25 + $RegenesisReorderRGProd_26 + $RegenesisReorderRGProd_27 + $RegenesisReorderRGProd_28 + $RegenesisReorderRGProd_29 + $RegenesisReorderRGProd_30;
-$RegenesisReorderRGProdTot = $RegenesisReorderRGProdTot + $RegenesisReorderRGProd_31 + $RegenesisReorderRGProd_32 + $RegenesisReorderRGProd_33 + $RegenesisReorderRGProd_34 + $RegenesisReorderRGProd_35 + $RegenesisReorderRGProd_36 + $RegenesisReorderRGProd_37 + $RegenesisReorderRGProd_38 + $RegenesisReorderRGProd_39 + $RegenesisReorderRGProd_40;
-
-if($RegenesisReorderRGProdTot > 1200)
-{
-    $_SESSION['RegenesisReorderThreshold'] = 'True';
-
-	if($_SESSION['RegenesisReorderRGProd_01'] == 'True' || $_SESSION['RegenesisReorderRVProd_01'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice1 - ($decExtendedPrice1 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice1;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_02'] == 'True' || $_SESSION['RegenesisReorderRVProd_02'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice2 - ($decExtendedPrice2 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-    	$decSubtotal = $decSubtotal + $decExtendedPrice2;
-    }
-
-    if($_SESSION['RegenesisReorderRGProd_03'] == 'True' || $_SESSION['RegenesisReorderRVProd_03'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice3 - ($decExtendedPrice3 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice3;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_04'] == 'True' || $_SESSION['RegenesisReorderRVProd_04'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice4 - ($decExtendedPrice4 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice4;
-    }
-
-    if($_SESSION['RegenesisReorderRGProd_05'] == 'True' || $_SESSION['RegenesisReorderRVProd_05'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice5 - ($decExtendedPrice5 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice5;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_06'] == 'True' || $_SESSION['RegenesisReorderRVProd_06'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice6 - ($decExtendedPrice6 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice6;
-    }
-
-    if($_SESSION['RegenesisReorderRGProd_07'] == 'True' || $_SESSION['RegenesisReorderRVProd_07'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice7 - ($decExtendedPrice7 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice7;
-    }
-
-    if($_SESSION['RegenesisReorderRGProd_08'] == 'True' || $_SESSION['RegenesisReorderRVProd_08'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice8 - ($decExtendedPrice8 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice8;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_09'] == 'True' || $_SESSION['RegenesisReorderRVProd_09'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice9 - ($decExtendedPrice9 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice9;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_10'] == 'True' || $_SESSION['RegenesisReorderRVProd_10'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice10 - ($decExtendedPrice10 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice10;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_11'] == 'True' || $_SESSION['RegenesisReorderRVProd_11'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice11 - ($decExtendedPrice11 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice11;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_12'] == 'True' || $_SESSION['RegenesisReorderRVProd_12'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice12 - ($decExtendedPrice12 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice12;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_13'] == 'True' || $_SESSION['RegenesisReorderRVProd_13'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice13 - ($decExtendedPrice13 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice13;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_14'] == 'True' || $_SESSION['RegenesisReorderRVProd_14'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice14 - ($decExtendedPrice14 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice14;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_15'] == 'True' || $_SESSION['RegenesisReorderRVProd_15'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice15 - ($decExtendedPrice15 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice15;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_16'] == 'True' || $_SESSION['RegenesisReorderRVProd_16'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice16 - ($decExtendedPrice16 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice16;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_17'] == 'True' || $_SESSION['RegenesisReorderRVProd_17'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice17 - ($decExtendedPrice17 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice17;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_18'] == 'True' || $_SESSION['RegenesisReorderRVProd_18'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice18 - ($decExtendedPrice18 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice18;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_19'] == 'True' || $_SESSION['RegenesisReorderRVProd_19'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice19 - ($decExtendedPrice19 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice19;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_20'] == 'True' || $_SESSION['RegenesisReorderRVProd_20'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice20 - ($decExtendedPrice20 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice20;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_21'] == 'True' || $_SESSION['RegenesisReorderRVProd_21'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice21 - ($decExtendedPrice21 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice21;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_22'] == 'True' || $_SESSION['RegenesisReorderRVProd_22'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice22 - ($decExtendedPrice22 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice22;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_23'] == 'True' || $_SESSION['RegenesisReorderRVProd_23'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice23 - ($decExtendedPrice23 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice23;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_24'] == 'True' || $_SESSION['RegenesisReorderRVProd_24'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice24 - ($decExtendedPrice24 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice24;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_25'] == 'True' || $_SESSION['RegenesisReorderRVProd_25'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice25 - ($decExtendedPrice25 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice25;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_26'] == 'True' || $_SESSION['RegenesisReorderRVProd_26'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice26 - ($decExtendedPrice26 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice26;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_27'] == 'True' || $_SESSION['RegenesisReorderRVProd_27'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice27 - ($decExtendedPrice27 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice27;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_28'] == 'True' || $_SESSION['RegenesisReorderRVProd_28'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice28 - ($decExtendedPrice28 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice28;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_29'] == 'True' || $_SESSION['RegenesisReorderRVProd_29'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice29 - ($decExtendedPrice29 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice29;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_30'] == 'True' || $_SESSION['RegenesisReorderRVProd_30'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice30 - ($decExtendedPrice30 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice30;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_31'] == 'True' || $_SESSION['RegenesisReorderRVProd_31'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice31 - ($decExtendedPrice31 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice31;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_32'] == 'True' || $_SESSION['RegenesisReorderRVProd_32'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice32 - ($decExtendedPrice32 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice32;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_33'] == 'True' || $_SESSION['RegenesisReorderRVProd_33'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice33 - ($decExtendedPrice33 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice33;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_34'] == 'True' || $_SESSION['RegenesisReorderRVProd_34'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice34 - ($decExtendedPrice34 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice34;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_35'] == 'True' || $_SESSION['RegenesisReorderRVProd_35'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice35 - ($decExtendedPrice35 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice35;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_36'] == 'True' || $_SESSION['RegenesisReorderRVProd_36'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice36 - ($decExtendedPrice36 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice36;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_37'] == 'True' || $_SESSION['RegenesisReorderRVProd_37'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice37 - ($decExtendedPrice37 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice37;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_38'] == 'True' || $_SESSION['RegenesisReorderRVProd_38'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice38 - ($decExtendedPrice38 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice38;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_39'] == 'True' || $_SESSION['RegenesisReorderRVProd_39'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice39 - ($decExtendedPrice39 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice39;
-    }
-
-	if($_SESSION['RegenesisReorderRGProd_40'] == 'True' || $_SESSION['RegenesisReorderRVProd_40'] == 'True')
-	{
-		$decSubtotal = $decSubtotal + ($decExtendedPrice40 - ($decExtendedPrice40 * $_SESSION['RegenesisReorderDiscount']));
-	}
-    else
-    {
-		$decSubtotal = $decSubtotal + $decExtendedPrice40;
-    }
-}
-else
-{
-    $decSubtotal = $decSubtotal + $decExtendedPrice1;
-    $decSubtotal = $decSubtotal + $decExtendedPrice2;
-    $decSubtotal = $decSubtotal + $decExtendedPrice3;
-    $decSubtotal = $decSubtotal + $decExtendedPrice4;
-    $decSubtotal = $decSubtotal + $decExtendedPrice5;
-    $decSubtotal = $decSubtotal + $decExtendedPrice6;
-    $decSubtotal = $decSubtotal + $decExtendedPrice7;
-    $decSubtotal = $decSubtotal + $decExtendedPrice8;
-    $decSubtotal = $decSubtotal + $decExtendedPrice9;
-    $decSubtotal = $decSubtotal + $decExtendedPrice10;
-    $decSubtotal = $decSubtotal + $decExtendedPrice11;
-    $decSubtotal = $decSubtotal + $decExtendedPrice12;
-    $decSubtotal = $decSubtotal + $decExtendedPrice13;
-    $decSubtotal = $decSubtotal + $decExtendedPrice14;
-    $decSubtotal = $decSubtotal + $decExtendedPrice15;
-    $decSubtotal = $decSubtotal + $decExtendedPrice16;
-    $decSubtotal = $decSubtotal + $decExtendedPrice17;
-    $decSubtotal = $decSubtotal + $decExtendedPrice18;
-    $decSubtotal = $decSubtotal + $decExtendedPrice19;
-    $decSubtotal = $decSubtotal + $decExtendedPrice20;
-    $decSubtotal = $decSubtotal + $decExtendedPrice21;
-    $decSubtotal = $decSubtotal + $decExtendedPrice22;
-    $decSubtotal = $decSubtotal + $decExtendedPrice23;
-    $decSubtotal = $decSubtotal + $decExtendedPrice24;
-    $decSubtotal = $decSubtotal + $decExtendedPrice25;
-    $decSubtotal = $decSubtotal + $decExtendedPrice26;
-    $decSubtotal = $decSubtotal + $decExtendedPrice27;
-    $decSubtotal = $decSubtotal + $decExtendedPrice28;
-    $decSubtotal = $decSubtotal + $decExtendedPrice29;
-    $decSubtotal = $decSubtotal + $decExtendedPrice30;
-    $decSubtotal = $decSubtotal + $decExtendedPrice31;
-    $decSubtotal = $decSubtotal + $decExtendedPrice32;
-    $decSubtotal = $decSubtotal + $decExtendedPrice33;
-    $decSubtotal = $decSubtotal + $decExtendedPrice34;
-    $decSubtotal = $decSubtotal + $decExtendedPrice35;
-    $decSubtotal = $decSubtotal + $decExtendedPrice36;
-    $decSubtotal = $decSubtotal + $decExtendedPrice37;
-    $decSubtotal = $decSubtotal + $decExtendedPrice38;
-    $decSubtotal = $decSubtotal + $decExtendedPrice39;
-    $decSubtotal = $decSubtotal + $decExtendedPrice40;
-}
-
 ?>
 </table>
 
@@ -35504,21 +34383,6 @@ if ($_POST['ItemID1'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice1 * $_POST['ItemQty1'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_01'] == 'True' || $_SESSION['RegenesisReorderRVProd_01'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice1  - ($decExtendedPrice1 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice1, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice1, 2, '.', '') . '</td>';
@@ -35783,21 +34647,6 @@ if ($_POST['ItemID2'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice2 * $_POST['ItemQty2'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_02'] == 'True' || $_SESSION['RegenesisReorderRVProd_02'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice2  - ($decExtendedPrice2 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice2, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice2, 2, '.', '') . '</td>';
@@ -36062,21 +34911,6 @@ if ($_POST['ItemID3'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice3 * $_POST['ItemQty3'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_03'] == 'True' || $_SESSION['RegenesisReorderRVProd_03'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice3  - ($decExtendedPrice3 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice3, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice3, 2, '.', '') . '</td>';
@@ -36341,21 +35175,6 @@ if ($_POST['ItemID4'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice4 * $_POST['ItemQty4'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_04'] == 'True' || $_SESSION['RegenesisReorderRVProd_04'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice4  - ($decExtendedPrice4 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice4, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice4, 2, '.', '') . '</td>';
@@ -36620,21 +35439,6 @@ if ($_POST['ItemID5'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice5 * $_POST['ItemQty5'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_05'] == 'True' || $_SESSION['RegenesisReorderRVProd_05'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice5  - ($decExtendedPrice5 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice5, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice5, 2, '.', '') . '</td>';
@@ -36899,21 +35703,6 @@ if ($_POST['ItemID6'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice6 * $_POST['ItemQty6'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_06'] == 'True' || $_SESSION['RegenesisReorderRVProd_06'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice6  - ($decExtendedPrice6 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice6, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice6, 2, '.', '') . '</td>';
@@ -37178,21 +35967,6 @@ if ($_POST['ItemID7'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice7 * $_POST['ItemQty7'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_07'] == 'True' || $_SESSION['RegenesisReorderRVProd_07'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice7  - ($decExtendedPrice7 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice7, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice7, 2, '.', '') . '</td>';
@@ -37457,21 +36231,6 @@ if ($_POST['ItemID8'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice8 * $_POST['ItemQty8'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_08'] == 'True' || $_SESSION['RegenesisReorderRVProd_08'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice8  - ($decExtendedPrice8 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice8, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice8, 2, '.', '') . '</td>';
@@ -37743,21 +36502,6 @@ if ($_POST['ItemID9'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice9 * $_POST['ItemQty9'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_09'] == 'True' || $_SESSION['RegenesisReorderRVProd_09'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice9  - ($decExtendedPrice9 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice9, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice9, 2, '.', '') . '</td>';
@@ -38022,21 +36766,6 @@ if ($_POST['ItemID10'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice10 * $_POST['ItemQty10'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_10'] == 'True' || $_SESSION['RegenesisReorderRVProd_10'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice10  - ($decExtendedPrice10 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice10, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice10, 2, '.', '') . '</td>';
@@ -38303,21 +37032,6 @@ if ($_POST['ItemID11'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice11 * $_POST['ItemQty11'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_11'] == 'True' || $_SESSION['RegenesisReorderRVProd_11'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice11  - ($decExtendedPrice11 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice11, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice11, 2, '.', '') . '</td>';
@@ -38582,21 +37296,6 @@ if ($_POST['ItemID12'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice12 * $_POST['ItemQty12'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_12'] == 'True' || $_SESSION['RegenesisReorderRVProd_12'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice12  - ($decExtendedPrice12 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice12, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice12, 2, '.', '') . '</td>';
@@ -38861,21 +37560,6 @@ if ($_POST['ItemID13'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice13 * $_POST['ItemQty13'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_13'] == 'True' || $_SESSION['RegenesisReorderRVProd_13'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice13  - ($decExtendedPrice13 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice13, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice13, 2, '.', '') . '</td>';
@@ -39140,21 +37824,6 @@ if ($_POST['ItemID14'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice14 * $_POST['ItemQty14'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_14'] == 'True' || $_SESSION['RegenesisReorderRVProd_14'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice14  - ($decExtendedPrice14 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice14, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice14, 2, '.', '') . '</td>';
@@ -39419,21 +38088,6 @@ if ($_POST['ItemID15'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice15 * $_POST['ItemQty15'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_15'] == 'True' || $_SESSION['RegenesisReorderRVProd_15'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice15  - ($decExtendedPrice15 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice15, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice15, 2, '.', '') . '</td>';
@@ -39698,21 +38352,6 @@ if ($_POST['ItemID16'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice16 * $_POST['ItemQty16'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_16'] == 'True' || $_SESSION['RegenesisReorderRVProd_16'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice16  - ($decExtendedPrice16 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice16, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice16, 2, '.', '') . '</td>';
@@ -39977,21 +38616,6 @@ if ($_POST['ItemID17'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice17 * $_POST['ItemQty17'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_17'] == 'True' || $_SESSION['RegenesisReorderRVProd_17'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice17  - ($decExtendedPrice17 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice17, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice17, 2, '.', '') . '</td>';
@@ -40256,21 +38880,6 @@ if ($_POST['ItemID18'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice18 * $_POST['ItemQty18'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_18'] == 'True' || $_SESSION['RegenesisReorderRVProd_18'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice18  - ($decExtendedPrice18 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice18, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice18, 2, '.', '') . '</td>';
@@ -40535,21 +39144,6 @@ if ($_POST['ItemID19'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice19 * $_POST['ItemQty19'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_19'] == 'True' || $_SESSION['RegenesisReorderRVProd_19'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice19  - ($decExtendedPrice19 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice19, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice19, 2, '.', '') . '</td>';
@@ -40814,21 +39408,6 @@ if ($_POST['ItemID20'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice20 * $_POST['ItemQty20'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_20'] == 'True' || $_SESSION['RegenesisReorderRVProd_20'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice20  - ($decExtendedPrice20 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice20, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice20, 2, '.', '') . '</td>';
@@ -41075,33 +39654,15 @@ if ($_POST['ItemID21'] != 0)
           echo ' + ' . $ItemFree21 . ' FREE';
          }
     }
-    
     echo '</td>';
-
     if($_SESSION['Bundles2010_21'] != '')
     {
 	    echo '<td>$' . number_format($decUnitPrice21 * $_POST['ItemQty21'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_21'] == 'True' || $_SESSION['RegenesisReorderRVProd_21'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice21  - ($decExtendedPrice21 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice21, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice21, 2, '.', '') . '</td>';
     }
-    
 	echo '</tr>';
 	if($_SESSION['BreastCancerAugOct2009_21'] >= 12)
 	{
@@ -41325,21 +39886,6 @@ if ($_POST['ItemID22'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice22 * $_POST['ItemQty22'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_22'] == 'True' || $_SESSION['RegenesisReorderRVProd_22'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice22  - ($decExtendedPrice22 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice22, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice22, 2, '.', '') . '</td>';
@@ -41567,21 +40113,6 @@ if ($_POST['ItemID23'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice23 * $_POST['ItemQty23'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_23'] == 'True' || $_SESSION['RegenesisReorderRVProd_23'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice23  - ($decExtendedPrice23 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice23, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice23, 2, '.', '') . '</td>';
@@ -41809,21 +40340,6 @@ if ($_POST['ItemID24'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice24 * $_POST['ItemQty24'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_24'] == 'True' || $_SESSION['RegenesisReorderRVProd_24'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice24  - ($decExtendedPrice24 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice24, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice24, 2, '.', '') . '</td>';
@@ -42051,21 +40567,6 @@ if ($_POST['ItemID25'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice25 * $_POST['ItemQty25'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_25'] == 'True' || $_SESSION['RegenesisReorderRVProd_25'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice25  - ($decExtendedPrice25 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice25, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice25, 2, '.', '') . '</td>';
@@ -42293,21 +40794,6 @@ if ($_POST['ItemID26'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice26 * $_POST['ItemQty26'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_26'] == 'True' || $_SESSION['RegenesisReorderRVProd_26'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice26  - ($decExtendedPrice26 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice26, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice26, 2, '.', '') . '</td>';
@@ -42535,21 +41021,6 @@ if ($_POST['ItemID27'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice27 * $_POST['ItemQty27'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_27'] == 'True' || $_SESSION['RegenesisReorderRVProd_27'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice27  - ($decExtendedPrice27 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice27, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice27, 2, '.', '') . '</td>';
@@ -42777,21 +41248,6 @@ if ($_POST['ItemID28'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice28 * $_POST['ItemQty28'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_28'] == 'True' || $_SESSION['RegenesisReorderRVProd_28'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice28  - ($decExtendedPrice28 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice28, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice28, 2, '.', '') . '</td>';
@@ -43019,21 +41475,6 @@ if ($_POST['ItemID29'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice29 * $_POST['ItemQty29'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_29'] == 'True' || $_SESSION['RegenesisReorderRVProd_29'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice29  - ($decExtendedPrice29 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice29, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice29, 2, '.', '') . '</td>';
@@ -43261,21 +41702,6 @@ if ($_POST['ItemID30'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice30 * $_POST['ItemQty30'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_30'] == 'True' || $_SESSION['RegenesisReorderRVProd_30'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice30  - ($decExtendedPrice30 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice30, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice30, 2, '.', '') . '</td>';
@@ -43503,21 +41929,6 @@ if ($_POST['ItemID31'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice31 * $_POST['ItemQty31'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_31'] == 'True' || $_SESSION['RegenesisReorderRVProd_31'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice31  - ($decExtendedPrice31 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice31, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice31, 2, '.', '') . '</td>';
@@ -43745,21 +42156,6 @@ if ($_POST['ItemID32'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice32 * $_POST['ItemQty32'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_32'] == 'True' || $_SESSION['RegenesisReorderRVProd_32'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice32  - ($decExtendedPrice32 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice32, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice32, 2, '.', '') . '</td>';
@@ -43987,21 +42383,6 @@ if ($_POST['ItemID33'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice33 * $_POST['ItemQty33'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_33'] == 'True' || $_SESSION['RegenesisReorderRVProd_33'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice33  - ($decExtendedPrice33 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice33, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice33, 2, '.', '') . '</td>';
@@ -44229,21 +42610,6 @@ if ($_POST['ItemID34'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice34 * $_POST['ItemQty34'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_34'] == 'True' || $_SESSION['RegenesisReorderRVProd_34'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice34  - ($decExtendedPrice34 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice34, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice34, 2, '.', '') . '</td>';
@@ -44471,21 +42837,6 @@ if ($_POST['ItemID35'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice35 * $_POST['ItemQty35'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_35'] == 'True' || $_SESSION['RegenesisReorderRVProd_35'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice35  - ($decExtendedPrice35 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice35, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice35, 2, '.', '') . '</td>';
@@ -44713,21 +43064,6 @@ if ($_POST['ItemID36'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice36 * $_POST['ItemQty36'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_36'] == 'True' || $_SESSION['RegenesisReorderRVProd_36'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice36  - ($decExtendedPrice36 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice36, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice36, 2, '.', '') . '</td>';
@@ -44955,21 +43291,6 @@ if ($_POST['ItemID37'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice37 * $_POST['ItemQty37'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_37'] == 'True' || $_SESSION['RegenesisReorderRVProd_37'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice37  - ($decExtendedPrice37 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice37, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice37, 2, '.', '') . '</td>';
@@ -45197,21 +43518,6 @@ if ($_POST['ItemID38'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice38 * $_POST['ItemQty38'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_38'] == 'True' || $_SESSION['RegenesisReorderRVProd_38'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice38  - ($decExtendedPrice38 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice38, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice38, 2, '.', '') . '</td>';
@@ -45439,21 +43745,6 @@ if ($_POST['ItemID39'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice39 * $_POST['ItemQty39'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_39'] == 'True' || $_SESSION['RegenesisReorderRVProd_39'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice39  - ($decExtendedPrice39 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice39, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice39, 2, '.', '') . '</td>';
@@ -45681,21 +43972,6 @@ if ($_POST['ItemID40'] != 0)
     {
 	    echo '<td>$' . number_format($decUnitPrice40 * $_POST['ItemQty40'], 2, '.', '') . '</td>';
     }
-
-    // GMC - 10/12/15 - Regenesis Reorder Discount Program
-    else if($_SESSION['RegenesisReorderThreshold'] == 'True')
-    {
-
-         if($_SESSION['RegenesisReorderRGProd_40'] == 'True' || $_SESSION['RegenesisReorderRVProd_40'] == 'True')
-         {
-             echo '<td>$' . number_format($decExtendedPrice40  - ($decExtendedPrice40 * $_SESSION['RegenesisReorderDiscount']), 2, '.', '') . '</td>';
-         }
-         else
-         {
-	        echo '<td>$' . number_format($decExtendedPrice40, 2, '.', '') . '</td>';
-         }
-    }
-
     else
     {
 	    echo '<td>$' . number_format($decExtendedPrice40, 2, '.', '') . '</td>';
@@ -46295,315 +44571,691 @@ else
              $request['RequestedShipment']['RateRequestTypes'] = 'ACCOUNT';
              // $request['RequestedShipment']['RateRequestTypes'] = 'LIST';
 
-             // $request['RequestedShipment']['PackageCount'] = '1';
-             $request['RequestedShipment']['PackageCount'] = $_SESSION['TotalBoxCount'];
-
-             $request['RequestedShipment']['PackageDetail'] = 'INDIVIDUAL_PACKAGES';
-
-             ///////////
-             // GMC - 08/17/10 - FedEx Box Project
-             /*
-             $request['RequestedShipment']['RequestedPackages'] = array('0' => array('SequenceNumber' => '1',
-                                          'InsuredValue' => array('Amount' => 0.0,
-                                          'Currency' => 'USD'),
-                                          'ItemDescription' => 'Athena Products',
-
-                                          // GMC - 04/06/10 - Add 1.2 lb to weight
-                                          // 'Weight' => array('Value' => $weight,
-                                          'Weight' => array('Value' => $weight + 1.2,
-
-                                          'Units' => 'LB'),
-                                          'Dimensions' => array('Length' => 5,
-                                          'Width' => 1,
-                                          'Height' => 1,
-                                          'Units' => 'IN'),
-                                          'CustomerReferences' => array('CustomerReferenceType' => 'CUSTOMER_REFERENCE',
-                                          'Value' => 'Undergraduate application')));
-             */
-
-             /*
-             $request['RequestedShipment']['RequestedPackageLineItems'] = array('0' => array('Weight' => array('Value' => $weight + 1.2,
-                                                                                    'Units' => 'LB'),
-                                                                                    'Dimensions' => array('Length' => 5,
-                                                                                    'Width' => 1,
-                                                                                    'Height' => 1,
-                                                                                    'Units' => 'IN')));
-             */
-
-             // GMC - 04/25/11 - Calculate Boxes for FedEx - From Prototype To Production
-             // GMC - 10/18/10 - Correct the Fedex Web Service Calculation
-             // $request['RequestedShipment']['RequestedPackageLineItems'] = $arrBoxes;
-             /*
-             $request['RequestedShipment']['RequestedPackageLineItems'] = array('0' => array('Weight' => array('Value' => $_SESSION['OrderWeight'] + 1.2,
-                                                                                    'Units' => 'LB'),
-                                                                                    'Dimensions' => array('Length' => 12,
-                                                                                    'Width' => 12,
-                                                                                    'Height' => 12,
-                                                                                    'Units' => 'IN')));
-             */
-
-             // GMC - 09/18/15 - Fedex Freight Desktop Tool - LTL Flag
-             /*
-             if($_SESSION['OrderWeight'] > 150)
+             // 08/12/15 - Separate FedEx Service Call based on Number of Boxes
+             if($TotalBoxCount > 100)
              {
-                 $ResultCode = 0;
-                 echo '<option value="777">FedEx Desktop Tool ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+				 // Number of times to iterate thru the FedEx
+				 $Iterate = floor($TotalBoxCount/100);
 
-                 $_SESSION['FedEx_Desktop_Tool'] = 1;
+				 $request['RequestedShipment']['PackageCount'] = floor($TotalBoxCount/$Iterate);
+				 $request['RequestedShipment']['PackageDetail'] = 'INDIVIDUAL_PACKAGES';
 
-                 if($_SESSION['OrderWeight'] > 400)
-                 {
-                     $_SESSION['LTL_Order_Flag'] = 1;
-                 }
+				 // Create the different boxes set based on the Iterate
+				 $BoxCount = floor($TotalBoxCount/$Iterate);
+				 $BoxWeight = floor($_SESSION['OrderWeight']/$TotalBoxCount);
+
+				 for ($i = 0; $i <= $BoxCount; $i++) {
+					$arrBoxesFedEx[$i] = array('Weight' => array('Value' => $BoxWeight,
+						  'Units' => 'LB'),
+						  'Dimensions' => array('Length' => 12,
+						  'Width' => 12,
+						  'Height' => 12,
+						  'Units' => 'IN'));
+				 }
+
+				 $request['RequestedShipment']['RequestedPackageLineItems'] = $arrBoxesFedEx;
+                 $_SESSION['Array_Boxes'] = $arrBoxesFedEx;
+
+				 /*
+				 print_r($arrBoxCount);
+				 echo '<br/>';
+				 echo '<br/>';
+				 var_dump($arrBoxCount);
+				 echo '<br/>';
+				 echo '<br/>';
+
+				 print_r($arrBoxesFedEx);
+				 echo '<br/>';
+				 echo '<br/>';
+				 var_dump($arrBoxesFedEx);
+				 echo '<br/>';
+				 echo '<br/>';
+				 echo '<br/>';
+				 echo '<br/>';
+				 */
+
+				 $ResultCode1[] = null;
+				 $ResultCode2[] = null;
+				 $ResultCode3[] = null;
+				 $ResultCode4[] = null;
+				 $ResultCode5[] = null;
+				 $ResultCode6[] = null;
+				 $ResultCode7[] = null;
+				 $ResultCode8[] = null;
+				 $ResultCode9[] = null;
+				 $ResultCode10[] = null;
+				 $ResultCode11[] = null;
+				 $ResultCode12[] = null;
+
+				 $RC1 = 0;
+				 $RC2 = 0;
+				 $RC3 = 0;
+				 $RC4 = 0;
+				 $RC5 = 0;
+				 $RC6 = 0;
+				 $RC7 = 0;
+				 $RC8 = 0;
+				 $RC9 = 0;
+				 $RC10 = 0;
+				 $RC11 = 0;
+				 $RC12 = 0;
+
+				 // Iterate thru the FedEx web service
+				 for ($i = 0; $i <= $Iterate; $i++)
+				 {
+					 try
+					 {
+						 $response = $client -> getRates($request);
+
+						 // echo "<pre>";
+						 // var_dump($response);
+						 // echo "</pre>";
+						 // echo sizeof($response);
+
+						 if ($response -> HighestSeverity != 'FAILURE' && $response -> HighestSeverity != 'ERROR')
+						 {
+							  foreach ($response -> RateReplyDetails as $rateReply)
+							  {
+								  $serviceType = $rateReply -> ServiceType;
+
+								  // GMC - 04/14/10 - Add FedEx Ground
+								  if($serviceType == "FEDEX_GROUND")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $ResultCode1[$i] = $rateReply -> RatedShipmentDetails -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
+
+									  $blnIsError = 0;
+								  }
+								  elseif($serviceType == "FEDEX_2_DAY")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode2[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+								  elseif($serviceType == "FEDEX_EXPRESS_SAVER")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode3[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+
+								  // GMC - 03/11/11 - Add Standard Overnight to Shipping Methods
+								  elseif($serviceType == "STANDARD_OVERNIGHT")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode4[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+
+								  // GMC - 08/17/10 - FedEx Box Project
+								  elseif($serviceType == "FEDEX_1_DAY_FREIGHT")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode5[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+
+								  elseif($serviceType == "FEDEX_2_DAY_FREIGHT")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode6[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+								  elseif($serviceType == "FEDEX_3_DAY_FREIGHT")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode7[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+
+								  elseif($serviceType == "INTERNATIONAL_PRIORITY")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode8[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+								  elseif($serviceType == "INTERNATIONAL_ECONOMY")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode9[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+
+								  // GMC - 08/17/10 - FedEx Box Project
+								  elseif($serviceType == "INTERNATIONAL_PRIORITY_FREIGHT")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode10[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+								  elseif($serviceType == "INTERNATIONAL_ECONOMY_FREIGHT")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode11[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+
+								  elseif($serviceType == "INTERNATIONAL_FIRST")
+								  {
+									  if(is_array($response -> RateReplyDetails))
+									  {
+										  $tnfec = $rateReply -> RatedShipmentDetails;
+										  foreach ($tnfec as $wha)
+										  {
+											  $ResultCode12[$i] = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+										  }
+									  }
+
+									  $blnIsError = 0;
+								  }
+							  }
+						 }
+						 else
+						 {
+							  foreach ($response -> Notifications as $notification)
+							  {
+								  if(is_array($response -> Notifications))
+								  {
+									  $blnIsError = 1;
+								  }
+								  else
+								  {
+									  $blnIsError = 1;
+								  }
+							  }
+						 }
+					 }
+					 catch (SoapFault $exception)
+					 {
+						$blnIsError = 1;
+					 }
+
+					 $response = null;
+				 }
+
+				 // Now add them all up
+				 for ($i = 0; $i <= $Iterate; $i++)
+				 {
+					 if(isset($ResultCode1[$i]))
+					 {
+						 $RC1 = $RC1 + $ResultCode1[$i];
+					 }
+
+					 if(isset($ResultCode2[$i]))
+					 {
+						 $RC2 = $RC2 + $ResultCode2[$i];
+					 }
+
+					 if(isset($ResultCode3[$i]))
+					 {
+						 $RC3 = $RC3 + $ResultCode3[$i];
+					 }
+
+					 if(isset($ResultCode4[$i]))
+					 {
+						 $RC4 = $RC4 + $ResultCode4[$i];
+					 }
+
+					 if(isset($ResultCode5[$i]))
+					 {
+						 $RC5 = $RC5 + $ResultCode5[$i];
+					 }
+
+					 if(isset($ResultCode6[$i]))
+					 {
+						 $RC6 = $RC6 + $ResultCode6[$i];
+					 }
+
+					 if(isset($ResultCode7[$i]))
+					 {
+						 $RC7 = $RC7 + $ResultCode7[$i];
+					 }
+
+					 if(isset($ResultCode8[$i]))
+					 {
+						 $RC8 = $RC8 + $ResultCode8[$i];
+					 }
+
+					 if(isset($ResultCode9[$i]))
+					 {
+						 $RC9 = $RC9 + $ResultCode9[$i];
+					 }
+
+					 if(isset($ResultCode10[$i]))
+					 {
+						 $RC10 = $RC10 + $ResultCode10[$i];
+					 }
+
+					 if(isset($ResultCode11[$i]))
+					 {
+						 $RC11 = $RC11 + $ResultCode11[$i];
+					 }
+
+					 if(isset($ResultCode12[$i]))
+					 {
+						 $RC12 = $RC12 + $ResultCode12[$i];
+					 }
+				 }
+
+				 // Finally get them all together in the drop down
+				 if($RC1 != 0)
+				 {
+                     echo '<option value="199">FedEx Ground ' . ' ($' . number_format($RC1, 2, '.', '') . ')</option>';
+                     $_SESSION['RC1'] = $RC1;
+				 }
+				 elseif($RC2 != 0)
+				 {
+					 echo '<option value="201">FedEx 2Day ' . ' ($' . number_format($RC2, 2, '.', '') . ')</option>';
+                     $_SESSION['RC2'] = $RC2;
+				 }
+				 elseif($RC3 != 0)
+				 {
+					 echo '<option value="200">FedEx Express Saver ' . ' ($' . number_format($RC3, 2, '.', '') . ')</option>';
+                     $_SESSION['RC3'] = $RC3;
+				 }
+				 elseif($RC4 != 0)
+				 {
+				     echo '<option value="202">FedEx Next Day Overnight ' . ' ($' . number_format($RC4, 2, '.', '') . ')</option>';
+                     $_SESSION['RC4'] = $RC4;
+				 }
+				 elseif($RC5 != 0)
+				 {
+  				     echo '<option value="211">FedEx 1 Day Freight ' . ' ($' . number_format($RC5, 2, '.', '') . ')</option>';
+                     $_SESSION['RC5'] = $RC5;
+				 }
+				 elseif($RC6 != 0)
+				 {
+					 echo '<option value="212">FedEx 2 Day Freight ' . ' ($' . number_format($RC6, 2, '.', '') . ')</option>';
+                     $_SESSION['RC6'] = $RC6;
+				 }
+				 elseif($RC7 != 0)
+				 {
+					 echo '<option value="213">FedEx 3 Day Freight ' . ' ($' . number_format($RC7, 2, '.', '') . ')</option>';
+                     $_SESSION['RC7'] = $RC7;
+				 }
+				 elseif($RC8 != 0)
+				 {
+					 echo '<option value="205">FedEx International Priority ' . ' ($' . number_format($RC8, 2, '.', '') . ')</option>';
+                     $_SESSION['RC8'] = $RC8;
+				 }
+				 elseif($RC9 != 0)
+				 {
+					 echo '<option value="206">FedEx International Economy ' . ' ($' . number_format($RC9, 2, '.', '') . ')</option>';
+                     $_SESSION['RC9'] = $RC9;
+				 }
+				 elseif($RC10 != 0)
+				 {
+				     echo '<option value="214">FedEx International Priority Freight' . ' ($' . number_format($RC10, 2, '.', '') . ')</option>';
+                     $_SESSION['RC10'] = $RC10;
+				 }
+				 elseif($RC11 != 0)
+				 {
+					 echo '<option value="215">FedEx International Economy Freight' . ' ($' . number_format($RC11, 2, '.', '') . ')</option>';
+                     $_SESSION['RC11'] = $RC11;
+				 }
+				 elseif($RC12 != 0)
+				 {
+					 echo '<option value="207">FedEx International First ' . ' ($' . number_format($RC12, 2, '.', '') . ')</option>';
+                     $_SESSION['RC12'] = $RC12;
+				 }
              }
              else
              {
-             */
+                 $request['RequestedShipment']['PackageCount'] = $TotalBoxCount;
+				 $request['RequestedShipment']['PackageDetail'] = 'INDIVIDUAL_PACKAGES';
                  $request['RequestedShipment']['RequestedPackageLineItems'] = $arrBoxes;
                  $_SESSION['Array_Boxes'] = $arrBoxes;
 
-                 try
-                 {
-				     $response = $client -> getRates($request);
+				 /*
+				 print_r($arrBoxCount);
+				 echo '<br/>';
+				 echo '<br/>';
+				 var_dump($arrBoxCount);
+				 echo '<br/>';
+				 echo '<br/>';
 
-				     if ($response -> HighestSeverity != 'FAILURE' && $response -> HighestSeverity != 'ERROR')
-				     {
-					     foreach ($response -> RateReplyDetails as $rateReply)
-					     {
-						     $serviceType = $rateReply -> ServiceType;
+				 print_r($arrBoxes);
+				 echo '<br/>';
+				 echo '<br/>';
+				 var_dump($arrBoxes);
+				 echo '<br/>';
+				 echo '<br/>';
+				 echo '<br/>';
+				 echo '<br/>';
+                 */
 
-						     // GMC - 04/14/10 - Add FedEx Ground
-						     if($serviceType == "FEDEX_GROUND")
-						     {
-							     if(is_array($response -> RateReplyDetails))
-							     {
-								     $ResultCode = $rateReply -> RatedShipmentDetails -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-							     }
+				 try
+				 {
+					 $response = $client -> getRates($request);
+      
+					 // echo "<pre>";
+					 // var_dump($response);
+					 // echo "</pre>";
+					 // echo sizeof($response);
 
-							     // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							     if($ResultCode != 0)
-							     {
-								     // GMC - 05/11/15 - Integrate CAP Products into Admin
-								     if($_SESSION['CapFlag'] && $ResultCode > 50)
-								     {
-									     echo '<option value="199">FedEx Ground ' . ' ($' . number_format($_SESSION['CapRate'], 2, '.', '') . ')</option>';
-									     $_SESSION['CapRateReal'] = $ResultCode;
-								     }
-								     else
-								     {
-									     echo '<option value="199">FedEx Ground ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-								     }
-							     }
-
-							     $blnIsError = 0;
-						     }
-						     elseif($serviceType == "FEDEX_2_DAY")
-						     {
-							     if(is_array($response -> RateReplyDetails))
-							     {
-								     $tnfec = $rateReply -> RatedShipmentDetails;
-								     foreach ($tnfec as $wha)
-								     {
-									     $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-								     }
-							      }
-
-							      // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							      if($ResultCode != 0){
-								      echo '<option value="201">FedEx 2Day ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							      }
-
-							      $blnIsError = 0;
-						     }
-						     elseif($serviceType == "FEDEX_EXPRESS_SAVER")
-						     {
-							      if(is_array($response -> RateReplyDetails))
-							      {
-								      $tnfec = $rateReply -> RatedShipmentDetails;
-								      foreach ($tnfec as $wha)
-								      {
-									      $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-								      }
-							      }
-
-							      // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							      if($ResultCode != 0){
-								      echo '<option value="200">FedEx Express Saver ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							      }
-
-							      $blnIsError = 0;
-                             }
-
-                             // GMC - 03/11/11 - Add Standard Overnight to Shipping Methods
-                             elseif($serviceType == "STANDARD_OVERNIGHT")
-                             {
-							  if(is_array($response -> RateReplyDetails))
-							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
-								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-								  }
-							  }
-
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="202">FedEx Next Day Overnight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
-
-							  $blnIsError = 0;
-						  }
-
-						  // GMC - 08/17/10 - FedEx Box Project
-						  elseif($serviceType == "FEDEX_1_DAY_FREIGHT")
+					 if ($response -> HighestSeverity != 'FAILURE' && $response -> HighestSeverity != 'ERROR')
+					 {
+						  foreach ($response -> RateReplyDetails as $rateReply)
 						  {
-							  if(is_array($response -> RateReplyDetails))
+							  $serviceType = $rateReply -> ServiceType;
+
+							  // GMC - 04/14/10 - Add FedEx Ground
+							  if($serviceType == "FEDEX_GROUND")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  $ResultCode = $rateReply -> RatedShipmentDetails -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
 								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0)
+								  {
+									  // GMC - 05/11/15 - Integrate CAP Products into Admin
+									  if($_SESSION['CapFlag'] && $ResultCode > 50)
+									  {
+										  echo '<option value="199">FedEx Ground ' . ' ($' . number_format($_SESSION['CapRate'], 2, '.', '') . ')</option>';
+										  $_SESSION['CapRateReal'] = $ResultCode;
+                                          $_SESSION['RC1'] = $ResultCode;
+									  }
+									  else
+									  {
+										  echo '<option value="199">FedEx Ground ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                          $_SESSION['RC1'] = $ResultCode;
+									  }
+								  }
+
+								  $blnIsError = 0;
 							  }
-
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="211">FedEx 1 Day Freight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
-
-							  $blnIsError = 0;
-						  }
-
-						  elseif($serviceType == "FEDEX_2_DAY_FREIGHT")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+							  elseif($serviceType == "FEDEX_2_DAY")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
 								  }
-							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="212">FedEx 2 Day Freight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="201">FedEx 2Day ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC2'] = $ResultCode;
+								  }
 
-							  $blnIsError = 0;
-						  }
-						  elseif($serviceType == "FEDEX_3_DAY_FREIGHT")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+								  $blnIsError = 0;
+							  }
+							  elseif($serviceType == "FEDEX_EXPRESS_SAVER")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
 								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="200">FedEx Express Saver ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC3'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
 							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="213">FedEx 3 Day Freight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
-
-							  $blnIsError = 0;
-						  }
-
-						  elseif($serviceType == "INTERNATIONAL_PRIORITY")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+							  // GMC - 03/11/11 - Add Standard Overnight to Shipping Methods
+							  elseif($serviceType == "STANDARD_OVERNIGHT")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
 								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="202">FedEx Next Day Overnight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC4'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
 							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="205">FedEx International Priority ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
-
-							  $blnIsError = 0;
-						  }
-						  elseif($serviceType == "INTERNATIONAL_ECONOMY")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+							  // GMC - 08/17/10 - FedEx Box Project
+							  elseif($serviceType == "FEDEX_1_DAY_FREIGHT")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
 								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="211">FedEx 1 Day Freight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC5'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
 							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="206">FedEx International Economy ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
-
-							  $blnIsError = 0;
-						  }
-
-						  // GMC - 08/17/10 - FedEx Box Project
-						  elseif($serviceType == "INTERNATIONAL_PRIORITY_FREIGHT")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+							  elseif($serviceType == "FEDEX_2_DAY_FREIGHT")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
 								  }
-							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="214">FedEx International Priority Freight' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="212">FedEx 2 Day Freight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC6'] = $ResultCode;
+								  }
 
-							  $blnIsError = 0;
-						  }
-						  elseif($serviceType == "INTERNATIONAL_ECONOMY_FREIGHT")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+								  $blnIsError = 0;
+							  }
+							  elseif($serviceType == "FEDEX_3_DAY_FREIGHT")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
 								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="213">FedEx 3 Day Freight ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC7'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
 							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="215">FedEx International Economy Freight' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
-							  }
-
-							  $blnIsError = 0;
-						  }
-
-						  elseif($serviceType == "INTERNATIONAL_FIRST")
-						  {
-							  if(is_array($response -> RateReplyDetails))
+							  elseif($serviceType == "INTERNATIONAL_PRIORITY")
 							  {
-								  $tnfec = $rateReply -> RatedShipmentDetails;
-								  foreach ($tnfec as $wha)
+								  if(is_array($response -> RateReplyDetails))
 								  {
-									  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
+									  }
 								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="205">FedEx International Priority ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC8'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
+							  }
+							  elseif($serviceType == "INTERNATIONAL_ECONOMY")
+							  {
+								  if(is_array($response -> RateReplyDetails))
+								  {
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
+								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="206">FedEx International Economy ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC9'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
 							  }
 
-							  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
-							  if($ResultCode != 0){
-								  echo '<option value="207">FedEx International First ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+							  // GMC - 08/17/10 - FedEx Box Project
+							  elseif($serviceType == "INTERNATIONAL_PRIORITY_FREIGHT")
+							  {
+								  if(is_array($response -> RateReplyDetails))
+								  {
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
+									  }
+								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="214">FedEx International Priority Freight' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC10'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
+							  }
+							  elseif($serviceType == "INTERNATIONAL_ECONOMY_FREIGHT")
+							  {
+								  if(is_array($response -> RateReplyDetails))
+								  {
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
+								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="215">FedEx International Economy Freight' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC11'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
 							  }
 
-							  $blnIsError = 0;
-						  }
+							  elseif($serviceType == "INTERNATIONAL_FIRST")
+							  {
+								  if(is_array($response -> RateReplyDetails))
+								  {
+									  $tnfec = $rateReply -> RatedShipmentDetails;
+									  foreach ($tnfec as $wha)
+									  {
+										  $ResultCode = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
+									  }
+								  }
+
+								  // GMC - 08/27/13 - Do Not Show 0 value for any ResultCode
+								  if($ResultCode != 0){
+									  echo '<option value="207">FedEx International First ' . ' ($' . number_format($ResultCode, 2, '.', '') . ')</option>';
+                                      $_SESSION['RC12'] = $ResultCode;
+								  }
+
+								  $blnIsError = 0;
+							  }
 						  }
 					 }
 					 else
@@ -46619,15 +45271,15 @@ else
 								  $blnIsError = 1;
 							  }
 						  }
-					  }
-				}
-					catch (SoapFault $exception)
-				{
+					 }
+				 }
+				 catch (SoapFault $exception)
+				 {
 					$blnIsError = 1;
-				}
-             // }
+				 }
+             }
 
-             $blnIsError = 0;
+			    $blnIsError = 0;
 
                 /*
 			    require_once("../modules/xmlparser.php");
@@ -46737,15 +45389,15 @@ else
                         }
                         */
 
-                        // GMC - 05/31/13 - Remove USPS Standard Ground and Post
-                        /*
+				// GMC - 05/31/13 - Remove USPS Standard Ground and Post
+				/*
                         if ($value2['MAILSERVICE'][0]['VALUE'] == 'Standard Post&lt;sup&gt;&amp;reg;&lt;/sup&gt;')
                         {
                             $ResultCode5 = $value2['RATE'][0]['VALUE'];
                             // echo '<tr><td>Standard Post' . ' ($' . number_format($ResultCode5, 2, '.', '') . ')</td></tr>';
                             echo '<option value="402">USPS Standard Post' . ' ($' . number_format($ResultCode5, 2, '.', '') . ')</option>';
                         }
-                        */
+				*/
 
                         if ($value2['MAILSERVICE'][0]['VALUE'] == 'First-Class Mail&lt;sup&gt;&amp;reg;&lt;/sup&gt; Parcel')
                         {
@@ -47153,22 +45805,7 @@ else
 <!-- GMC - 06/20/13 - Back buttons for some pages -->
 <table width="100%" cellpadding="0">
     <tr>
-        <td width="725">
-
-        <?php
-
-            // GMC - 09/18/15 - Fedex Freight Desktop Tool - LTL Flag
-            /*
-            if($_SESSION['FedEx_Desktop_Tool'] == 1)
-            {
-                echo "<table width='100%' border=0'><tr><td><font color='#FF0000'><b>WARNING</b></font></td></tr><tr><td><p>Use the FedEx Desktop Tool installed in your computer to obtain Shipping Rates for Order with large quantities</p>";
-                echo "<p><font color='#FF0000'><b>INSTRUCTIONS</b></font><br />1. You must use the Package Tab<br />2. In the Recipient Information enter there Country as follows: <b>" . $_SESSION["country"] . "</b><br />3. And also enter the Zip Code/Postal Code as follows: <b>" . $_SESSION["zip"] . "</b><br />4. In No. of Packages enter the following: <b>" . $_SESSION['TotalBoxCount'] . "</b><br /><font color='#FF0000'>In the event that the number of packages exceeds 999 (FedEx Limit), please break the Order in multiple orders</font><br />5. In Total Weight enter the following: <b>" . $_SESSION['OrderWeight'] . "</b><br />6. Click on Quote";
-                echo "</p><p>Select 'FedEx Desktop Tool' in the Shipping Method</p><p>Override the Shipping Cost with Shipping Rate obtained from the FedEx Desktop Tool</p><p>Proceed as normal</p></td></tr></table>";
-            }
-            */
-        ?>
-
-        </td>
+        <td width="625"></td>
         <td width="*"><a href="/csradmin/customers.php"><font color="red">Return to Customer Management</font></a></td>
     </tr>
 </table>

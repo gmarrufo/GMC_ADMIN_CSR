@@ -6,23 +6,13 @@
 require_once("../modules/session.php");
 require_once("../modules/db.php");
 require_once('../library/fedex-common.php5');
-$path_to_wsdl = "../wsdl/RateService_v18.wsdl";
+$path_to_wsdl = "../wsdl/RateService_v8.wsdl";
 $arrBoxCount = array();
 $arrBoxes = array();
 
 // CONNECT TO SQL SERVER DATABASE
-// $conn2NewOrder = sqlsrv_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
-// $selected = sqlsrv_select_db($dbName, $conn2NewOrder);
-
-$connectionInfo2 = array( "Database"=>$dbName, "UID"=>$dbUser, "PWD"=>$dbPass);
-$conn2 = sqlsrv_connect( $serverName, $connectionInfo2);
-
-if( $conn2 ) {
-	 echo "Connection established.<br />";
-}else{
-	 echo "Connection could not be established.<br />";
-	 die( print_r( sqlsrv_errors(), true));
-}	
+$connNewOrder = mssql_connect($dbServer, $dbUser, $dbPass) or die("Couldn't connect to SQL Server on $dbServer");
+$selected = mssql_select_db($dbName, $connNewOrder);
 
 $_SESSION['IsInternational'] = '1';
 
@@ -217,12 +207,12 @@ $_SESSION["BundlesInformation"] = "";
 // Now get the Weight and BoxCount for each entry
 if (isset($_POST['ItemID1']) && $_POST['ItemID1'] != 0)
 {
-    $ProductWtBx1 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID1);
+    $ProductWtBx1 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID1);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle1 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID1);
+    $Bundle1 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID1);
 
-    while($row = sqlsrv_fetch_array($Bundle1))
+    while($row = mssql_fetch_array($Bundle1))
     {
         $_SESSION["Bundle1"] = $row["ProductID"];
     }
@@ -234,12 +224,12 @@ else
 
 if (isset($_POST['ItemID2']) && $_POST['ItemID2'] != 0)
 {
-    $ProductWtBx2 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID2);
+    $ProductWtBx2 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID2);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle2 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID2);
+    $Bundle2 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID2);
 
-    while($row = sqlsrv_fetch_array($Bundle2))
+    while($row = mssql_fetch_array($Bundle2))
     {
         $_SESSION["Bundle2"] = $row["ProductID"];
     }
@@ -251,12 +241,12 @@ else
 
 if (isset($_POST['ItemID3']) && $_POST['ItemID3'] != 0)
 {
-    $ProductWtBx3 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID3);
+    $ProductWtBx3 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID3);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle3 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID3);
+    $Bundle3 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID3);
 
-    while($row = sqlsrv_fetch_array($Bundle3))
+    while($row = mssql_fetch_array($Bundle3))
     {
         $_SESSION["Bundle3"] = $row["ProductID"];
     }
@@ -268,12 +258,12 @@ else
 
 if (isset($_POST['ItemID4']) && $_POST['ItemID4'] != 0)
 {
-    $ProductWtBx4 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID4);
+    $ProductWtBx4 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID4);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle4 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID4);
+    $Bundle4 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID4);
 
-    while($row = sqlsrv_fetch_array($Bundle4))
+    while($row = mssql_fetch_array($Bundle4))
     {
         $_SESSION["Bundle4"] = $row["ProductID"];
     }
@@ -285,12 +275,12 @@ else
 
 if (isset($_POST['ItemID5']) && $_POST['ItemID5'] != 0)
 {
-    $ProductWtBx5 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID5);
+    $ProductWtBx5 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID5);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle5 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID5);
+    $Bundle5 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID5);
 
-    while($row = sqlsrv_fetch_array($Bundle5))
+    while($row = mssql_fetch_array($Bundle5))
     {
         $_SESSION["Bundle5"] = $row["ProductID"];
     }
@@ -302,12 +292,12 @@ else
 
 if (isset($_POST['ItemID6']) && $_POST['ItemID6'] != 0)
 {
-    $ProductWtBx6 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID6);
+    $ProductWtBx6 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID6);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle6 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID6);
+    $Bundle6 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID6);
 
-    while($row = sqlsrv_fetch_array($Bundle6))
+    while($row = mssql_fetch_array($Bundle6))
     {
         $_SESSION["Bundle6"] = $row["ProductID"];
     }
@@ -319,12 +309,12 @@ else
 
 if (isset($_POST['ItemID7']) && $_POST['ItemID7'] != 0)
 {
-    $ProductWtBx7 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID7);
+    $ProductWtBx7 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID7);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle7 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID7);
+    $Bundle7 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID7);
 
-    while($row = sqlsrv_fetch_array($Bundle7))
+    while($row = mssql_fetch_array($Bundle7))
     {
         $_SESSION["Bundle7"] = $row["ProductID"];
     }
@@ -336,12 +326,12 @@ else
 
 if (isset($_POST['ItemID8']) && $_POST['ItemID8'] != 0)
 {
-    $ProductWtBx8 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID8);
+    $ProductWtBx8 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID8);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle8 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID8);
+    $Bundle8 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID8);
 
-    while($row = sqlsrv_fetch_array($Bundle8))
+    while($row = mssql_fetch_array($Bundle8))
     {
         $_SESSION["Bundle8"] = $row["ProductID"];
     }
@@ -353,12 +343,12 @@ else
 
 if (isset($_POST['ItemID9']) && $_POST['ItemID9'] != 0)
 {
-    $ProductWtBx9 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID9);
+    $ProductWtBx9 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID9);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle9 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID9);
+    $Bundle9 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID9);
 
-    while($row = sqlsrv_fetch_array($Bundle9))
+    while($row = mssql_fetch_array($Bundle9))
     {
         $_SESSION["Bundle9"] = $row["ProductID"];
     }
@@ -370,12 +360,12 @@ else
 
 if (isset($_POST['ItemID10']) && $_POST['ItemID10'] != 0)
 {
-    $ProductWtBx10 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID10);
+    $ProductWtBx10 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID10);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle10 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID10);
+    $Bundle10 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID10);
 
-    while($row = sqlsrv_fetch_array($Bundle10))
+    while($row = mssql_fetch_array($Bundle10))
     {
         $_SESSION["Bundle10"] = $row["ProductID"];
     }
@@ -387,12 +377,12 @@ else
 
 if (isset($_POST['ItemID11']) && $_POST['ItemID11'] != 0)
 {
-    $ProductWtBx11 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID11);
+    $ProductWtBx11 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID11);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle11 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID11);
+    $Bundle11 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID11);
 
-    while($row = sqlsrv_fetch_array($Bundle11))
+    while($row = mssql_fetch_array($Bundle11))
     {
         $_SESSION["Bundle11"] = $row["ProductID"];
     }
@@ -404,12 +394,12 @@ else
 
 if (isset($_POST['ItemID12']) && $_POST['ItemID12'] != 0)
 {
-    $ProductWtBx12 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID12);
+    $ProductWtBx12 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID12);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle12 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID12);
+    $Bundle12 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID12);
 
-    while($row = sqlsrv_fetch_array($Bundle12))
+    while($row = mssql_fetch_array($Bundle12))
     {
         $_SESSION["Bundle12"] = $row["ProductID"];
     }
@@ -421,12 +411,12 @@ else
 
 if (isset($_POST['ItemID13']) && $_POST['ItemID13'] != 0)
 {
-    $ProductWtBx13 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID13);
+    $ProductWtBx13 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID13);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle13 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID13);
+    $Bundle13 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID13);
 
-    while($row = sqlsrv_fetch_array($Bundle13))
+    while($row = mssql_fetch_array($Bundle13))
     {
         $_SESSION["Bundle13"] = $row["ProductID"];
     }
@@ -438,12 +428,12 @@ else
 
 if (isset($_POST['ItemID14']) && $_POST['ItemID14'] != 0)
 {
-    $ProductWtBx14 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID14);
+    $ProductWtBx14 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID14);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle14 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID14);
+    $Bundle14 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID14);
 
-    while($row = sqlsrv_fetch_array($Bundle14))
+    while($row = mssql_fetch_array($Bundle14))
     {
         $_SESSION["Bundle14"] = $row["ProductID"];
     }
@@ -455,12 +445,12 @@ else
 
 if (isset($_POST['ItemID15']) && $_POST['ItemID15'] != 0)
 {
-    $ProductWtBx15 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID15);
+    $ProductWtBx15 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID15);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle15 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID15);
+    $Bundle15 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID15);
 
-    while($row = sqlsrv_fetch_array($Bundle15))
+    while($row = mssql_fetch_array($Bundle15))
     {
         $_SESSION["Bundle15"] = $row["ProductID"];
     }
@@ -472,12 +462,12 @@ else
 
 if (isset($_POST['ItemID16']) && $_POST['ItemID16'] != 0)
 {
-    $ProductWtBx16 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID16);
+    $ProductWtBx16 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID16);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle16 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID16);
+    $Bundle16 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID16);
 
-    while($row = sqlsrv_fetch_array($Bundle16))
+    while($row = mssql_fetch_array($Bundle16))
     {
         $_SESSION["Bundle16"] = $row["ProductID"];
     }
@@ -489,12 +479,12 @@ else
 
 if (isset($_POST['ItemID17']) && $_POST['ItemID17'] != 0)
 {
-    $ProductWtBx17 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID17);
+    $ProductWtBx17 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID17);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle17 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID17);
+    $Bundle17 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID17);
 
-    while($row = sqlsrv_fetch_array($Bundle17))
+    while($row = mssql_fetch_array($Bundle17))
     {
         $_SESSION["Bundle17"] = $row["ProductID"];
     }
@@ -506,12 +496,12 @@ else
 
 if (isset($_POST['ItemID18']) && $_POST['ItemID18'] != 0)
 {
-    $ProductWtBx18 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID18);
+    $ProductWtBx18 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID18);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle18 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID18);
+    $Bundle18 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID18);
 
-    while($row = sqlsrv_fetch_array($Bundle18))
+    while($row = mssql_fetch_array($Bundle18))
     {
         $_SESSION["Bundle18"] = $row["ProductID"];
     }
@@ -523,12 +513,12 @@ else
 
 if (isset($_POST['ItemID19']) && $_POST['ItemID19'] != 0)
 {
-    $ProductWtBx19 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID19);
+    $ProductWtBx19 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID19);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle19 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID19);
+    $Bundle19 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID19);
 
-    while($row = sqlsrv_fetch_array($Bundle19))
+    while($row = mssql_fetch_array($Bundle19))
     {
         $_SESSION["Bundle19"] = $row["ProductID"];
     }
@@ -540,12 +530,12 @@ else
 
 if (isset($_POST['ItemID20']) && $_POST['ItemID20'] != 0)
 {
-    $ProductWtBx20 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID20);
+    $ProductWtBx20 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $ProductID20);
 
     // GMC - 09/06/12 - To handle Bundles in the Box Calculation
-    $Bundle20 = sqlsrv_query($conn2, "SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID20);
+    $Bundle20 = mssql_query("SELECT ProductID FROM tblBundles WHERE ProductID = " . $ProductID20);
 
-    while($row = sqlsrv_fetch_array($Bundle20))
+    while($row = mssql_fetch_array($Bundle20))
     {
         $_SESSION["Bundle20"] = $row["ProductID"];
     }
@@ -556,7 +546,7 @@ else
 }
 
 // CLOSE DATABASE CONNECTION
-// sqlsrv_close($conn2);
+mssql_close($connNewOrder);
 
 ?>
 
@@ -599,7 +589,7 @@ else
              // 1 Entry
              if ($EntryFlag1 != "True" && $_SESSION["Bundle1"] == "")
              {
-                 while($row = sqlsrv_fetch_array($ProductWtBx1))
+                 while($row = mssql_fetch_array($ProductWtBx1))
                  {
                      $Weight1 = $row["Weight"];
                      $BoxCount1 = $row["BoxCount"];
@@ -655,7 +645,7 @@ else
              // 2 Entry
              if ($EntryFlag2 != "True" && $_SESSION["Bundle2"] == "")
              {
-                 while($row = sqlsrv_fetch_array($ProductWtBx2))
+                 while($row = mssql_fetch_array($ProductWtBx2))
                  {
                      $Weight2 = $row["Weight"];
                      $BoxCount2 = $row["BoxCount"];
@@ -711,7 +701,7 @@ else
              // 3 Entry
              if ($EntryFlag3 != "True" && $_SESSION["Bundle3"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx3))
+             while($row = mssql_fetch_array($ProductWtBx3))
              {
                  $Weight3 = $row["Weight"];
                  $BoxCount3 = $row["BoxCount"];
@@ -768,7 +758,7 @@ else
              // 4 Entry
              if ($EntryFlag4 != "True" && $_SESSION["Bundle4"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx4))
+             while($row = mssql_fetch_array($ProductWtBx4))
              {
                  $Weight4 = $row["Weight"];
                  $BoxCount4 = $row["BoxCount"];
@@ -825,7 +815,7 @@ else
              // 5 Entry
              if ($EntryFlag5 != "True" && $_SESSION["Bundle5"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx5))
+             while($row = mssql_fetch_array($ProductWtBx5))
              {
                  $Weight5 = $row["Weight"];
                  $BoxCount5 = $row["BoxCount"];
@@ -882,7 +872,7 @@ else
              // 6 Entry
              if ($EntryFlag6 != "True" && $_SESSION["Bundle6"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx6))
+             while($row = mssql_fetch_array($ProductWtBx6))
              {
                  $Weight6 = $row["Weight"];
                  $BoxCount6 = $row["BoxCount"];
@@ -939,7 +929,7 @@ else
              // 7 Entry
              if ($EntryFlag7 != "True" && $_SESSION["Bundle7"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx7))
+             while($row = mssql_fetch_array($ProductWtBx7))
              {
                  $Weight7 = $row["Weight"];
                  $BoxCount7 = $row["BoxCount"];
@@ -996,7 +986,7 @@ else
              // 8 Entry
              if ($EntryFlag8 != "True" && $_SESSION["Bundle8"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx8))
+             while($row = mssql_fetch_array($ProductWtBx8))
              {
                  $Weight8 = $row["Weight"];
                  $BoxCount8 = $row["BoxCount"];
@@ -1053,7 +1043,7 @@ else
              // 9 Entry
              if ($EntryFlag9 != "True" && $_SESSION["Bundle9"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx9))
+             while($row = mssql_fetch_array($ProductWtBx9))
              {
                  $Weight9 = $row["Weight"];
                  $BoxCount9 = $row["BoxCount"];
@@ -1110,7 +1100,7 @@ else
              // 10 Entry
              if ($EntryFlag10 != "True" && $_SESSION["Bundle10"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx10))
+             while($row = mssql_fetch_array($ProductWtBx10))
              {
                  $Weight10 = $row["Weight"];
                  $BoxCount10 = $row["BoxCount"];
@@ -1167,7 +1157,7 @@ else
              // 11 Entry
              if ($EntryFlag11 != "True"  && $_SESSION["Bundle11"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx11))
+             while($row = mssql_fetch_array($ProductWtBx11))
              {
                  $Weight11 = $row["Weight"];
                  $BoxCount11 = $row["BoxCount"];
@@ -1224,7 +1214,7 @@ else
              // 12 Entry
              if ($EntryFlag12 != "True" && $_SESSION["Bundle12"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx12))
+             while($row = mssql_fetch_array($ProductWtBx12))
              {
                  $Weight12 = $row["Weight"];
                  $BoxCount12 = $row["BoxCount"];
@@ -1281,7 +1271,7 @@ else
              // 13 Entry
              if ($EntryFlag13 != "True" && $_SESSION["Bundle13"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx13))
+             while($row = mssql_fetch_array($ProductWtBx13))
              {
                  $Weight13 = $row["Weight"];
                  $BoxCount13 = $row["BoxCount"];
@@ -1338,7 +1328,7 @@ else
              // 14 Entry
              if ($EntryFlag14 != "True" && $_SESSION["Bundle14"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx14))
+             while($row = mssql_fetch_array($ProductWtBx14))
              {
                  $Weight14 = $row["Weight"];
                  $BoxCount14 = $row["BoxCount"];
@@ -1395,7 +1385,7 @@ else
              // 15 Entry
              if ($EntryFlag15 != "True" && $_SESSION["Bundle15"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx15))
+             while($row = mssql_fetch_array($ProductWtBx15))
              {
                  $Weight15 = $row["Weight"];
                  $BoxCount15 = $row["BoxCount"];
@@ -1452,7 +1442,7 @@ else
              // 16 Entry
              if ($EntryFlag16 != "True" && $_SESSION["Bundle16"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx16))
+             while($row = mssql_fetch_array($ProductWtBx16))
              {
                  $Weight16 = $row["Weight"];
                  $BoxCount16 = $row["BoxCount"];
@@ -1509,7 +1499,7 @@ else
              // 17 Entry
              if ($EntryFlag17 != "True" && $_SESSION["Bundle17"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx17))
+             while($row = mssql_fetch_array($ProductWtBx17))
              {
                  $Weight17 = $row["Weight"];
                  $BoxCount17 = $row["BoxCount"];
@@ -1566,7 +1556,7 @@ else
              // 18 Entry
              if ($EntryFlag18 != "True" && $_SESSION["Bundle18"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx18))
+             while($row = mssql_fetch_array($ProductWtBx18))
              {
                  $Weight18 = $row["Weight"];
                  $BoxCount18 = $row["BoxCount"];
@@ -1623,7 +1613,7 @@ else
              // 19 Entry
              if ($EntryFlag19 != "True" && $_SESSION["Bundle19"] == "")
              {
-             while($row = sqlsrv_fetch_array($ProductWtBx19))
+             while($row = mssql_fetch_array($ProductWtBx19))
              {
                  $Weight19 = $row["Weight"];
                  $BoxCount19 = $row["BoxCount"];
@@ -1680,7 +1670,7 @@ else
              // 20 Entry
              if ($EntryFlag20 != "True" && $_SESSION["Bundle20"] == "")
              {
-                 while($row = sqlsrv_fetch_array($ProductWtBx20))
+                 while($row = mssql_fetch_array($ProductWtBx20))
                  {
                      $Weight20 = $row["Weight"];
                      $BoxCount20 = $row["BoxCount"];
@@ -1737,9 +1727,9 @@ else
              if ($_SESSION["Bundle1"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems1 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle1"]);
+                 $BundleItems1 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle1"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems1))
+                 while($row = mssql_fetch_array($BundleItems1))
                  {
                      $BI1NavID[$arrayCounter] = $row["NavID"];
                      $BI1Qty[$arrayCounter] = $row["Qty"];
@@ -1748,8 +1738,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI1 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI1NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI1))
+                     $ProductBI1 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI1NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI1))
                      {
                          $WeightBI1[$c] = $row["Weight"];
                          $BoxCountBI1[$c] = $row["BoxCount"];
@@ -1793,9 +1783,9 @@ else
              if ($_SESSION["Bundle2"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems2 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle2"]);
+                 $BundleItems2 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle2"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems2))
+                 while($row = mssql_fetch_array($BundleItems2))
                  {
                      $BI2NavID[$arrayCounter] = $row["NavID"];
                      $BI2Qty[$arrayCounter] = $row["Qty"];
@@ -1804,8 +1794,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI2 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI2NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI2))
+                     $ProductBI2 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI2NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI2))
                      {
                          $WeightBI2[$c] = $row["Weight"];
                          $BoxCountBI2[$c] = $row["BoxCount"];
@@ -1849,9 +1839,9 @@ else
              if ($_SESSION["Bundle3"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems3 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle3"]);
+                 $BundleItems3 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle3"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems3))
+                 while($row = mssql_fetch_array($BundleItems3))
                  {
                      $BI3NavID[$arrayCounter] = $row["NavID"];
                      $BI3Qty[$arrayCounter] = $row["Qty"];
@@ -1860,8 +1850,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI3 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI3NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI3))
+                     $ProductBI3 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI3NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI3))
                      {
                          $WeightBI3[$c] = $row["Weight"];
                          $BoxCountBI3[$c] = $row["BoxCount"];
@@ -1905,9 +1895,9 @@ else
              if ($_SESSION["Bundle4"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems4 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle4"]);
+                 $BundleItems4 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle4"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems4))
+                 while($row = mssql_fetch_array($BundleItems4))
                  {
                      $BI4NavID[$arrayCounter] = $row["NavID"];
                      $BI4Qty[$arrayCounter] = $row["Qty"];
@@ -1916,8 +1906,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI4 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI4NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI4))
+                     $ProductBI4 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI4NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI4))
                      {
                          $WeightBI4[$c] = $row["Weight"];
                          $BoxCountBI4[$c] = $row["BoxCount"];
@@ -1961,9 +1951,9 @@ else
              if ($_SESSION["Bundle5"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems5 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle5"]);
+                 $BundleItems5 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle5"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems5))
+                 while($row = mssql_fetch_array($BundleItems5))
                  {
                      $BI5NavID[$arrayCounter] = $row["NavID"];
                      $BI5Qty[$arrayCounter] = $row["Qty"];
@@ -1972,8 +1962,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI5 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI5NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI5))
+                     $ProductBI5 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI5NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI5))
                      {
                          $WeightBI5[$c] = $row["Weight"];
                          $BoxCountBI5[$c] = $row["BoxCount"];
@@ -2017,9 +2007,9 @@ else
              if ($_SESSION["Bundle6"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems6 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle6"]);
+                 $BundleItems6 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle6"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems6))
+                 while($row = mssql_fetch_array($BundleItems6))
                  {
                      $BI6NavID[$arrayCounter] = $row["NavID"];
                      $BI6Qty[$arrayCounter] = $row["Qty"];
@@ -2028,8 +2018,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI6 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI6NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI6))
+                     $ProductBI6 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI6NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI6))
                      {
                          $WeightBI6[$c] = $row["Weight"];
                          $BoxCountBI6[$c] = $row["BoxCount"];
@@ -2073,9 +2063,9 @@ else
              if ($_SESSION["Bundle7"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems7 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle7"]);
+                 $BundleItems7 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle7"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems7))
+                 while($row = mssql_fetch_array($BundleItems7))
                  {
                      $BI7NavID[$arrayCounter] = $row["NavID"];
                      $BI7Qty[$arrayCounter] = $row["Qty"];
@@ -2084,8 +2074,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI7 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI7NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI7))
+                     $ProductBI7 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI7NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI7))
                      {
                          $WeightBI7[$c] = $row["Weight"];
                          $BoxCountBI7[$c] = $row["BoxCount"];
@@ -2129,9 +2119,9 @@ else
              if ($_SESSION["Bundle8"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems8 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle8"]);
+                 $BundleItems8 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle8"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems8))
+                 while($row = mssql_fetch_array($BundleItems8))
                  {
                      $BI8NavID[$arrayCounter] = $row["NavID"];
                      $BI8Qty[$arrayCounter] = $row["Qty"];
@@ -2140,8 +2130,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI8 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI8NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI8))
+                     $ProductBI8 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI8NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI8))
                      {
                          $WeightBI8[$c] = $row["Weight"];
                          $BoxCountBI8[$c] = $row["BoxCount"];
@@ -2185,9 +2175,9 @@ else
              if ($_SESSION["Bundle9"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems9 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle9"]);
+                 $BundleItems9 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle9"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems9))
+                 while($row = mssql_fetch_array($BundleItems9))
                  {
                      $BI9NavID[$arrayCounter] = $row["NavID"];
                      $BI9Qty[$arrayCounter] = $row["Qty"];
@@ -2196,8 +2186,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI9 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI9NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI9))
+                     $ProductBI9 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI9NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI9))
                      {
                          $WeightBI9[$c] = $row["Weight"];
                          $BoxCountBI9[$c] = $row["BoxCount"];
@@ -2241,9 +2231,9 @@ else
              if ($_SESSION["Bundle10"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems10 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle10"]);
+                 $BundleItems10 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle10"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems10))
+                 while($row = mssql_fetch_array($BundleItems10))
                  {
                      $BI10NavID[$arrayCounter] = $row["NavID"];
                      $BI10Qty[$arrayCounter] = $row["Qty"];
@@ -2252,8 +2242,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI10 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI10NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI10))
+                     $ProductBI10 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI10NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI10))
                      {
                          $WeightBI10[$c] = $row["Weight"];
                          $BoxCountBI10[$c] = $row["BoxCount"];
@@ -2297,9 +2287,9 @@ else
              if ($_SESSION["Bundle11"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems11 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle11"]);
+                 $BundleItems11 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle11"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems11))
+                 while($row = mssql_fetch_array($BundleItems11))
                  {
                      $BI11NavID[$arrayCounter] = $row["NavID"];
                      $BI11Qty[$arrayCounter] = $row["Qty"];
@@ -2308,8 +2298,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI11 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI11NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI11))
+                     $ProductBI11 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI11NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI11))
                      {
                          $WeightBI11[$c] = $row["Weight"];
                          $BoxCountBI11[$c] = $row["BoxCount"];
@@ -2353,9 +2343,9 @@ else
              if ($_SESSION["Bundle12"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems12 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle12"]);
+                 $BundleItems12 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle12"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems12))
+                 while($row = mssql_fetch_array($BundleItems12))
                  {
                      $BI12NavID[$arrayCounter] = $row["NavID"];
                      $BI12Qty[$arrayCounter] = $row["Qty"];
@@ -2364,8 +2354,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI12 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI12NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI12))
+                     $ProductBI12 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI12NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI12))
                      {
                          $WeightBI12[$c] = $row["Weight"];
                          $BoxCountBI12[$c] = $row["BoxCount"];
@@ -2409,9 +2399,9 @@ else
              if ($_SESSION["Bundle13"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems13 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle13"]);
+                 $BundleItems13 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle13"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems13))
+                 while($row = mssql_fetch_array($BundleItems13))
                  {
                      $BI13NavID[$arrayCounter] = $row["NavID"];
                      $BI13Qty[$arrayCounter] = $row["Qty"];
@@ -2420,8 +2410,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI13 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI13NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI13))
+                     $ProductBI13 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI13NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI13))
                      {
                          $WeightBI13[$c] = $row["Weight"];
                          $BoxCountBI13[$c] = $row["BoxCount"];
@@ -2465,9 +2455,9 @@ else
              if ($_SESSION["Bundle14"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems14 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle14"]);
+                 $BundleItems14 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle14"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems14))
+                 while($row = mssql_fetch_array($BundleItems14))
                  {
                      $BI14NavID[$arrayCounter] = $row["NavID"];
                      $BI14Qty[$arrayCounter] = $row["Qty"];
@@ -2476,8 +2466,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI14 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI14NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI14))
+                     $ProductBI14 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI14NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI14))
                      {
                          $WeightBI14[$c] = $row["Weight"];
                          $BoxCountBI14[$c] = $row["BoxCount"];
@@ -2521,9 +2511,9 @@ else
              if ($_SESSION["Bundle15"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems15 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle15"]);
+                 $BundleItems15 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle15"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems15))
+                 while($row = mssql_fetch_array($BundleItems15))
                  {
                      $BI15NavID[$arrayCounter] = $row["NavID"];
                      $BI15Qty[$arrayCounter] = $row["Qty"];
@@ -2532,8 +2522,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI15 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI15NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI15))
+                     $ProductBI15 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI15NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI15))
                      {
                          $WeightBI15[$c] = $row["Weight"];
                          $BoxCountBI15[$c] = $row["BoxCount"];
@@ -2577,9 +2567,9 @@ else
              if ($_SESSION["Bundle16"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems16 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle16"]);
+                 $BundleItems16 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle16"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems16))
+                 while($row = mssql_fetch_array($BundleItems16))
                  {
                      $BI16NavID[$arrayCounter] = $row["NavID"];
                      $BI16Qty[$arrayCounter] = $row["Qty"];
@@ -2588,8 +2578,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI16 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI16NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI16))
+                     $ProductBI16 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI16NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI16))
                      {
                          $WeightBI16[$c] = $row["Weight"];
                          $BoxCountBI16[$c] = $row["BoxCount"];
@@ -2633,9 +2623,9 @@ else
              if ($_SESSION["Bundle17"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems17 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle17"]);
+                 $BundleItems17 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle17"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems17))
+                 while($row = mssql_fetch_array($BundleItems17))
                  {
                      $BI17NavID[$arrayCounter] = $row["NavID"];
                      $BI17Qty[$arrayCounter] = $row["Qty"];
@@ -2644,8 +2634,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI17 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI17NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI17))
+                     $ProductBI17 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI17NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI17))
                      {
                          $WeightBI17[$c] = $row["Weight"];
                          $BoxCountBI17[$c] = $row["BoxCount"];
@@ -2689,9 +2679,9 @@ else
              if ($_SESSION["Bundle18"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems18 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle18"]);
+                 $BundleItems18 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle18"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems18))
+                 while($row = mssql_fetch_array($BundleItems18))
                  {
                      $BI18NavID[$arrayCounter] = $row["NavID"];
                      $BI18Qty[$arrayCounter] = $row["Qty"];
@@ -2700,8 +2690,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI18 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI18NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI18))
+                     $ProductBI18 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI18NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI18))
                      {
                          $WeightBI18[$c] = $row["Weight"];
                          $BoxCountBI18[$c] = $row["BoxCount"];
@@ -2745,9 +2735,9 @@ else
              if ($_SESSION["Bundle19"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems19 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle19"]);
+                 $BundleItems19 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle19"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems19))
+                 while($row = mssql_fetch_array($BundleItems19))
                  {
                      $BI19NavID[$arrayCounter] = $row["NavID"];
                      $BI19Qty[$arrayCounter] = $row["Qty"];
@@ -2756,8 +2746,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI19 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI19NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI19))
+                     $ProductBI19 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI19NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI19))
                      {
                          $WeightBI19[$c] = $row["Weight"];
                          $BoxCountBI19[$c] = $row["BoxCount"];
@@ -2801,9 +2791,9 @@ else
              if ($_SESSION["Bundle20"] != "")
              {
                  // Get all items from the bundle
-                 $BundleItems20 =  sqlsrv_query($conn2, "SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle20"]);
+                 $BundleItems20 =  mssql_query("SELECT NavID, Qty FROM tblBundles WHERE ProductID = " . $_SESSION["Bundle20"]);
                  $arrayCounter = 0;
-                 while($row = sqlsrv_fetch_array($BundleItems20))
+                 while($row = mssql_fetch_array($BundleItems20))
                  {
                      $BI20NavID[$arrayCounter] = $row["NavID"];
                      $BI20Qty[$arrayCounter] = $row["Qty"];
@@ -2812,8 +2802,8 @@ else
 
                  for ($c = 0; $c < $arrayCounter; $c++)
                  {
-                     $ProductBI20 = sqlsrv_query($conn2, "SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI20NavID[$c]);
-                     while($row = sqlsrv_fetch_array($ProductBI20))
+                     $ProductBI20 = mssql_query("SELECT Weight, BoxCount, BoxWeight, BoxLength, BoxWidth, BoxHeight, PartNumber FROM tblProducts WHERE RecordId = " . $BI20NavID[$c]);
+                     while($row = mssql_fetch_array($ProductBI20))
                      {
                          $WeightBI20[$c] = $row["Weight"];
                          $BoxCountBI20[$c] = $row["BoxCount"];
@@ -2895,8 +2885,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo1 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle1"]);
-               while($row = sqlsrv_fetch_array($BundleInfo1))
+               $BundleInfo1 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle1"]);
+               while($row = mssql_fetch_array($BundleInfo1))
                {
                    $_SESSION["BundlesInformation"] = "Admin RecordID: " .  $_SESSION["Bundle1"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty1 . "\n";
                }
@@ -2914,8 +2904,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo2 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle2"]);
-               while($row = sqlsrv_fetch_array($BundleInfo2))
+               $BundleInfo2 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle2"]);
+               while($row = mssql_fetch_array($BundleInfo2))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle2"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty2 . "\n";
                }
@@ -2933,8 +2923,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo3 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle3"]);
-               while($row = sqlsrv_fetch_array($BundleInfo3))
+               $BundleInfo3 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle3"]);
+               while($row = mssql_fetch_array($BundleInfo3))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle3"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty3 . "\n";
                }
@@ -2952,8 +2942,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo4 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle4"]);
-               while($row = sqlsrv_fetch_array($BundleInfo4))
+               $BundleInfo4 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle4"]);
+               while($row = mssql_fetch_array($BundleInfo4))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle4"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty4 . "\n";
                }
@@ -2971,8 +2961,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo5 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle5"]);
-               while($row = sqlsrv_fetch_array($BundleInfo5))
+               $BundleInfo5 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle5"]);
+               while($row = mssql_fetch_array($BundleInfo5))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle5"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty5 . "\n";
                }
@@ -2990,8 +2980,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo6 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle6"]);
-               while($row = sqlsrv_fetch_array($BundleInfo6))
+               $BundleInfo6 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle6"]);
+               while($row = mssql_fetch_array($BundleInfo6))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle6"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty6 . "\n";
                }
@@ -3009,8 +2999,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo7 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle7"]);
-               while($row = sqlsrv_fetch_array($BundleInfo7))
+               $BundleInfo7 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle7"]);
+               while($row = mssql_fetch_array($BundleInfo7))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle7"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty7 . "\n";
                }
@@ -3028,8 +3018,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo8 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle8"]);
-               while($row = sqlsrv_fetch_array($BundleInfo8))
+               $BundleInfo8 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle8"]);
+               while($row = mssql_fetch_array($BundleInfo8))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle8"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty8 . "\n";
                }
@@ -3047,8 +3037,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo9 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle9"]);
-               while($row = sqlsrv_fetch_array($BundleInfo9))
+               $BundleInfo9 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle9"]);
+               while($row = mssql_fetch_array($BundleInfo9))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle9"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty9 . "\n";
                }
@@ -3066,8 +3056,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo10 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle10"]);
-               while($row = sqlsrv_fetch_array($BundleInfo10))
+               $BundleInfo10 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle10"]);
+               while($row = mssql_fetch_array($BundleInfo10))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle10"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty10 . "\n";
                }
@@ -3085,8 +3075,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo11 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle11"]);
-               while($row = sqlsrv_fetch_array($BundleInfo11))
+               $BundleInfo11 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle11"]);
+               while($row = mssql_fetch_array($BundleInfo11))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle11"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty11 . "\n";
                }
@@ -3104,8 +3094,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo12 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle12"]);
-               while($row = sqlsrv_fetch_array($BundleInfo12))
+               $BundleInfo12 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle12"]);
+               while($row = mssql_fetch_array($BundleInfo12))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle12"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty12 . "\n";
                }
@@ -3123,8 +3113,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo13 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle13"]);
-               while($row = sqlsrv_fetch_array($BundleInfo13))
+               $BundleInfo13 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle13"]);
+               while($row = mssql_fetch_array($BundleInfo13))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle13"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty13 . "\n";
                }
@@ -3142,8 +3132,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo14 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle14"]);
-               while($row = sqlsrv_fetch_array($BundleInfo14))
+               $BundleInfo14 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle14"]);
+               while($row = mssql_fetch_array($BundleInfo14))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle14"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty14 . "\n";
                }
@@ -3161,8 +3151,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo15 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle15"]);
-               while($row = sqlsrv_fetch_array($BundleInfo15))
+               $BundleInfo15 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle15"]);
+               while($row = mssql_fetch_array($BundleInfo15))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle15"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty15 . "\n";
                }
@@ -3180,8 +3170,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo16 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle16"]);
-               while($row = sqlsrv_fetch_array($BundleInfo16))
+               $BundleInfo16 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle16"]);
+               while($row = mssql_fetch_array($BundleInfo16))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle16"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty16 . "\n";
                }
@@ -3199,8 +3189,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo17 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle17"]);
-               while($row = sqlsrv_fetch_array($BundleInfo17))
+               $BundleInfo17 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle17"]);
+               while($row = mssql_fetch_array($BundleInfo17))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle17"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty17 . "\n";
                }
@@ -3218,8 +3208,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo18 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle18"]);
-               while($row = sqlsrv_fetch_array($BundleInfo18))
+               $BundleInfo18 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle18"]);
+               while($row = mssql_fetch_array($BundleInfo18))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle18"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty18 . "\n";
                }
@@ -3237,8 +3227,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo19 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle19"]);
-               while($row = sqlsrv_fetch_array($BundleInfo19))
+               $BundleInfo19 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle19"]);
+               while($row = mssql_fetch_array($BundleInfo19))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle19"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty19 . "\n";
                }
@@ -3256,8 +3246,8 @@ else
                }
 
                // GMC - 10/03/12 - Display Bundle Item Number, Description and Qty
-               $BundleInfo20 = sqlsrv_query($conn2, "SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle20"]);
-               while($row = sqlsrv_fetch_array($BundleInfo20))
+               $BundleInfo20 = mssql_query("SELECT ProductName, PartNumber FROM tblProducts WHERE RecordId = " . $_SESSION["Bundle20"]);
+               while($row = mssql_fetch_array($BundleInfo20))
                {
                    $_SESSION["BundlesInformation"] += "Admin RecordID: " .  $_SESSION["Bundle20"] . " - Product Name: " . $row["ProductName"] . " - NavID : " . $row["PartNumber"] . " - Qty: " . $Qty20 . "\n";
                }
@@ -3393,7 +3383,7 @@ else
              array('Key' => 'hRnybIZX3PKne28q', 'Password' => 'yDjVeSkK252f1kFblX1AXy31b')); // Replace 'XXX' and 'YYY' with FedEx provided credentials
              $request['ClientDetail'] = array('AccountNumber' => '462227000', 'MeterNumber' => '100677102');// Replace 'XXX' with your account and meter number
              $request['TransactionDetail'] = array('CustomerTransactionId' => ' *** Rate Available Services Request v8 using PHP ***');
-             $request['Version'] = array('ServiceId' => 'crs', 'Major' => '18', 'Intermediate' => '0', 'Minor' => '0');
+             $request['Version'] = array('ServiceId' => 'crs', 'Major' => '8', 'Intermediate' => '0', 'Minor' => '0');
              $request['ReturnTransitAndCommit'] = true;
              $request['RequestedShipment']['DropoffType'] = 'REGULAR_PICKUP'; // valid values REGULAR_PICKUP, REQUEST_COURIER, ...
              $request['RequestedShipment']['ShipTimestamp'] = date('c');
@@ -3415,216 +3405,7 @@ else
 
              $request['RequestedShipment']['RateRequestTypes'] = 'ACCOUNT';
              // $request['RequestedShipment']['RateRequestTypes'] = 'LIST';
-			 
-             $request['RequestedShipment']['PackageCount'] = $TotalBoxCount;
-             // $request['RequestedShipment']['PackageCount'] = $arrBoxCount;
-             $request['RequestedShipment']['PackageDetail'] = 'INDIVIDUAL_PACKAGES';
-             $request['RequestedShipment']['RequestedPackageLineItems'] = $arrBoxes;
 
-             print_r($arrBoxCount);
-             echo '<br/>';
-             echo '<br/>';
-             var_dump($arrBoxCount);
-             echo '<br/>';
-             echo '<br/>';
-             print_r($arrBoxes);
-             echo '<br/>';
-             echo '<br/>';
-             var_dump($arrBoxes);
-             echo '<br/>';
-             echo '<br/>';
-             echo '<br/>';
-             echo '<br/>';
-
-             try
-             {
-                 $response = $client -> getRates($request);
-                 if ($response -> HighestSeverity != 'FAILURE' && $response -> HighestSeverity != 'ERROR')
-                 {
-                      foreach ($response -> RateReplyDetails as $rateReply)
-                      {
-                          $serviceType = $rateReply -> ServiceType;
-                          if($serviceType == "FEDEX_GROUND")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode1 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx Ground ' . ' ($' . number_format($ResultCode1, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "FEDEX_2_DAY")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode2 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx 2Day ' . ' ($' . number_format($ResultCode2, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "FEDEX_EXPRESS_SAVER")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode3 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx Express Saver ' . ' ($' . number_format($ResultCode3, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "STANDARD_OVERNIGHT")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode4 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx Next Day Overnight ' . ' ($' . number_format($ResultCode4, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "FEDEX_1_DAY_FREIGHT")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode5 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx 1 Day Freight ' . ' ($' . number_format($ResultCode5, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "FEDEX_2_DAY_FREIGHT")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode6 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx 2 Day Freight ' . ' ($' . number_format($ResultCode6, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "FEDEX_3_DAY_FREIGHT")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode7 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx 3 Day Freight ' . ' ($' . number_format($ResultCode7, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "INTERNATIONAL_PRIORITY")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode8 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx International Priority ' . ' ($' . number_format($ResultCode8, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "INTERNATIONAL_ECONOMY")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode9 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx International Economy ' . ' ($' . number_format($ResultCode9, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "INTERNATIONAL_PRIORITY_FREIGHT")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode10 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge->Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx International Priority Freight' . ' ($' . number_format($ResultCode10, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "INTERNATIONAL_ECONOMY_FREIGHT")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode11 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx International Economy Freight' . ' ($' . number_format($ResultCode11, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                          elseif($serviceType == "INTERNATIONAL_FIRST")
-                          {
-                              if(is_array($response -> RateReplyDetails))
-                              {
-                                  $tnfec = $rateReply -> RatedShipmentDetails;
-                                  foreach ($tnfec as $wha)
-                                  {
-                                      $ResultCode12 = $wha -> ShipmentRateDetail -> TotalNetFedExCharge -> Amount;
-                                  }
-                              }
-                              echo '<tr><td>FedEx International First ' . ' ($' . number_format($ResultCode12, 2, '.', '') . ')</td></tr>';
-                              $blnIsError = 0;
-                          }
-                      }
-                 }
-                 else
-                 {
-                      foreach ($response -> Notifications as $notification)
-                      {
-                          if(is_array($response -> Notifications))
-                          {
-                              $blnIsError = 1;
-                          }
-                          else
-                          {
-                              $blnIsError = 1;
-                          }
-                      }
-                 }
-             }
-             catch (SoapFault $exception)
-             {
-                $blnIsError = 1;
-                echo $blnIsError;
-				echo $exception;
-             }
-			 
-			 /*
              // 08/12/15 - Separate FedEx Service Call based on Number of Boxes
              if($TotalBoxCount > 100)
              {
@@ -3668,7 +3449,6 @@ else
 				 echo '<br/>';
 				 */
 
-				 /*
 				 $ResultCode1[] = null;
 				 $ResultCode2[] = null;
 				 $ResultCode3[] = null;
@@ -3725,7 +3505,6 @@ else
 									  }
 									  */
 
-									  /*
 									  $blnIsError = 0;
 								  }
 								  elseif($serviceType == "FEDEX_2_DAY")
@@ -4036,16 +3815,15 @@ else
 				 echo '<br/>';
 				 echo '<br/>';
                  */
-				 
-                 /*
+                 
 				 try
 				 {
 					 $response = $client -> getRates($request);
 
-					 // echo "<pre>";
-					 // var_dump($response);
-					 // echo "</pre>";
-					 // echo sizeof($response);
+					 echo "<pre>";
+					 var_dump($response);
+					 echo "</pre>";
+					 echo sizeof($response);
 
 					 if ($response -> HighestSeverity != 'FAILURE' && $response -> HighestSeverity != 'ERROR')
 					 {
@@ -4232,13 +4010,7 @@ else
 					echo $blnIsError;
 				 }
              }
-			 */
-			 
-			 
-			 
-			 
-			 
-			 
+
          ?>
 
          </table>

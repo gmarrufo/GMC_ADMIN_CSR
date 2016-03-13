@@ -67,8 +67,11 @@ $_SESSION['MagentoFlag'] = '';
 // $_SESSION['FedEx_Desktop_Tool'] = 0;
 
 // GMC - 10/12/15 - Regenesis Reorder Discount Program
+// GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+/*
 $_SESSION['RegenesisReorderThreshold'] = '';
 $_SESSION['RegenesisReorderDiscount'] = .15;
+*/
 
 $_SESSION['RegenesisReorderRGProd_01'] = '';
 $_SESSION['RegenesisReorderRGProd_02'] = '';

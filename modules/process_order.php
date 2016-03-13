@@ -734,13 +734,13 @@ if ($_SESSION['PaymentType'] == 'CreditCard')
   //GMC - THIS SECTION FOR TEST ONLY - WARNING - WARNING - WARNING
   // GMC - 03/04/11 - Fix of Bug OrderTotal instead of OrderSubTotal
   // if($OrderSubtotal > 0)
-  /*
+
   if($OrderTotal > 0)
   {
     $CCAuthorization = "TEST";
     $CCTransactionID = "TEST";
   }
-  */
+
 
 }
 elseif ($_SESSION['PaymentType'] == 'CreditCardSwiped')
@@ -997,11 +997,14 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
     }
 
     // GMC - 10/12/15 - Regenesis Reorder Discount Program
+    // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+    /*
     if($_SESSION['RegenesisReorderThreshold'] == 'True')
     {
         $PromoCode = "RGRODIS";
     }
-
+    */
+    
 	// BIND PARAMETERS
 	$intStatusCode = 0;
 	mssql_bind($qryInsert, "@prmUserID", $intUserID, SQLINT4);
@@ -1531,6 +1534,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_01'] == 'True' || $_SESSION['RegenesisReorderRVProd_01'] == 'True'))
             {
                 $qryInsertItem1 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -1575,7 +1580,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs1 = mssql_execute($qryInsertItem1);
             }
-
+            */
+            
             else
             {
                 $qryInsertItem1 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -1789,6 +1795,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_02'] == 'True' || $_SESSION['RegenesisReorderRVProd_02'] == 'True'))
             {
                 $qryInsertItem2 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -1833,7 +1841,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs2 = mssql_execute($qryInsertItem2);
             }
-
+            */
+            
             else
             {
                 $qryInsertItem2 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2046,6 +2055,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_03'] == 'True' || $_SESSION['RegenesisReorderRVProd_03'] == 'True'))
             {
                 $qryInsertItem3 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2090,7 +2101,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs3 = mssql_execute($qryInsertItem3);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem3 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2304,6 +2316,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_04'] == 'True' || $_SESSION['RegenesisReorderRVProd_04'] == 'True'))
             {
                 $qryInsertItem4 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2348,7 +2362,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs4 = mssql_execute($qryInsertItem4);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem4 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2562,6 +2577,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_05'] == 'True' || $_SESSION['RegenesisReorderRVProd_05'] == 'True'))
             {
                 $qryInsertItem5 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2606,7 +2623,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs5 = mssql_execute($qryInsertItem5);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem5 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2819,6 +2837,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_06'] == 'True' || $_SESSION['RegenesisReorderRVProd_06'] == 'True'))
             {
                 $qryInsertItem6 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -2863,7 +2883,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs6 = mssql_execute($qryInsertItem6);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem6 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3076,6 +3097,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_07'] == 'True' || $_SESSION['RegenesisReorderRVProd_07'] == 'True'))
             {
                 $qryInsertItem7 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3120,7 +3143,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs7 = mssql_execute($qryInsertItem7);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem7 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3333,6 +3357,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_08'] == 'True' || $_SESSION['RegenesisReorderRVProd_08'] == 'True'))
             {
                 $qryInsertItem8 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3377,7 +3403,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs8 = mssql_execute($qryInsertItem8);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem8 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3590,6 +3617,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_09'] == 'True' || $_SESSION['RegenesisReorderRVProd_09'] == 'True'))
             {
                 $qryInsertItem9 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3634,7 +3663,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs9 = mssql_execute($qryInsertItem9);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem9 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3847,6 +3877,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_10'] == 'True' || $_SESSION['RegenesisReorderRVProd_10'] == 'True'))
             {
                 $qryInsertItem10 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -3891,7 +3923,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs10 = mssql_execute($qryInsertItem10);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem10 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4106,6 +4139,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_11'] == 'True' || $_SESSION['RegenesisReorderRVProd_11'] == 'True'))
             {
                 $qryInsertItem11 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4150,7 +4185,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs11 = mssql_execute($qryInsertItem11);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem11 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4363,6 +4399,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_12'] == 'True' || $_SESSION['RegenesisReorderRVProd_12'] == 'True'))
             {
                 $qryInsertItem12 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4407,7 +4445,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs12 = mssql_execute($qryInsertItem12);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem12 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4620,6 +4659,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_13'] == 'True' || $_SESSION['RegenesisReorderRVProd_13'] == 'True'))
             {
                 $qryInsertItem13 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4664,7 +4705,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs13 = mssql_execute($qryInsertItem13);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem13 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4877,6 +4919,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_14'] == 'True' || $_SESSION['RegenesisReorderRVProd_14'] == 'True'))
             {
                 $qryInsertItem14 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -4921,7 +4965,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs14 = mssql_execute($qryInsertItem14);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem14 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5134,6 +5179,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_15'] == 'True' || $_SESSION['RegenesisReorderRVProd_15'] == 'True'))
             {
                 $qryInsertItem15 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5178,7 +5225,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs15 = mssql_execute($qryInsertItem15);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem15 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5391,6 +5439,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_16'] == 'True' || $_SESSION['RegenesisReorderRVProd_16'] == 'True'))
             {
                 $qryInsertItem16 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5435,7 +5485,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs16 = mssql_execute($qryInsertItem16);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem16 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5648,6 +5699,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_17'] == 'True' || $_SESSION['RegenesisReorderRVProd_17'] == 'True'))
             {
                 $qryInsertItem17 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5692,7 +5745,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs17 = mssql_execute($qryInsertItem17);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem17 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -5905,6 +5959,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_18'] == 'True' || $_SESSION['RegenesisReorderRVProd_18'] == 'True')
 )
             {
@@ -5950,7 +6006,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs18 = mssql_execute($qryInsertItem18);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem18 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6163,6 +6220,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_19'] == 'True' || $_SESSION['RegenesisReorderRVProd_19'] == 'True'))
             {
                 $qryInsertItem19 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6207,7 +6266,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs19 = mssql_execute($qryInsertItem19);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem19 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6420,6 +6480,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_20'] == 'True' || $_SESSION['RegenesisReorderRVProd_20'] == 'True'))
             {
                 $qryInsertItem20 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6464,7 +6526,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs20 = mssql_execute($qryInsertItem20);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem20 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6670,6 +6733,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_21'] == 'True' || $_SESSION['RegenesisReorderRVProd_21'] == 'True'))
             {
                 $qryInsertItem21 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6714,7 +6779,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs21 = mssql_execute($qryInsertItem21);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem21 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6883,6 +6949,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_22'] == 'True' || $_SESSION['RegenesisReorderRVProd_22'] == 'True'))
             {
                 $qryInsertItem22 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -6927,7 +6995,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs22 = mssql_execute($qryInsertItem22);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem22 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7096,6 +7165,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_23'] == 'True' || $_SESSION['RegenesisReorderRVProd_23'] == 'True'))
             {
                 $qryInsertItem23 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7140,7 +7211,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs23 = mssql_execute($qryInsertItem23);
             }
-
+            */
+             
             else
             {
 			    $qryInsertItem23 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7309,6 +7381,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_24'] == 'True' || $_SESSION['RegenesisReorderRVProd_24'] == 'True'))
             {
                 $qryInsertItem24 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7353,7 +7427,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs24 = mssql_execute($qryInsertItem24);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem24 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7522,6 +7597,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_25'] == 'True' || $_SESSION['RegenesisReorderRVProd_25'] == 'True'))
             {
                 $qryInsertItem25 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7566,7 +7643,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs25 = mssql_execute($qryInsertItem25);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem25 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7735,6 +7813,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_26'] == 'True' || $_SESSION['RegenesisReorderRVProd_26'] == 'True'))
             {
                 $qryInsertItem26 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7779,7 +7859,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs26 = mssql_execute($qryInsertItem26);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem26 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7948,6 +8029,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_27'] == 'True' || $_SESSION['RegenesisReorderRVProd_27'] == 'True'))
             {
                 $qryInsertItem27 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -7992,7 +8075,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs27 = mssql_execute($qryInsertItem27);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem27 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8161,6 +8245,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_28'] == 'True' || $_SESSION['RegenesisReorderRVProd_28'] == 'True'))
             {
                 $qryInsertItem28 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8205,7 +8291,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs28 = mssql_execute($qryInsertItem28);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem28 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8374,6 +8461,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_29'] == 'True' || $_SESSION['RegenesisReorderRVProd_29'] == 'True'))
             {
                 $qryInsertItem29 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8418,7 +8507,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs29 = mssql_execute($qryInsertItem29);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem29 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8587,6 +8677,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_30'] == 'True' || $_SESSION['RegenesisReorderRVProd_30'] == 'True'))
             {
                 $qryInsertItem30 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8631,7 +8723,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs30 = mssql_execute($qryInsertItem30);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem30 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8800,6 +8893,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_31'] == 'True' || $_SESSION['RegenesisReorderRVProd_31'] == 'True'))
             {
                 $qryInsertItem31 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -8844,7 +8939,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs31 = mssql_execute($qryInsertItem31);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem31 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9013,6 +9109,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_32'] == 'True' || $_SESSION['RegenesisReorderRVProd_32'] == 'True'))
             {
                 $qryInsertItem32 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9057,7 +9155,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs32 = mssql_execute($qryInsertItem32);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem32 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9226,6 +9325,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_33'] == 'True' || $_SESSION['RegenesisReorderRVProd_33'] == 'True'))
             {
                 $qryInsertItem33 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9270,7 +9371,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs33 = mssql_execute($qryInsertItem33);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem33 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9439,6 +9541,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_34'] == 'True' || $_SESSION['RegenesisReorderRVProd_34'] == 'True'))
             {
                 $qryInsertItem34 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9483,7 +9587,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs34 = mssql_execute($qryInsertItem34);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem34 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9652,6 +9757,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_35'] == 'True' || $_SESSION['RegenesisReorderRVProd_35'] == 'True'))
             {
                 $qryInsertItem35 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9696,7 +9803,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs35 = mssql_execute($qryInsertItem35);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem35 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9865,6 +9973,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_36'] == 'True' || $_SESSION['RegenesisReorderRVProd_36'] == 'True'))
             {
                 $qryInsertItem36 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -9909,7 +10019,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs36 = mssql_execute($qryInsertItem36);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem36 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10078,6 +10189,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_37'] == 'True' || $_SESSION['RegenesisReorderRVProd_37'] == 'True'))
             {
                 $qryInsertItem37 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10122,7 +10235,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs37 = mssql_execute($qryInsertItem37);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem37 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10291,6 +10405,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_38'] == 'True' || $_SESSION['RegenesisReorderRVProd_38'] == 'True'))
             {
                 $qryInsertItem38 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10335,7 +10451,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs38 = mssql_execute($qryInsertItem38);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem38 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10504,6 +10621,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_39'] == 'True' || $_SESSION['RegenesisReorderRVProd_39'] == 'True'))
             {
                 $qryInsertItem39 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10548,7 +10667,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs39 = mssql_execute($qryInsertItem39);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem39 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10717,6 +10837,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
             }
 
             // GMC - 10/12/15 - Regenesis Reorder Discount Program
+            // GMC - 03/10/16 - Cancel Regenesis Reorder Discount Program
+            /*
             else if($_SESSION['RegenesisReorderThreshold'] == 'True' && ($_SESSION['RegenesisReorderRGProd_40'] == 'True' || $_SESSION['RegenesisReorderRVProd_40'] == 'True'))
             {
                 $qryInsertItem40 = mssql_init("spOrders_Items_Create", $connProcess);
@@ -10761,7 +10883,8 @@ if (!isset($blnPaymentError) && isset($CCAuthorization) && isset($CCTransactionI
 
 			    $rs40 = mssql_execute($qryInsertItem40);
             }
-
+            */
+            
             else
             {
 			    $qryInsertItem40 = mssql_init("spOrders_Items_Create", $connProcess);
